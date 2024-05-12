@@ -24,9 +24,9 @@
             {% for category in categories %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ category.image_url }}" class="card-img-top" alt="{{ category.name }}">
+                    <img src="{{ category.image_url }}" class="card-img-top" alt="{{ category.d_name }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ category.name }}</h5>
+                        <h5 class="card-title">{{ category.d_name }}</h5>
                         <a href="#" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#category-modal-{{ loop.index }}">View Files</a>
                     </div>
@@ -42,7 +42,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="category-modal-label-{{ loop.index }}">{{ category.name }}</h5>
+                    <h5 class="modal-title" id="category-modal-label-{{ loop.index }}">{{ category.d_name }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
