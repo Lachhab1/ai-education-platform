@@ -1,0 +1,1398 @@
+                              DBA
+                            Oracle 12c
+                      Département math-info
+
+
+
+                     DBA/ORACLE 12C
+                         Révision
+
+
+
+                                              Smi / s6
+PR.SANAA EL FILALI
+                                              Année universsitaire : 2021/2022
+2
+
+
+
+
+          Partie 1
+    Architecture Oracle
+Architecture Oracle :
+
+
+
+
+                        • Se compose de:
+                          •         Un serveur .
+                          •         Un processus serveur + PGA .
+    Processus             •         Un processus utilisateur .
+    utilisateur
+
+
+
+
+    Processus                                           Serveur
+    serveur
+              PGA
+Les composants du serveur oracle :
+
+                                                             • Un serveur oracle se compose de :
+                                                                •     une instance .
+                                                                 •     une base de données
+                                                                 •     fichiers de paramètres
+                                                                 •    fichiers de mots de passe .
+Un serveur Oracle :                                              •    fichiers de journalisation archivées .
+  • est un système de gestion de base de données qui offre
+
+    une méthode de gestion des informations ouverte,
+
+    complète et intégrée,
+
+                                                                                    Instance
+  • est constitué d'une instance et d'une base de données
+
+    Oracle.
+                                                             Fichiers de
+                                                             paramètres                                          Fichiers de
+                                                              Fichiers de
+                                                                                    Base de                    journalisations
+                                                               mots de              données                       archivées
+                                                                passes
+ Les composants d’une base de données oracle .
+
+
+
+
+• La base de données oracle se compose de 3 fichiers qui constituent la structure physique de la base :
+
+    •   fichiers de données .
+    •   fichiers de contrôles .
+    •   fichiers de journalisations .
+
+
+                                            Base de données
+
+
+
+                            Fichiers de             Fichiers de            Fichiers de
+                             données                 contrôle             journalisation
+ • Une instance Oracle se compose de :
+      •    une mémoire SGA .
+      •   des processus d’arrière plan .
+
+
+
+                                                                          Instance
+                                                                         Mémoire SGA
+Une instance Oracle :
+ ◦ permet d'accéder à une base de données Oracle,                        Structures
+ ◦ n'ouvre qu'une seule base de données,                                 mémoire
+ ◦ est constituée de structures de processus d'arrière-plan
+   et de structures mémoire.
+                                                              PMON SMON DBWR LGWR CKPT   Autres
+
+
+
+
+ SGA : mémoire temporaire qui stocke les données venant de la base .
+ Processus : se chargent du traitement .
+Les processus d'arrière-plan
+
+
+  PMON     exécute des opérations de nettoyage suite à l'échec de processus.
+
+
+  SMON se charge de la récupération de l'instance
+
+
+  DBWR     écrit dans les fichiers de données.
+
+           enregistre les modifications de la base de données pour permettre la récupération.
+  LGWR
+
+
+  CKPT     permet l'écriture dans les en-têtes des fichiers de données.
+
+           ARCn : se charge de l’archivage . En mode ARCHIVELOG, il archive automatiquement les fichiers de
+  Autres
+           journalisation en ligne
+           .
+        Les composants de : SGA .
+
+
+• SGA : shared global area , Se compose de :                      Instance
+                                                                 Mémoire SGA
+    • 1-Une zone mémoire partagée .            Zone de mémoire
+                                               partagée
+                                                                 Cache de
+    • 2- Cache de tampons de base de données    Cache            tampons de      Tampon de
+                                                                                 journalisation
+                                                "library"        la base
+                                                                 de données
+    • 3- Tampon de journalisation               Cache du
+                                                dictionnaire      Zone de        Zone de mémoire
+                                                                  mémoire Java   LARGE POOL
+    • 4- Zone de mémoire java                   de données
+
+
+    • 5- Zone de mémoire LARGE POOL
+    •
+  1- Zone de mémoire partagée
+  Elle est constituée de deux structures mémoire :
+           • Cache "library" : les instructions SQL exécutées,
+           • Cache du dictionnaire de données : les dernières définitions de données utilisées (sommaire ) .
+
+
+ 2- Cache de tampons de la base de données
+    • Ce cache conserve des copies des blocs de données extraits des fichiers de données.
+
+
+3- Tampon de journalisation
+◦ Il enregistre toutes les modifications apportées aux blocs de données de la base.
+
+
+
+
+                                                       Zone mémoire facultatifs
+  4-Zone de mémoire Java
+     • La zone de mémoire Java répond aux besoins d'analyse des commandes Java.
+     • Elle est nécessaire si Java est installé et utilisé.
+
+
+5- Zone de mémoire LARGE POOL
+o Elle réduit la charge de la zone de mémoire partagée.
+Autres fichiers importants du Serveur
+
+   • Le serveur Oracle utilise également d'autres fichiers qui ne font pas partie de la base de données :
+
+
+        • Le fichier de paramètres définit les caractéristiques d'une instance Oracle. Ce fichier contient, par exemple,
+
+           des paramètres qui définissent la taille de certaines structures de la mémoire SGA.
+
+        • Le fichier de mots de passe authentifie les utilisateurs autorisés à démarrer et à arrêter une instance Oracle.
+
+        • Les fichiers de journalisation archivés sont des copies hors ligne (offline) des fichiers de journalisation, qui peuvent être
+           nécessaires à la récupération des données suite à une défaillance physique.
+
+
+
+
+                                                                                                         Instance
+
+                                                                                Fichiers de
+                                                             Serveur            paramètres                                    Fichiers de
+                                                                                                                            journalisations
+                                                                                 Fichiers de
+                                                                                                   Base de données             archivées
+                                                                                  mots de
+                                                                                   passes
+Présentation des principaux composants
+
+
+                                                                   Instance
+             Processus
+             utilisateur              Zone de mémoire             Mémoire SGA
+                                      partagée
+
+                                        Cache                     Cache de
+                                                                  tampons de           Tampon de
+                                        "library"                                      journalisation
+                                                                  la base
+                                        Cache du                  de données
+             Processus
+             serveur                    dictionnaire                                   Zone de mémoire
+                                                                   Zone de
+                                        de données                 mémoire Java        LARGE POOL
+                      PGA
+
+                                      PMON SMON DBWR LGWR CKPT                                    Autres
+
+
+
+
+                                                    Fichiers de   Fichiers de     Fichiers de
+                                                    données       contrôle        journali-        Fichiers de
+                           Fichier de
+                                                                                  sation           Journalisation
+                           paramètres
+                                                                                                   archivés
+                           Fichier
+                           de mots
+                           de passe
+                                                                   Base de données
+Les différents mode de démarrage
+Démarrer une base de données en mode OPEN
+
+
+                                  OPEN
+   STARTUP                         Tous les fichiers sont ouverts,
+                                   comme indiqué par le fichier
+                         MOUNT     de contrôle de cette instance
+
+                         Fichier de contrôle
+                         ouvert pour cette
+             NOMOUNT     instance
+
+              Instance
+              démarrée
+  SHUTDOWN
+                                               SHUTDOWN
+Démarrer une base de données en mode OPEN
+                   STARTUP            STARTUP               STARTUP
+    SHUTDOWN
+                   NOMOUNT             MOUNT
+
+
+      Instance       Instance           Instance              Instance
+       inactive        active            Active                 active
+
+
+
+
+    BD fermée        BD non                                 BD ouverte
+                                     BD montée
+                     montée
+
+
+                  Accès autorisé
+      Accès                         Accès autorisé seul     Accès autorisé tous
+                      mais les
+     restreint                     le fichier de contrôle     les fichier sont
+                   fichiers sont
+                                       est accessible           accessibles
+                  inaccessibles
+15
+
+
+
+
+     Dictionnaire de données
+ Dictionnaire de données
+
+◦ Il est vital pour toute base de données Oracle.
+
+◦ Il décrit la base de données et ses objets.
+
+◦ Il contient des tables et des vues en lecture seule.
+
+◦ Il est stocké dans le tablespace SYSTEM.
+
+◦ Le propriétaire est l'utilisateur SYS.
+
+◦ Sa mise à jour est effectuée par le serveur Oracle à travers des requêtes LDD .
+
+◦ Il est accessible avec le privilège SELECT
+Dictionnaire de données
+
+
+• Le dictionnaire de données est composé de deux parties :
+ 1-Tables de base
+              • Contiennent la description de la base de données
+              • Sont créées à l'aide de la commande CREATE DATABASE
+ 2-Vues du dictionnaire de données
+              • Simplifient les informations contenues dans les tables de base
+              • Sont accessibles par des synonymes publics
+ Dictionnaire de données :
+ Trois principaux ensembles de vues statiques Se distinguent par leur portée :
+       • DBA :     contenu de toutes la base
+       • ALL :     éléments auxquels l'utilisateur a accès
+       • USER :    contenu du objet de l'utilisateur
+Remarque : DBA_xxx à une vue homologue CDB_xxx avec une colonne
+supplémentaire qui permet d’identifier le CONTAINER.
+
+CDB_xxx : tous les objets de la CDB sur tous les PDBs
+
+     DBA_xxx : tous les objets dans un conteneur ou PDB
+
+         ALL_xxx : objets accessibles à l'utilisateur en cours
+
+
+             USER_xxx : objets appartenant à l'utilisateur en cours
+vue importantes du dictionnaire de données :
+
+Les vues à interroger :
+
+
+Dba_........... …………; //                 Affiche les objets appartenant à la base (dans un conteneur PDB).
+
+All_..............................; //   Affiche les objets aux quels j’ai accès .
+
+User_..........................; //      Affiche mes objets .
+
+
+
+
+Exemple :
+
+
+ Dba_tables; // Affiche toutes les tables de la base du coneneur.
+ All_tables; // Affiche toutes les tables aux quelles j’ai accès .
+ User_tables; // Affiche mes propres tables .
+                   Dictionnaire de données
+
+
+
+
+                          Sommaire
+
+
+                       la base de données
+
+     utilisateur                                Système
+
+Tables       Vues       Vues de performances       Vues de gestion
+                            dynamiques              users \ base
+
+                             V$spparameter            Dba_............
+                           V$system_parameter        All_...............
+                           ………………………..               User_..............
+21
+
+
+
+
+                  TP 1
+     Gestion d’instance et Fichier de
+               paramètres
+       Qu'est-ce qu'un fichier de paramètres
+
+
+Le fichier de paramètres est un texte ou un binaire pour stocker les paramètres d'initialisation de la base
+de données. L'instance oracle lit le fichier de paramètres au démarrage, qui est ensuite utilisé pour
+contrôler le comportement de l'instance de base de données et de nombreux autres aspects. Tels que:
+allocation de mémoire (SGA et PGA), démarrage de processus d'arrière-plan optionnels, Il existe 2 types
+de fichiers de paramètres, à savoir:
+
+
+
+
+  1.    pfile   (fichier   texte)   -   méthode   plus   ancienne    [non    recommandée   par   oracle]
+  2 . spfile (fichier binaire) - méthode plus récente [recommandée par oracle]
+    pfile V/S spfile
+
+
+
+                      pfile                                                 spfile
+Fichier texte                                        Fichier binaire
+Les paramètres de pfile peuvent être modifiés à      spfile ne peut pas être modifié à l'aide d'un éditeur
+l'aide de n'importe quel éditeur de texte            de texte. Au lieu de cela, il ne peut être modifié qu'à
+                                                     l'aide de la commande
+                                                     ««ALTER SYSTEM »»
+
+
+Emplacement par défaut de pfile - $                  Emplacement par défaut du fichier spfile - $
+ORACLE_HOME / dbs / init [SID] .ora où [SID] - est   ORACLE_HOME / dbs / spfile [SID] .ora où [SID] -
+le nom de l'instance.                                est le nom de l'instance.
+    Comment vérifier si SPFILE ou PFILE est utilisé
+
+Exécutez la commande ci-dessous sur la base de données que vous souhaitez vérifier:
+
+
+ SQL> show parameter spfile
+
+
+Si la requête ne renvoie aucune ligne, pfile est utilisé. Si la requête renvoie une valeur avec un nom de
+fichier (avec son chemin), SPFILE est utilisé par l'instance en cours d'exécution. Par exemple
+
+
+SQL> show parameter spfile
+
+NAME TYPE VALUE
+------------------------------------ ----------- ------------------------------
+spfile string ?/dbs/spfile@.ora
+
+L'exemple ci-dessus montre ce spfile utilisé par l'instance en cours d'exécution.
+ Commandes :
+
+                          SPFILE                                                        PFILE
+
+ SQL> show parameter spfile                                           SQL> show parameter spfile
+
+     Cette requête nous renvoie le chemin si spfile est utilisé sinon elle renvoie aucun résultat .
+
+
+
+SQL> Startup                                                          SQL> Startup PFILE =‘chemin ‘ ;
+
+  Pour démarrer l’instance on exécute la commande STARTUP . Par défaut cette requête exploite le fichier
+  SPFILE . Si on veut travailler avec PFILE , il faut préciser son chemin .
+
+
+SQL> Create spfile from Pfile ;                                       SQL> Create pfile from spfile ;
+
+Si l’un des fichiers n’existe pas et on veut le créer , on peut le créer à travers l’autre suivant les requêtes
+suivantes :
+Démmarage
+
+
+                         Startup
+
+
+
+                     Fichier de paramètres
+
+
+
+
+            SPFILE                           PFILE
+ Démmarage :
+
+
+               Fichiers de paramètres
+
+
+                                        Démarrer
+                      SPFILE                           Instance
+
+
+
+Startup
+
+                        Pfile
+                                                   Base de données
+28
+
+
+
+
+               TP 2
+     Les vues de performances
+ Vue de performance :
+                                     V$system_parameter
+
+                                        Instance ( memory )
+
+
+
+V$spparameter                        sys
+
+
+  SPFILE                              V$parameter
+
+
+
+                  • V$SPPARAMETER            : affiche les paramètres du SPFILE .
+
+                  • V$SYSTEM_PARAMETER : affiche les paramètres de l’instance .
+
+                  • V$PARAMETER              : affiche les paramètres avec lesquelles travail l’utilisateur
+ •Situation 1
+Scope =SPFILE
+Vue de performance :
+
+                                                V$system_parameter
+                                                  Instance ( memory )
+         V$spparameter                               Processes = 200
+                                                     Lang = ANG
+              SPFILE
+          Processes = 200
+            Lang = ANG                            sys
+
+
+                                                  V$parameter
+       SQL -> Select value from V$spparameter where name =‘processes’ ;
+              value = 200
+
+       SQL -> Select value from V$system_parameter where name =‘processes’ ;
+              value = 200
+
+       SQL -> Select value from V$parameter where name =‘processes’ ;
+              value = 200
+On modifie la valeur au niveau du SPFILE
+SQL -> Alter system set processes=150 scope =spfile ;
+
+
+                                                 V$system_parameter
+
+                                                      Instance ( memory )
+            V$spparameter                              Processes = 200
+                                                       Lang = ANG
+                 SPFILE
+           Processes = 150
+           Lang = ANG                                 sys
+
+
+                                                      V$parameter
+           SQL -> Select value from V$spparameter where name =‘processes’ ;
+                  value = 150
+
+           SQL -> Select value from V$system_parameter where name =‘processes’ ;
+                  value = 200
+
+           SQL -> Select value from V$parameter where name =‘processes’ ;
+                  value = 200
+Les modifications au     niveau de SPFILE sont prises au
+considération au niveau de l’instance , après le redémarrage .
+On modifie la valeur au niveau du SPFILE
+SQL -> Alter system set processes=150 scope =spfile ;
+SQL -> shutdown
+SQL -> startup
+                                                    V$system_parameter
+
+                                                      Instance ( memory )
+             V$spparameter                               Processes = 150
+                                                         Lang = ANG
+                   SPFILE
+              Processes = 150
+              Lang = ANG                              sys
+
+
+                                                     V$parameter
+
+           SQL -> Select value from V$spparameter where name =‘processes’ ;
+                  value = 150
+
+           SQL -> Select value from V$system_parameter where name =‘processes’ ;
+                  value = 150
+
+           SQL -> Select value from V$parameter where name =‘processes’ ;
+                  value = 150
+  Situation 2
+Scope =Memory
+Vue de performance :
+
+                                                V$system_parameter
+                                                  Instance ( memory )
+                                                     Processes = 200
+         V$spparameter                               Lang = ANG
+              SPFILE
+          Processes = 200
+            Lang = ANG                            sys
+
+
+                                                V$parameter
+
+       SQL -> Select value from V$spparameter where name =‘processes’ ;
+              value = 200
+
+       SQL -> Select value from V$system_parameter where name =‘processes’ ;
+              value = 200
+
+       SQL -> Select value from V$parameter where name =‘processes’ ;
+              value = 200
+On modifie la valeur au niveau du SPFILE
+SQL -> Alter system set processes=150 scope =memory ;
+
+
+
+                                                    V$system_parameter
+
+                                                      Instance ( memory )
+             V$spparameter                             Processes = 150
+                   SPFILE                              Lang = ANG
+              Processes = 200
+              Lang = ANG                              sys
+
+
+                                                     V$parameter
+           SQL -> Select value from V$spparameter where name =‘processes’ ;
+                  value = 200
+
+           SQL -> Select value from V$system_parameter where name =‘processes’ ;
+                  value = 150
+
+           SQL -> Select value from V$parameter where name =‘processes’ ;
+                  value = 150
+Les modifications au niveau de l’instance sont temporaires ,
+elles sont annulées après redémarrage , vue que le SPFILE
+                    n’est pas modifié .
+On modifie la valeur au niveau du SPFILE
+SQL -> Alter system set processes=150 scope =memory ;
+SQL -> shutdown
+SQL -> startup
+
+                                                   V$system_parameter
+
+                                                     Instance ( memory )
+            V$spparameter
+                                                      Processes = 200
+                  SPFILE                              Lang = ANG
+             Processes = 200
+             Lang = ANG                              sys
+
+
+                                                V$parameter
+
+          SQL -> Select value from V$spparameter where name =‘processes’ ;
+                 value = 200
+
+          SQL -> Select value from V$system_parameter where name =‘processes’ ;
+                 value = 200
+
+          SQL -> Select value from V$parameter where name =‘processes’ ;
+                 value = 200
+                         Situation 3
+                    V$PARAMETER
+V$parameter est une vue qui permet de visualiser les paramètres de
+                           l’utilisateur .
+Avec user HR :
+SQL -> ALTER SESSION SET NLS_LANGUAGE= ‘FRENCH’ ;
+
+
+
+                                                             V$system_parameter
+                                                                                Instance ( memory )
+                                                                                        Processes = 200
+                                                                                        Lang = ANG
+                  V$spparameter
+                                                                                                                        HR
+                        SPFILE                             sys        Processes = 200                 Processes = 200
+                   Processes = 200                                    Lang = ANG                      Lang = FR
+                   Lang = ANG
+                                                            V$parameter                                      V$parameter
+
+
+
+
+Ici la langue va changer que pour user HR , puisque c’est lui qui a fait le changement au
+niveau de sa session .
+
+Si on sélectionne à partir de spfile , on trouvera qu c’est toujours ANG .
+La même chose pour l’instance , la langue de l’instance est toujours ANG , c’est-à-dire que
+les autres users connectés à l’instance vont travailler en ANG
+
+Sauf que pour user HR
+  TP 3
+CDB -PDB
+Rappel sur le CDB et les PDB
+ Commandes :
+
+ SQL> Show con_name
+
+Cette requête nous renvoie le nom de la CDB en cours
+
+
+ SQL> Show pdbs
+Cette requête nous affiche La liste des pdbs intégrés dans le conteneur CDB$ROOT
+
+
+SQL> Select name, open_mode from v$pdbs ;
+
+Cette requete nous Affiche l'ensemble des pdbs avec leurs états de démarrage actuel
+
+
+SQL> alter session set container =nom_pdbs;
+
+Cette requête nous permet de basculer entre les pdbs .
+        TP 4
+Fichiers de contrôles
+Fichiers de contrôle -
+
+ • Il s'agit d'un petit fichier binaire.
+
+ • Il définit l'état actuel de la base de données physique.
+
+ • Il assure l'intégrité de la base de données.
+
+ • Il est requis :
+
+      • lors de l'étape MOUNT lors du démarrage de la base de données,
+
+      • pour le fonctionnement de la base de données.
+                                                                         Base de données
+ • Il est lié à une seule base
+   de données.                                                              Fichiers
+                                                                               de
+                                                                            contrôle
+ • La perte de ce fichier peut nécessiter la récupération
+   de la base de données.
+  Contenu du fichier de contrôle
+
+
+• Le fichier de contrôle contient les entrées suivantes :
+    • Nom et identificateur de la base de données
+    • Nom des tablespaces
+    •   Nom et emplacement des fichiers de données et des fichiers de journalisation (redo log)
+    •   Numéro de séquence du fichier de journalisation en cours
+    •   Informations sur les points de reprise (checkpoints)
+    •   Informations sur l'archivage des fichiers de journalisation
+                                                                                   Base de données
+    •   Informations sur les sauvegardes
+                                                                                       Fichiers
+                                                                                          de
+                                                                                       contrôle
+Cas de perte du fichier de contrôle :
+
+Exemple : On supprime le fichier de contrôle et on tente d’ouvrir la base par STARTUP .
+
+
+
+
+                                                                                          Base de données
+
+                                                                                             Fichiers
+On ne peut pas ouvrir la base sans fichier de contrôle , on est dans l’état                     de
+NOMOUNT .                                                                                    contrôle
+
+
+Pour la sécurité de la base , On doit avoir plusieurs copie du fichier de contrôle .
+49
+
+
+
+
+     Multiplexer le fichier de contrôle
+   Multiplexer le fichier de contrôle
+
+
+  1- Sachant qu’on possède déjà deux fichier de contrôle , control01.CTL et control02.CTL .
+
+                                     Disque 1                           Disque 2
+
+
+                                   ctrl01.ctl                         ctrl02.ctl
+
+
+
+
+Le but est de créer une troisième copie , pour le faire on suit les étapes suivantes :
+
+
+• Création physique       : Copier un des fichier et créer un troisième fichier nommé control03.CTL .
+
+• Création logique    :Pour que le changement s’applique au niveau du système , on Ajoute le chemin du fichier
+  ajouté ( control03.CTL ) au niveau du fichier de paramètres .
+Multiplexer le fichier de contrôle :
+
+                                     lorsqu'un fichier SPFILE est utilisé
+
+1. Modifiez le SPFILE :
+ALTER SYSTEM SET control_files =
+'$HOME/ORADATA/u01/ctrl01.ctl',
+'$HOME/ORADATA/u02/ctrl02.ctl’
+'$HOME/ORADATA/u02/ctrl03.ctl’
+  SCOPE=SPFILE;
+
+2.   Arrêtez la base de données :
+
+shutdown immediate
+
+3.   Créez des fichiers de contrôle supplémentaires :
+4.
+Créer une copie physique du fichier control03.CTL à partir d’un des deux
+fichier (control01.CTL / control02.CTL) .
+cp $HOME/ORADATA/u01/ctrl01.ctl $HOME/ORADATA/u02/ctrl02.ctl
+4.   Démarrez la base de données :
+
+startup
+ Multiplexer le fichier de contrôle :
+
+                                       lorsqu'un fichier PFILE est utilisé
+
+1.   Arrêtez la base de données :
+
+ shutdown immediate
+
+2. Créez un fichier de contrôle supplémentaire :
+ Créer une copie physique du fichier control03.CTL à partir d’un des deux
+ fichier (control01.CTL / control02.CTL) .
+ cp $HOME/ORADATA/u01/ctrl01.ctl
+ $HOME/ORADATA/u02/ctrl03.ctl
+
+
+
+3. Ajoutez les noms des fichiers de contrôle au fichier PFILE :
+ CONTROL_FILES = (/DISK1/control01.ctl,
+                  /DISK3/control02.ctl), /DISK3/control03.ctl) )
+4.   Démarrez la base de données :
+ startup
+Les modifications au niveau de SPFILE sont prises en compte après redémarrage .
+54
+
+
+
+
+               TP 5
+     Fichiers de journalisation
+1. Expliquer le rôle des fichiers de journalisation en ligne
+
+
+
+
+Les fichiers de journalisation présentent les caractéristiques suivantes :
+• Ils enregistrent toutes les modifications apportées aux données.
+• Ils offrent un mécanisme de récupération.
+• Ils peuvent être organisés en groupes.
+• Deux groupes au moins sont requis.                                         Fichiers de
+                                                                               journa-
+                                                                               lisation
+2. Décrire la structure des fichiers de journalisation en ligne
+
+
+
+
+                                                                      • Lorsqu'un fichier de ce type est
+ Groupe 1               Groupe 2             Groupe 3
+                                                                        rempli, le processus LGWR passe au
+                                                           Disque 1     groupe de fichiers de journalisation
+
+ Membre                 Membre                Membre                    suivant.
+
+
+
+                                                                      • On parle alors de changement de
+
+                        Membre                Membre       Disque 2     fichier de journalisation.
+ Membre
+
+
+                                                                      • Les fichiers de journalisation sont
+                                                                        utilisés de façon cyclique.
+3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Informations concernant les Groupes                               Informations concernant les Membres
+
+
+•   Un ensemble de copies identiques de fichiers de                  •    Chaque fichier de journalisation en ligne d'un
+    journalisation en ligne est nommé groupe de fichiers de               groupe est nommé membre.
+    journalisation en ligne.
+                                                                     •    Les membres d'un groupe portent tous le même
+•   Le processus d'arrière-plan LGWR écrit simultanément les              numéro de séquence de journal et ont tous la
+    mêmes informations dans tous les fichiers de journalisation           même taille.
+    en ligne d'un groupe.
+
+
+•   Le serveur Oracle nécessite au moins deux groupes de
+    fichiers de journalisation en ligne pour garantir un
+    fonctionnement correct de la base de données.
+   3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+Sachant qu’on possède deux fichiers de journalisation , ajoutez un troisième .
+
+
+
+ ALTER DATABASE ADD LOGFILE GROUP 3
+ ('$HOME/ORADATA/u01/log3a.rdo',
+  '$HOME/ORADATA/u02/log3b.rdo')
+ SIZE 1M;
+
+
+
+
+     log1a.rdo                  log2a.rdo                log3a.rdo
+
+          log1b.rdo                  log2b.rdo                log3b.rdo
+
+           Groupe 1                   Groupe 2                 Groupe 3
+ 3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Ajouter des membres à des fichiers de journalisation en ligne
+
+
+ALTER DATABASE ADD LOGFILE MEMBER
+'$HOME/ORADATA/u04/log1c.rdo' TO GROUP 1,
+'$HOME/ORADATA/u04/log2c.rdo' TO GROUP 2,
+'$HOME/ORADATA/u04/log3c.rdo' TO GROUP 3;
+
+
+
+
+    log1a.rdo                  log2a.rdo                 log3a.rdo
+
+        log1b.rdo                  log2b.rdo                  log3b.rdo
+
+                log1c.rdo                  log2c.rdo                  log3c.rdo
+
+                 Groupe 1                   Groupe 2                       Groupe 3
+   3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+
+Supprimer des groupes de fichiers de journalisation en ligne
+
+
+    ALTER DATABASE DROP LOGFILE GROUP 3;
+
+
+
+
+                   log1a.rdo               log2a.rdo                 log3a.rdo
+
+                     Groupe 1                Groupe 2                  Groupe 3
+ 3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Supprimer des membres de fichiers de journalisation en ligne
+
+
+
+
+  ALTER DATABASE DROP LOGFILE MEMBER
+  '$HOME/ORADATA/u04/log3c.rdo';
+
+
+
+
+     log1a.rdo                     log1a.rdo
+
+          log1b.rdo                    log1b.rdo
+
+                  log1c.rdo                     log2c.rdo
+
+                    Groupe 1                     Groupe 2
+Obtenir des informations sur les groupes et les membres
+
+
+
+
+ • Pour obtenir des informations sur les groupes et les
+   membres, interrogez les vues suivantes :
+
+    • V$LOG         : les groupes
+    • V$LOGFILE     : les members
+Fichiers de journalisation archivés
+
+
+
+
+• Vous pouvez archiver les fichiers de journalisation en ligne complets.
+
+• L'exécution de la base de données en mode ARCHIVELOG et l'archivage des fichiers de journalisation
+  présentent deux avantages :
+
+             • Récupération : La sauvegarde de la base de données et des fichiers de journalisation en
+                ligne et archivés peuvent garantir la récupération de toutes les transactions validées.
+
+             • Sauvegarde : Peut s'effectuer lorsque la base de données est ouverte.
+
+
+
+• Par défaut, une base de données est créée en mode NOARCHIVELOG.
+Vérifier dans quel mode d’archivage la base est configurée
+
+
+     Méthode 1 :
+
+     sql -> archive log list
+
+
+
+
+    Méthode 2 :
+
+    sql -> SELECT archiver FROM v$instance;
+
+
+
+     Méthode 3 :
+
+     Sql ->select log_mode from v$database;
+Fichiers de journalisation archivés
+
+                                      Activer l’archivage
+
+          Sql -> startup mount
+          Sql-> alter database archivelog ;
+          Sql -> alter database open ;
+
+
+
+
+                                  Désactiver l’archivage
+           Sql -> startup mount
+           Sql-> alter database noarchivelog ;
+           Sql -> alter database open ;
+       TP 6
+Fichier de données
+1. Décrire la structure de stockage physique et logique de la base .
+
+
+
+
+•Les fichiers de données sont des fichiers qui stockent l’ensemble de données de notre base .
+
+
+•Ils sont stockés physiquement au niveau du serveur , et regroupés logiquement au niveau d’une
+ entité logique nommée TABLESPACE .
+
+
+•Il s’agit d’un regroupement logique de fichiers de données .
+
+                                                                       Fichiers
+                                                                          de
+                                                                       données
+ 1. Décrire la structure de stockage physique et logique des fichiers de données .
+
+
+
+
+                                             Structures logiques
+
+
+
+
+Ces structures sont créées et reconnues par Oracle Database et ne sont pas connues par le système
+d'exploitation.
+
+
+
+      • Tablespace           : regroupement logique de fichiers de données .
+      • Segments             : Est un ensemble d'extensions allouées à un objet de base de données spécifique,
+        tel qu'une table .
+      • Extensions           : regroupement de blocs de données .
+ 1. Décrire la structure de stockage physique et logique des fichiers de données .
+
+
+
+                         Logical                                Physical
+
+                       Tablespace                               Datafile
+
+
+
+
+                        Segment
+
+
+
+
+                         Extent                                   Bloc
+
+
+
+•Blocs de données Est la plus petite unité de stockage de données dans Oracle Database.
+2. Enoncer les différents types des tablespaces .
+
+
+
+
+o Tablespace Permanent           : un espace alloué pour stocker les données définitivement .
+
+o Tablespace Temporaire           : un espace alloué pour les traitement temporaires ( TRIE ) .
+
+o Tablespace d’annulation         : un espace alloué pour les traitements d’annulation (Rollback) .
+                Les différents tablespace spéciaux
+
+
+SYSTEM   Très important , la base ne peut pas fonctionner sans ce tablespace, contient le dictionnaire de
+         données .
+
+SYSAUX   Un assistant pour diminuer la charge . Le tablespace SYSAUX est un tablespace auxiliaire au
+         tablespace SYSTEM.
+
+USERS    Tablespace par défaut de la base .
+
+
+ TEMP    Tablespace temporaire , pour les traitement de trie , ……
+
+
+UNDO     Tablespace d’annulation , pour les traitement de rollback
+Résumé :
+
+
+ • Un tablespace ou espace disque logique, est une partition logique de la base contenant un ou plusieurs
+   fichiers.
+ • Un fichier appartient à 1 et 1 seul tablespace.
+ • Les tablespaces sont donc utiles pour répartir les données, mais aussi les segments d’annulations et les
+   espaces temporaires sur plusieurs espaces logiques et disques.
+
+
+
+
+Ils permettent :
+❑ performance (répartitions des accès disques),
+❑ sécurité (séparation des infos systèmes des données utilisateurs)
+    Commandes :
+    SQL> CREATE TABLESPACE SMI1
+    DATAFILE     'E:\app\ELFILALI\oradata\orcl\file1.dbf’
+    size 10m ;
+    Cette requête nous permet de créer un tablespace nommé SMI1 avec un seul fichier file1 dont la taille = 10m .
+
+
+    SQL> alter database datafile ‘ E:\app\ELFILALI\oradata\orcl\file1.dbf’ resize 11m ;
+
+Cette requête nous permet d’allouez 1Mo d'espace disque supplémentaires au tablespace smi1.
+
+
+    SQL> CREATE TABLESPACE SMI1
+    DATAFILE     'E:\app\ELFILALI\oradata\orcl\file1.dbf’
+    size 10m autoextend on next 1m maxsize 100m;
+
+•     La taille initiale de l’espace disque logique est de 5 Mo.
+•     Lorsque la taille du fichier disque devient insuffisante, il y aura une extension automatique du fichier par tranche de 1 Mo
+      avec une limite à 100 Mo.
+Commandes :
+
+     sql> create table TABLE2
+            (ID NUMBER , name VARCHAR2 (50)) tablespace smi1;
+
+
+   Créez un objet (une table) dans un tablespace précis
+
+
+- Supprimez le tablespace smi1 .
+
+    sql> drop     tablespace smi1 ;
+
+
+
+
+NOTE : le tablespace n’est pas vide . On vient de créer une table au niveau de ce tablespace
+Commandes :
+
+
+
+     sql> drop    tablespace SMI1 INCLUDING CONTENTS;
+
+
+
+
+Note : La requête suivante permet de supprimer le tablespace avec son contenu .
+       TP 7
+Gestion de privlèges
+Gérer les utilisateurs
+
+
+                                            Etapes de création d‘un
+                                                  utilisateur
+
+
+                A- Choisir un nom d'utilisateur et un mécanisme d'authentification
+
+
+                 B- Identifier les tablespaces dans lesquels l'utilisateur va stocker ses objets
+
+
+                 C- Décider des quotas pour chaque tablespace
+
+
+                 D-Créer l’utilisateur
+
+
+                E-Accorder des privilèges et des rôles à l'utilisateur
+C - Décider des quotas pour chaque tablespace
+
+
+
+
+Un QUOTA est l’espace nécessaire (allocation ou limite d'espace) destiné à contenir la table d'objet.
+
+
+
+
+Affecter Quota .
+
+Sql -> alter user SANAA quota 15m on users ; .
+
+Affecter à user SANNA un espace de 15 m à consommer au niveau du tablespace USERS .
+
+
+
+
+Enlever Quota.
+
+Sql -> alter user SANAA quota 0m on users ; .
+                                        Modification
+
+
+
+
+Avec ordre ALTER USER :
+
+•   force changement de mot de passe ALTER USER Toto
+        alter user toto identified by toto PASSWORD EXPIRE;
+
+•   Suppression de quota ALTER USER Toto QUOTA 0m ON users;
+       les données existantes restent mais plus possible d'en insérer d'autres
+
+•   quota illimité ALTER USER Toto
+       alter user toto QUOTA UNLIMITED ON users;
+Les types de privilèges :
+
+
+ Les privilèges sont des droits pour exécuter des requêtes
+
+
+
+
+  Deux types de Privilèges
+
+  • SYSTÈME
+     permet aux utilisateurs d'effectuer des opérations touchant la structure de la base (create
+     tablespace, create database, alter system , create table, create user, alter profile …)
+
+
+  • OBJET
+     Un privilège objet permet d’exécuter une action particulière sur une table , un objet d’un schéma.
+     Par exemple y accéder, la mettre a jour ou même y insérer des information (select, update, insert …)
+Les privilèges :
+
+
+                      privilèges
+
+
+
+
+             Donner                Enlever
+
+
+
+
+            Grant                  Revoke
+                                             Comparaison
+
+
+                    Système                                                    Objet
+
+   Faire une action au niveau de la base                       Faire une manipulation .
+   create , drop ….                                            Select , insert , delete …
+
+                                            Donner privilège
+GRANT CREATE table TO SANAA ;                         GRANT select ON nom_table TO SANAA;
+
+
+
+                                           supprimer privilège
+
+REVOKE CREATE TABLE FROM SANAA;                       REVOKE SELECT ON nom_table FROM SANAA;
+
+
+
+                      Permettre à SANAA de donner le privilège à un autre user
+GRANT CREATE table TO SANAA WITH ADMIN                GRANT select ON nom_table TO SANAA WITH
+OPTION;                                               GRANT OPTION;
+Gestion des privilèges
+
+1. Quel privilège un utilisateur doit-il posséder pour se connecter au serveur Oracle ? S'agit-il d'un privilège système ou
+   objet ?
+
+
+ Rappel :
+ Système : permet aux utilisateurs de réaliser certaines actions dans la base de
+ données
+ Objet : permet aux utilisateurs d'accéder à un objet donné et de le manipuler
+
+
+
+      Privilège système
+Gestion des privilèges
+
+2-Quel privilège un utilisateur doit-il posséder pour créer des tables ?
+
+
+
+
+      Privilège système
+
+
+
+
+  NOTE : Privilège objet pour manipuler les tables et non pas créer
+Gestion des privilèges
+
+3-Si vous créez une table, qui peut transmettre à d'autres utilisateurs des privilèges sur votre table ?
+
+
+
+
+ Vous-même
+ L adminastrateur
+ Cellui qui vous a accordé le privilège
+Gestion des rôles
+
+
+
+Oracle défini des « rôles » comme un ensemble de privilèges.
+
+On utilise les rôles afin d’optimiser l’affectation des privilèges .
+Création/Affectation de Rôles
+
+  Création :
+ Sql -> CREATE ROLE Vente;
+
+ Affectation des privilèges :
+ Sql -> grant create table to vente ;
+
+ Affectation du privilège :
+ Sql -> grant vente to toto ;
+
+
+ Suppression des rôles :
+ DROP ROLE vente ;
+
+ Suppression des rôles d'un utilisateur
+
+ REVOKE vente FROM Toto;
+   ATTENTION :
+
+
+
+
+             1- authentification ( login , mot de passe )                     ------→ Connexion
+
+             2- ouvrir compte                                                ------→ Ouvrir session
+
+
+
+
+NOTE : pour qu’un utilisateur puisse se connecter correctement , il doit avoir un login et un mot de passe , ainsi que le
+droit d’ouvrir sa session .
+Gestion des privilèges
+
+Sachant qu’on possède déjà une table TABLE3 , Autorisez un autre utilisateur à accéder à votre table table3.
+
+
+
+1- On commence par créer cet utilisateur , pour lui affecter les privilèges sur la table .
+
+
+ SQL>create user C##_casa identified by          casa;
+
+
+
+ SQL> grant CREATE SESSION to C##_casa;
+
+
+
+
+     sql>   user sys : grant SELECT on table1 to C##_casa with grant option;
+
+     sql>   user casa : SELECT * from sys.table1 ;
+Schéma de base de données
+
+
+
+ A chaque création d’un utilisateur correspond la création d’un schéma de même nom
+
+
+
+    Un compte utilisateur = Un schéma de BDD ( VOIR diapo suivant ) .
+
+              • C'est un ensemble de d'objets : tables, vues, ,...
+              • L'utilisateur crée, modifie,... ses objets
+                                                           BASE
+
+                 Create table NOTE
+ user SYS
+                                                       Shéma : SYS
+
+                                                          NOTE
+
+
+                 Create table DBA
+user SANAA                                             Shéma : BOB
+                                                         COURS
+
+
+
+                Create table COURS                     Shéma : SANAA
+ user BOB
+                                                          DBA
+
+
+
+
+                                                SANAA dans cette requête représente le nom du schéma
+       USER SARA : select * from SANAA. Dba ;
+                                                Ou se trouve la table .
+

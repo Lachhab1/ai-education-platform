@@ -1,0 +1,2138 @@
+Chapitre 2
+
+Éléments de base du langage Java
+
+27
+
+Les règles de base
+ Java est sensible à la casse
+ Les blocs de code sont encadrés par des accolades
+ Chaque instruction se termine par un point virgule (;)
+ Une instruction peut tenir sur plusieurs lignes:
+ Exemple :
+
+
+l’instruction « int x=3; » peut être écrite
+
+:
+
+int
+
+x
+=
+3;
+
+Java - Dr A. Belangour
+
+28
+
+28
+
+1
+
+Les identificateurs
+ Chaque objet, classe, programme ou variable est
+associé à un nom : un identificateur.
+ Un identificateur peut se composer de tous les
+caractères alphanumériques et des caractères _ et $.
+ Le premier caractère doit être une lettre, le caractère
+de soulignement ou le signe dollar.
+ Un identificateur ne peut pas appartenir à la liste des
+mots réservé du langage Java (ex: abstract, new,
+return, try, …)
+Java - Dr A. Belangour
+
+29
+
+29
+
+Les commentaires
+ Ils sont sauté par le compilateur (pas de ‘;’ à la fin)
+ Il existe trois types de commentaires en Java :
+1. Monoligne. Exemple : int N=1; // déclaration du compteur
+2. Multiligne. Exemple : /* commentaires ligne 1
+commentaires ligne 2 */
+
+3. De documentation automatique.
+Exemple :
+/**
+* commentaire de la méthode
+* @param val la valeur a traiter
+* @return Rien
+* @deprecated Utiliser la nouvelle méthode XXX
+*/
+
+Java - Dr A. Belangour
+
+30
+
+30
+
+2
+
+Les variables
+ Une variable possède un nom, un type et une valeur.
+ Pour utiliser une variable il faut la déclarer pour lui
+réserver de la mémoire avant de lui affecter une valeur.
+ Exemples :
+
+
+int x, y, somme=0;
+
+
+
+String nom;
+
+
+
+Date dateNaissance;
+
+ Remarque :
+
+
+Une variable n'est visible que dans le bloc ou elle est déclarée.
+
+
+
+Elle peut être simple (int, long,..) ou objet (String, Date,…)
+Java - Dr A. Belangour
+
+31
+
+31
+
+Les types élémentaires
+
+
+Les types élémentaires ont une taille identique quelque soit la
+plate-forme d'exécution.
+
+ c'est un des éléments qui permet à Java d'être indépendant de la
+plate-forme sur lequel le code s'exécute.
+
+Entiers
+Type
+
+Désignation
+
+Longueur
+
+Valeurs
+
+byte
+
+octet signé
+
+8 bits
+
+-128 à 127
+
+short
+
+entier court signé
+
+16 bits
+
+-32768 à 32767
+
+int
+
+entier signé
+
+32 bits
+
+-2147483648 à 2147483647
+
+long
+
+entier long
+
+64 bits
+
+-9223372036854775808 à
+9223372036854775807
+
+Java - Dr A. Belangour
+
+32
+
+32
+
+3
+
+Les types élémentaires
+Réels
+Type
+
+Désignation
+
+Longueur
+
+Valeurs
+
+float
+
+virgule flottante simple
+précision (IEEE754)
+
+32 bits
+
+1.401e-045 à 3.40282e+038
+
+double
+
+virgule flottante double
+précision (IEEE754)
+
+64 bits
+
+2.22507e-308 à 1.79769e+308
+
+Autre
+Type
+
+Désignation
+
+Longueur
+
+Valeurs
+
+Commentaires
+
+boolean
+
+valeur logique
+
+1 bit
+
+true ou false
+
+pas de conversion possible
+vers un autre type
+
+char
+
+caractère Unicode
+
+16 bits
+
+\u0000 à \uFFFF
+
+entouré de cotes simples
+dans du code Java
+
+Java - Dr A. Belangour
+
+33
+
+33
+
+Format des types élémentaires
+
+
+Le format des nombres entiers :
+
+
+Les types byte, short, int et long peuvent être codés en
+décimal, hexadécimal ou octal.
+
+
+
+Un nombre hexadécimal, doit commencer par 0x.
+
+
+
+Un nombre octal, doit commencer par zéro.
+
+
+
+Le suffixe l ou L permet de spécifier que c'est un entier long.
+
+Java - Dr A. Belangour
+
+34
+
+34
+
+4
+
+Format des types élémentaires
+
+
+Le format des nombres décimaux :
+
+
+Les types float et double stockent des nombres flottants.
+
+
+
+Ils doivent posséder soit un point, un exposant ou l'un des
+suffixes f, F, d, D.
+
+
+
+Exemples : float pi = 3.14f; double v = 3d ;
+float f = +.1f , d = 1e10f;
+
+Java - Dr A. Belangour
+
+35
+
+35
+
+Format des types élémentaires
+ Remarque :
+
+
+Il est possible de préciser des nombres qui n'ont pas le
+partie entière ou décimale.
+
+
+
+Par défaut un littéral est de type double : pour définir un
+float il faut le suffixer par la lettre f ou F.
+
+
+
+Exemple :double w = 1.1;
+
+
+
+Attention ! float pi = 3.14; // provoque une erreur à la
+compilation
+
+Java - Dr A. Belangour
+
+36
+
+36
+
+5
+
+Format des types élémentaires
+ Le format des caractères :
+
+
+Un caractère est codé sur 16 bits car il est conforme à la
+norme Unicode.
+
+
+
+Il doit être entouré par des apostrophes.
+
+
+
+Une valeur de type char peut être considérée comme un
+entier non négatif de 0 à 65535.
+
+
+
+Les caractères 0 à 255 correspondent exactement au jeu de
+caractères ASCII
+
+
+
+La conversion implicite par affectation n'est pas possible.
+
+Java - Dr A. Belangour
+
+37
+
+37
+
+Format des types élémentaires
+ Exemple 1 (liste des caractères Unicode):
+for(int i=0;i<Character.MAX_VALUE;i++)
+System.out.println(i+" : "+(char)i);
+
+ Extrait de l'exécution :
+
+
+
+
+
+
+
+
+
+
+…
+‫ ا‬: 1575
+‫ ب‬: 1576
+‫ ة‬: 1577
+‫ ت‬: 1578
+‫ ث‬: 1579
+‫ ج‬: 1580
+‫ ح‬: 1581
+…
+Java - Dr A. Belangour
+
+38
+
+38
+
+6
+
+Format des types élémentaires
+ Exemple 2 : la lettre arabe JIM (‫)ج‬
+System.out.println((char)1580); //décimal
+System.out.println("\u062C"); // hexadécimal
+
+ Exemple 3 :
+char lettre= 'D';
+int diff= lettre - 'A';
+System.out.println(" différence = " + diff);
+
+ Résultat : différence = 3
+
+Java - Dr A. Belangour
+
+39
+
+39
+
+Les chaînes de caractères
+ Une chaîne de caractères stocke une séquence de
+caractères alphanumériques.
+ La définition d'un caractère : char touche = '%';
+ La définition d'une chaîne : String texte = "bonjour";
+ Les variables de type String sont des objets.
+ Le compilateur Java remplace les constantes chaînes
+par un objet de type String avec le contenu spécifié.
+ Il est donc possible d'écrire par exemple:
+
+
+String texte = "tata".replace('a','o');
+Java - Dr A. Belangour
+
+40
+
+40
+
+7
+
+Les chaînes de caractères
+ Quelques méthodes:
+
+
+int compareTo(String chaine2) : Compare deux chaines
+alphabetiquement.
+
+
+Si le résultat < 0 : notre chaine précède chaine2
+
+
+
+Si le résultat > 0 : notre chaine2 précède notre chaine
+
+
+
+Si le résultat = 0 : les deux chaines sont égales
+
+
+
+int length() : Retourne la longueur de la chaine.
+
+
+
+String toUpperCase()
+
+: transforme notre chaine en majuscule.
+
+
+
+String toLowerCase()
+
+: transforme notre chaine en miniscule.
+
+ Exemple : String ch1="Ali", ch2="Bachir"
+
+
+ch1.compareTo(ch2) retourne un entier négatif car « Ali »
+précède « Bachir » en ordre alphabétique.
+Java - Dr A. Belangour
+
+41
+
+41
+
+Les chaînes de caractères
+ Les caractères spéciaux dans les chaînes:
+
+
+Apostrophe : \'
+
+
+
+Guillemet : \"
+
+
+
+Anti-slash : \\
+
+
+
+Tabulation : \t
+
+
+
+retour arrière (backspace) : \b
+
+
+
+retour chariot : \r
+
+
+
+saut de page (form feed) : \f
+
+
+
+saut de ligne (newline) : \n
+
+
+
+caractère ASCII ddd (octal) : \0ddd
+
+
+
+caractère ASCII dd (hexadécimal) : \xdd
+
+
+
+caractère Unicode dddd (hexadécimal) : \udddd
+Java - Dr A. Belangour
+
+42
+
+42
+
+8
+
+Les opérateurs
+ Les opérateurs arithmétiques se notent :
+
+
++ (addition)
+
+
+
+- (soustraction)
+
+
+
+* (multiplication)
+
+
+
+/ (division)
+
+
+
+% (reste de la division)
+
+ Ils peuvent se combiner à l'opérateur d'affectation.
+
+Java - Dr A. Belangour
+
+43
+
+43
+
+L’affectation
+
+
+le signe = est l'opérateur d'affectation et s'utilise avec une
+expression de la forme variable = expression.
+
+
+
+L'opération d'affectation est associatif de droite à gauche : il
+renvoie la valeur affectée ce qui permet d'écrire : x = y = z = 0;
+
+
+
+Liste d’opérateurs abrégée d’affectation :
+
+Opérateur
+
+Exemple
+
+=
+
+a=10
+
++=
+
+a+=10
+
+a = a + 10
+
+-=
+
+a-=10
+
+a = a - 10
+
+*=
+
+a*=10
+
+a = a * 10
+
+/=
+
+a/=10
+
+a = a / 10
+
+%=
+
+a%=10
+
+Reste de la division
+
+^=
+
+a^=10
+
+a = a ^ 10
+
+Java - Dr A. Belangour
+
+Signification
+
+44
+
+44
+
+9
+
+Les comparaisons
+ Java propose des opérateurs pour toutes les comparaisons :
+
+
+> (strictement supérieur)
+
+
+
+& (ET binaire )
+
+
+
+< (strictement inférieur )
+
+
+
+^ (OU exclusif binaire )
+
+
+
+>= (supérieur ou égal )
+
+
+
+| (OU binaire)
+
+
+
+<=(inférieur ou égal )
+
+
+
+?: (opérateur conditionnel)
+
+
+
+== (égalité)
+
+
+
+!= (diffèrent de )
+
+
+
+&& (ET logique)
+
+
+
+|| (OU logique)
+
+
+
+! (Négation)
+
+
+
+Exemple : a ? b : c
+équivalent à : si a alors b
+sinon c
+
+
+
+Remarque : b et c doivent
+retourner le même type
+
+Java - Dr A. Belangour
+
+45
+
+45
+
+Les comparaisons
+
+
+Priorités des opérateurs du plus au moins prioritaire :
+
+1) les parenthèses : ( )
+2) les opérateurs d'incrémentation : ++ , -3) les opérateurs de multiplication, division, et modulo :*, / , %
+4) les opérateurs d'addition et soustraction :+, 5) les opérateurs de décalage : << et >>
+6) les opérateurs de comparaison : < , >,<=,>=
+7) les opérateurs d'égalité : ==, !=
+8) l'opérateur OU exclusif : ^
+9) l'opérateur ET : &
+10) l'opérateur OU : |
+Java - Dr A. Belangour
+
+46
+
+46
+
+10
+
+Les comparaisons
+11) l'opérateur ET logique : &&
+12) l'opérateur OU logique : ||
+13) les opérateurs d'assignement : =, += ,-=
+
+
+Remarque 1:
+
+
+Les parenthèses ayant une forte priorité, l'ordre d'interprétation
+des opérateurs peut être modifié par des parenthèses.
+
+Java - Dr A. Belangour
+
+47
+
+47
+
+Les comparaisons
+ Remarque 2 :
+
+
+L’opérateur == teste l’égalité entre les types primitifs
+comme les entiers, réels,...
+
+
+Exemple : int x,y;
+….
+if (x==y) {…..}
+
+
+
+Pour les classes la méthode equals() est à utiliser
+
+
+Exemple : String ch1,ch2;
+….
+if (ch1.equals(ch2)){….}
+
+Java - Dr A. Belangour
+
+48
+
+48
+
+11
+
+Lecture & Ecriture des variables
+ Ecriture : System.out.println(expression)
+
+
+Exemple : System.out.println(" le résultat est " + R)
+
+ Lecture : Se fait grâce à la classe Scanner
+
+
+next() : permet de lire un mot de type String
+
+
+
+nextLine() : permet de lire une chaine de caractère
+
+
+
+nextInt() : permet de lire un int
+
+
+
+nextLong() : permet de lire un long
+
+
+
+nextDouble() : permet de lire un double
+
+
+
+nextFloat() : permet de lire un float
+
+Java - Dr A. Belangour
+
+49
+
+49
+
+Lecture & Ecriture des variables
+ Utilisation :
+1) La classe doit être importée du package java.util
+2) Elle doit être ensuite instanciée (création et initialisation de
+la variable)
+3) Finalement ses méthodes de lecture peuvent être appelées
+
+Java - Dr A. Belangour
+
+50
+
+50
+
+12
+
+Lecture & Ecriture des variables
+ Exemple:
+import java.util.Scanner;
+public class SaisieClavier{
+public static void main(String [] args){
+Scanner s = new Scanner(System.in);
+System.out.println("Entrez un entier:");
+int n = s.nextInt();
+System.out.println(" Le carré de :"+ n +" est :" + n*n);
+}
+}
+Java - Dr A. Belangour
+
+51
+
+51
+
+Les opérations arithmétiques
+ Remarque :
+
+
+L'opérateur + permet de concaténer une chaine de caractères
+avec d'autres chaines de caractères ou types élémentaires.
+
+
+
+Exemple :
+
+
+int x=12;
+
+
+
+String ch="Salle de cours Numéro "+x+" au rez-de-chaussée" ;
+
+
+
+ch vaut alors "Salle de cours Numéro 12 au rez-de-chaussée "
+
+ On distingue entre deux arithmétiques :
+
+
+L'arithmétique entière
+
+
+
+L'arithmétique en virgule flottante
+
+Java - Dr A. Belangour
+
+52
+
+52
+
+13
+
+Les opérations arithmétiques
+ L'arithmétique entière
+
+
+conversion implicite vers le type int des types numériques
+(promotion entière) pour renforcer la sécurité du code
+
+
+
+Exemple :
+ short x= 5 , y = 15;
+ x = x + y ; //erreur à la compilation
+ Incompatible type for =. Explicit cast needed to convert
+int to short.
+ x = x + y ; //erreur à la compilation ^ 1 error
+
+Java - Dr A. Belangour
+
+53
+
+53
+
+Les opérations arithmétiques
+ Explication :
+ Les opérandes et le résultat de l'opération sont
+convertis en type int.
+ Le résultat est affecté dans un type short : il y a donc
+risque de perte d'informations et donc erreur à la
+compilation est émise
+ Cette promotion évite un débordement de capacité
+sans que le programmeur soit pleinement conscient
+du risque.
+
+Java - Dr A. Belangour
+
+54
+
+54
+
+14
+
+Les opérations arithmétiques
+ il est nécessaire, pour régler le problème, d'utiliser
+une conversion explicite ou cast :
+ x = (short) ( x + y );
+ Il est nécessaire de mettre l'opération entre parenthèse
+pour que ce soit son résultat qui soit converti car le cast
+a une priorité plus forte que les opérateurs
+arithmétiques.
+
+ Remarque :
+
+
+La division par zéro pour les types entiers lève l'exception
+ArithmeticException
+
+Java - Dr A. Belangour
+
+55
+
+55
+
+Les opérations arithmétiques
+ Exemple: Dans ce programme nous essayerons de
+faire une division par zéro d’un entier. Remarquez
+l’exécution.
+
+ Solution:
+/* test sur la division par zero de nombres entiers */
+class test3 {
+public static void main (String args[]) {
+int valeur=10;
+double resultat = valeur / 0;
+System.out.println("Resultat = " + resultat); }
+}
+Java - Dr A. Belangour
+
+56
+
+56
+
+15
+
+Les opérations arithmétiques
+
+
+L'arithmétique en virgule flottante
+
+
+la division par zéro des float ou double, ne produit
+pas d'exception mais une des 3 valeurs spéciales:
+1. NaN (not a number : nombre non défini):
+
+
+Float.NaN ou Double.NaN
+
+2. Infinity (+∞ : valeur positive supérieure au plafond
+du type ):
+
+
+Float.POSITIVE_INFINITY ou Double.POSITIVE_INFINITY
+
+3. - Infinity (-∞ : valeur négative supérieure au plafond
+du type):
+
+
+Float.NEGATIVE_INFINITY ou Double.NEGATIVE_INFINITY
+Java - Dr A. Belangour
+
+57
+
+57
+
+Les opérations arithmétiques
+Tableau récapitulatif
+
+ Exemple:
+
+
+Dans ce programme nous
+divisons délibérément un
+
+X
+
+Y
+
+X/Y
+
+X%Y
+
+valeur finie
+
+0
+
++/-∞
+
+NaN
+x
+
+valeur finie
+
++/-∞
+
+0
+
+float par zéro. Remarquez le
+
+0
+
+0
+
+NaN
+
+NaN
+
+résultat !
+
++/- ∞
+
+valeur finie
+
++/-∞
+
+NaN
+
++/- ∞
+
++/-∞
+
+NaN
+
+NaN
+
+Solution : /* test sur la division par zéro de nombres flottants */
+class test2 {
+public static void main (String args[]) {
+float valeur=10f;
+double résultat = valeur / 0;
+System.out.println(" Resultat = " + résultat);
+}
+}
+Java - Dr A. Belangour
+
+58
+
+58
+
+16
+
+Les opérations arithmétiques
+ L'incrémentation et la décrémentation
+ Les opérateurs d'incrémentation et de
+décrémentation sont : n++, ++n , n-- , --n
+ L'opérateur ++ (resp. --) renvoie la valeur avant
+incrémentation s'il est postfixé et après
+incrémentation s'il est préfixé.
+ Exemple :
+y=x++  y=x; x = x + 1;
+y=++x  x = x + 1; y=x;
+
+Java - Dr A. Belangour
+
+59
+
+59
+
+Les opérations arithmétiques
+
+
+Exercice : Quel sera le résultat de l’exécution du programme :
+
+class test4 {
+public static void main (String args[]) {
+int a=0,b=0;
+System.out.println("a = " + a + " b = " + b);
+a=b++;
+System.out.println("a = " + a + " b = " + b);
+a=++b;
+System.out.println("a = " + a + " b = " + b);
+a=a++;
+System.out.println("a = " + a + " b = " + b);
+}
+}
+
+Java - Dr A. Belangour
+
+60
+
+60
+
+17
+
+Les opérations arithmétiques
+ Résultat:
+ int a=0; int b=0;
+
+ a=0
+
+b=0
+
+ a=b++;
+
+ a=0
+
+b=1
+
+ a=++b;
+
+ a=2
+
+b=2
+
+ a=a++;
+
+ attention : a ne change pas
+de valeur
+
+
+
+Par contre l'instruction "a=++a" incrémente la valeur de a
+
+Java - Dr A. Belangour
+
+61
+
+61
+
+Les structures de contrôles
+ Java propose un ensemble d'instructions qui permettent
+d'organiser et de structurer les traitements.
+ Ils sont appelés structures de contrôle et sont :
+1. Les boucles
+2. Les branchements conditionnels
+
+ L'utilisation de ces structures de contrôle est similaire à
+celle des autres langages de programmation.
+
+Java - Dr A. Belangour
+
+62
+
+62
+
+18
+
+Les structures de contrôles
+ Les boucles
+ Permettent de répéter un certain nombre
+d’instructions un certain nombre de fois ou jusqu’à ce
+qu’une condition soit réalisée.
+ Ces boucles sont :
+ while (condition) { ... }
+ do { …} while (condition)
+ for (initialisation; condition; incrémentation) {…}
+ La boucle for des collections :
+for (type variable: collection) {…}
+Java - Dr A. Belangour
+
+63
+
+63
+
+Les structures de contrôles
+ Boucle WHILE:
+
+ Boucle DO..WHILE:
+
+while ( condition) {
+
+do {
+
+...
+
+...
+} while ( condition)
+
+}
+
+
+Similitudes : Dans les deux boucles le code est exécuté
+tant que la condition est vraie. Lorsque la condition passe
+à faux le bloc du While est sauté.
+
+
+
+Différence : Dans do…While, la boucle est au moins
+exécutée une fois quelque soit la valeur de la condition;
+
+Java - Dr A. Belangour
+
+64
+
+64
+
+19
+
+Les structures de contrôles
+ Boucle FOR :
+for ( initialisation; condition; modification) {
+...
+}
+
+
+Est utilisée en principe lorsque le nombre d’itérations est
+connu à l’avance.
+
+
+
+Exemple :
+for (int i =0; i<10; i++) {
+System.out.println(" le carré de"+i+ "est :"+i*i);
+}
+Java - Dr A. Belangour
+
+65
+
+65
+
+Les structures de contrôles
+ La boucle for des collections permet d'itérer sur un
+tableau ou une collection par leurs contenus et non
+indices
+ Exemple :
+public class TestForArray {
+public static void main(String[] args) {
+int[] t= {23,1,12,33,41,57,16,27,81,19};
+for (int i=0;i<t.length ; i++) { System.out.println(t[i]); }
+for (int x: t) { System.out.println(x); } // parcours par contenu
+}
+
+Java - Dr A. Belangour
+
+66
+
+66
+
+20
+
+Les structures de contrôles
+ Les branchements conditionnels :
+ Permettent d’effectuer des tests.
+ Se composent :
+ Du mot clé if
+ De l’opérateur ternaire
+ Du mot clé switch
+
+Java - Dr A. Belangour
+
+67
+
+67
+
+Les structures de contrôles
+ Tests avec IF :
+
+ L’opérateur ternaire:
+
+ Forme :
+
+ Forme :
+
+if (condition) { ... }
+
+
+
+else { if (condition) { ... }
+
+: valeur-faux
+
+else { ... }
+
+
+
+}
+
+passe= true;
+
+Facilité d’écriture pour un
+if avec un else.
+
+ Exemple :
+if (moyenne>10)
+
+( condition ) ? valeur-vrai
+
+
+
+Exemple :
+
+
+passe= (moyenne>10) ?
+true : false;
+
+else
+passe = false;
+Java - Dr A. Belangour
+
+68
+
+68
+
+21
+
+Les structures de contrôles
+ Remarque :
+
+
+Il ne faut jamais déclarer une variable à l'intérieur d'une
+boucle ou d'une condition !!
+
+Java - Dr A. Belangour
+
+69
+
+69
+
+Les structures de contrôles
+ Tests avec Switch :
+
+
+Switch permet d’effectuer des tests pour des valeurs
+constantes de type (byte, short, int, char, String).
+
+
+
+Forme :
+switch (expression)
+{
+
+case constante1 : instr11; instr12; break;
+case constante2 : ...
+default : ...
+
+}
+
+
+En l’absence du break, l’exécution passe au case suivant.
+
+
+
+Il est possible d'imbriquer des switch
+Java - Dr A. Belangour
+
+70
+
+70
+
+22
+
+Les structures de contrôles
+ Exemple :
+class SwitchDemo {
+public static void main(String[] args) {
+int mois;
+//lecture mois
+switch (mois) {
+case 1: System.out.println("Janvier"); break;
+…
+case 12: System.out.println("Décembre"); break;
+default: System.out.println("Mois Invalide ");break; }
+}
+}
+Java - Dr A. Belangour
+
+71
+
+71
+
+Les structures de contrôles
+ Remarque : il est possible de regrouper des valeurs
+qui ont les mêmes traitement.
+ Exemple :
+
+
+Transformer l'exemple précédent pour indiquer la saison du
+mois entré.
+
+Java - Dr A. Belangour
+
+72
+
+72
+
+23
+
+Les structures de contrôles
+switch (mois) {
+case 12:
+case 1:
+case 2: System.out.println("Hiver"); break;
+case 3:
+case 4:
+case 5: System.out.println("Printems"); break;
+case 6:
+case 7:
+case 8: System.out.println("Eté"); break;
+case 9:
+case 10:
+case 11: System.out.println("Automne"); break;
+default: System.out.println("Mois invalide");
+}
+
+Java - Dr A. Belangour
+
+73
+
+73
+
+Les tableaux
+ Les tableaux sont des structures de données regroupant
+plusieurs valeurs de même type.
+ On peut accéder à n’importe quelle valeur à partir de son
+rang ou indice.
+ Exemples de déclarations:
+
+
+float[] notes = new float[3] // tableau de 3 réels
+
+
+
+int[] t=new int[10] // tableau de 10 entiers
+
+
+
+String[] noms= new String[20] // tableau de 20 strings
+
+ Remarque :
+
+
+Une fois fixée, la taille d’un tableau ne peut changer.
+Java - Dr A. Belangour
+
+74
+
+74
+
+24
+
+Les tableaux
+ Exemple d’affectation :
+
+
+notes[0]=16
+
+
+
+notes[1]=14
+
+
+
+notes[2]=18
+
+notes
+0
+
+1
+
+2
+
+16
+
+14
+
+18
+
+ Taille du tableau : propriété length
+
+
+Exemple : notes.length renvoie 3
+
+ Parcours :
+
+
+Requière une boucle avec un seul indice de 0 jusqu’à
+length-1
+
+Java - Dr A. Belangour
+
+75
+
+75
+
+Les tableaux : Exemple
+import java.util.Scanner;
+public class Main {
+public static void main(String[] args) {
+Scanner s = new Scanner(System.in);
+System.out.println("Combien d'éléments voulez vous ?");
+int n = s.nextInt(); //lecture de la taille souhaitée
+int[] t = new int[n]; // déclaration et réservation
+for (int i = 0; i < t.length; i++) {
+System.out.println("Entrer Element " + i + " : ");
+t[i] = s.nextInt();
+}
+System.out.println("Affichage du Contenu du tableau :");
+for (int i = 0; i < t.length; i++) {
+System.out.println("t[" + i + "] = " + t[i]);
+}
+}
+}
+Java - Dr A. Belangour
+76
+
+76
+
+25
+
+Les tableaux
+ Les tableaux à deux dimensions sont déclarés comme
+étant un tableau de tableaux.
+
+
+Exemple : float[][] t = new float[3][3];
+0
+
+0
+
+1
+
+2
+
+0
+
+1
+1
+
+2
+2
+
+0
+
+1
+
+2
+
+0
+
+1
+
+2
+
+0
+ou 1
+2
+
+ Taille du tableau : length
+
+
+t.length renvoie ta taille de la 1ère dimension
+
+
+
+t[0].length, t[1].length,…renvoient la taille de la 2eme
+dimension
+Java - Dr A. Belangour
+
+77
+
+77
+
+Les tableaux
+ Parcours :
+ Une première boucle pour parcourir les cases de la
+première dimension (indice de 0 jusqu’à length-1)
+ Une deuxième boucles pour parcourir les contenus
+t[0][0]; t[0][1]; t[0][2];
+des cases qui sont des tableaux
+t[1][0]; t[1][1]; t[1][2];
+t[2][0]; t[2][1]; t[2][2];
+ Forme :
+for (int i = 0; i < t.length; i++) {
+for (int j = 0; j < t[i].length; j++) {
+// traitement sur t[i][j]
+}
+}
+Java - Dr A. Belangour
+
+78
+
+78
+
+26
+
+Les tableaux
+import java.util.Scanner;
+public class Main {
+public static void main(String[] args) {
+Scanner s = new Scanner(System.in);
+System.out.println(" Taille de la première dimension?");
+int n = s.nextInt(); //lecture de la taille de la 1ere dim
+System.out.println(" Taille de la deuxième dimension ?");
+int m = s.nextInt(); //lecture de la taille de la 2eme dim
+int[][] t = new int[n][m]; // déclaration et réservation
+// parcours et remplissage du tableau
+for (int i = 0; i < t.length; i++) {
+for (int j = 0; j < t[i].length; j++) {
+System.out.println("Entrer Element " + i + " , "+ j + " : ");
+t[i][j] = s.nextInt();
+}
+}
+Java - Dr A. Belangour
+
+79
+
+79
+
+Les tableaux
+// parcours et affichage du contenu du tableau
+System.out.println(" Affichage du contenu du tableau");
+for (int i = 0; i < t.length; i++) {
+for (int j = 0; j < t[i].length; j++) {
+System.out.println("t["+i+"]["+j+"] = "+ t[i][j]);
+}
+}
+} // fin main
+}//fin classe
+
+Java - Dr A. Belangour
+
+80
+
+80
+
+27
+
+Les tableaux
+ Remarque :
+
+
+La taille des tableaux de la seconde dimension peut ne pas
+être identique pour chaque occurrence.
+
+
+
+Exemple :
+
+
+int[][] t= new int[3][];
+
+
+
+t[0] = new int[2];
+
+
+
+t[1] = new int[1];
+
+
+
+t[2] = new int[3];
+
+Java - Dr A. Belangour
+
+81
+
+81
+
+Les tableaux
+ Chaque élément du tableau est initialisé selon son type
+par l'instruction new :
+
+
+
+
+
+0 pour les numériques,
+'\0' pour les caractères,
+false pour les booléens et
+null pour les chaînes de caractères et les autres objets.
+
+ L'initialisation explicite d'un tableau. Exemple :
+ int[] tableau = {10,20,30,40,50};
+ int[][] tableau = {{5,1},{6,2},{7,3}};
+ int[][] tableau = {{4,2},{9},{6,3,4}};
+
+ La taille du tableau est déduite automatiquement
+
+Java - Dr A. Belangour
+
+82
+
+82
+
+28
+
+Les tableaux
+ Exemple de déclaration de tableaux dans une méthode :
+
+
+En paramètre : public void afficher(int[] t){ ... }
+
+
+
+En retour : public int[] calculer(){ ... }
+
+ Remarque :
+
+
+Les tableaux sont toujours transmis par référence puisque
+ce sont des objets.
+
+Java - Dr A. Belangour
+
+83
+
+83
+
+Les conversions de types
+ On peut avoir besoin de convertir une variable d’un
+type vers un autre type.
+ Deux cas de figure existent :
+
+
+Conversion vers un type de taille plus grande : se font
+sans perte d’information, et sans besoin d’être spécifié.
+
+
+
+Conversion vers un type de taille plus petite: peut
+entraîner une perte d’information, et doit être spécifiées
+par un opérateur de cast.
+
+
+Exemple:
+ int entier = 5;
+ float flottant = (float) entier;
+
+Java - Dr A. Belangour
+
+84
+
+84
+
+29
+
+Les conversions de types
+ La bibliothèque de classes API fournit une série de
+classes qui contiennent des méthodes de manipulation
+et de conversion de types élémentaires :
+
+
+String : pour les chaines de caractères Unicode
+
+
+
+Integer : pour les valeurs entières (int)
+
+
+
+Long : pour les entiers long signés (long)
+
+
+
+Float : pour les nombres à virgules flottante (float)
+
+
+
+Double : pour les nombres à virgule flottante en double
+précision (double)
+
+Java - Dr A. Belangour
+
+85
+
+85
+
+Les conversions de types
+ Conversion d’une chaine de caractère en :
+
+
+int : méthode parseInt() de la classe Integer
+
+
+
+long : méthode parseLong() de la classe Long
+
+
+
+float : méthode parseFloat() de la classe Float
+
+
+
+double: méthode parseDouble() de la classe Double
+
+ Exemple :
+ String ch="10";
+ int x=Integer.parseInt(ch)
+
+Java - Dr A. Belangour
+
+86
+
+86
+
+30
+
+Les conversions de types
+ Remarque :
+
+
+L’instruction de conversion doit être obligatoirement être
+mise dans un bloc try/catch
+
+
+
+Exemple :
+try {
+x=Integer.parseInt(ch);
+}
+catch (Exception e) {
+System.out.println("erreur :" + e.getMessage());
+}
+
+Java - Dr A. Belangour
+
+87
+
+87
+
+Les conversions de types
+ Conversion d'un int/long/float/double en chaîne
+de caractère String:
+
+
+Première méthode : le concaténer avec une chaine vide
+ Exemple :
+
+
+
+
+
+int x=10;
+
+
+
+String ch=""+x;
+
+Deuxième méthode : utiliser la méthode valueOf de String
+ Exemple :
+
+
+int i = 10;
+
+
+
+String montexte = new String();
+
+
+
+montexte =montexte.valueOf(i);
+Java - Dr A. Belangour
+
+88
+
+88
+
+31
+
+Les méthodes
+ Une méthode est un sous-programme qui permet
+d'effectuer une tâche.
+ Elle est composée d'une signature et d'un corps.
+
+
+
+
+La signature est constituée de:
+
+
+Une visibilité
+
+
+
+Un type de retour
+
+
+
+Un nom
+
+
+
+En ensemble de paramètres
+
+Le corps est un bloc de code délimité par des accolades
+
+Java - Dr A. Belangour
+
+89
+
+89
+
+Les méthodes
+ Une méthode retourne le résultat grâce à return
+ Les instructions après return sont ignorées.
+ Exemple 1:
+public class Main {
+// déclaration
+public static int carré(int x) {
+
+return x*x;
+
+}
+
+public static void main(String[] args) {
+int nombre=3;
+//appel de la méthode
+int résultat = carré(nombre);
+System.out.println("le carré de "+nombre+" est :"+ résultat);
+}
+
+}
+Java - Dr A. Belangour
+
+90
+
+90
+
+32
+
+Les méthodes
+ Si la méthode ne retourne rien, alors on utilise void.
+ Exemple 2:
+public class Main {
+// déclaration
+public static void carré(int x) {
+int résultat = x*x;
+System.out.println("le carré de "+x+" est :"+ résultat) ;
+}
+
+}
+
+public static void main(String[] args) {
+int nombre=3;
+//appel de la méthode
+carré(nombre);
+}
+Java - Dr A. Belangour
+
+91
+
+91
+
+Les méthodes
+ Remarque : Il est possible d'inclure une
+instruction return dans une méthode de type void :
+cela permet de quitter la méthode.
+
+Java - Dr A. Belangour
+
+92
+
+92
+
+33
+
+Les méthodes
+ Si la méthode retourne un tableau alors les [] peuvent
+être précisés après le type de retour ou après la liste
+des paramètres.
+ Exemple:
+
+
+int[] valeurs() { ... }
+
+
+
+int valeurs()[] { ... }
+
+Java - Dr A. Belangour
+
+93
+
+93
+
+Les méthodes
+ Il est possible de passer un nombre non défini
+d'arguments d'un même type à une méthode sans les
+mettre dans un tableau ou une collection.
+ Exemple :
+public class Arguments {
+public static int somme(int ... valeurs) {
+int s= 0;
+for (int val : valeurs) s+= val;
+return s;
+}
+Java - Dr A. Belangour
+
+94
+
+94
+
+34
+
+Les méthodes : arguments variables
+public static void main(String[] args) {
+System.out.println("somme 1 = " + somme(1,2,3));
+System.out.println("somme 2 = " + somme(2,5,6,8,10));
+//il est possible d'appeler la même méthode somme
+
+//en lui passant un tableau
+int[] t= {1,2,3,4};
+System.out.println("somme 3 = " + somme(t));
+}
+}
+
+Java - Dr A. Belangour
+
+95
+
+95
+
+La méthode main
+ Une classe contenant la méthode main() constitue le
+point d’entrée pour une application
+ La signature de la méthode main doit être respectée
+sinon la machine virtuelle ne la reconnaitra pas.
+ Elle doit être comme suit
+
+
+public static void main (String args[]) { ... }
+
+ Args est un tableau pour recueillir d’éventuels
+paramètres quand le programme est exécuté en mode
+ligne de commande.
+Java - Dr A. Belangour
+
+96
+
+96
+
+35
+
+La méthode main
+ Exemple :
+
+
+Faire un programme qui calcule la moyenne de notes
+fournies en ligne de commande.
+
+ Remarque:
+
+
+Pour exécuter cet exemple , il faut se mettre en mode
+commande (ms dos)
+
+
+
+Et taper par exemple :
+
+
+
+
+java Moyenne 10 12 14 14 10
+
+Le résultat sera affiché sous dos aussi comme suit :
+
+
+la moyenne est : 12.0
+
+Java - Dr A. Belangour
+
+97
+
+97
+
+La méthode main
+ Solution :
+public class Moyenne{
+public static void main(String[] args) {
+double somme=0,moyenne,note;
+try{
+for (String arg : args){
+note=Double.parseDouble(arg);
+somme=somme+note;
+}
+moyenne=somme/args.length;
+System.out.println("la moyenne est : "+moyenne);
+}
+catch(FormatException e){
+System.out.println("Erreur : "+e.getMessage());
+}
+}
+}
+
+Java - Dr A. Belangour
+
+98
+
+98
+
+36
+
+Les énumérations
+ Lorsqu’une variable varie dans un ensemble de
+valeurs prédéfinis, il faut créer un type énumération.
+ Une énumération est un ensemble fini de constantes
+numériques (correspondant à 0, 1, 2, …)
+ Exemple :
+
+
+public enum Jours { LUNDI, MARDI, MERCREDI, JEUDI,
+VENDREDI, SAMEDI, DIMANCHE }
+
+
+
+Jours jr=Jours.VENDREDI; // exemple de variable
+
+ Le nom de l'énumération précède toujours ses
+constantes ( sauf dans Switch)
+Java - Dr A. Belangour
+
+99
+
+99
+
+Les énumérations : Exemple
+import java.util.Scanner;
+public class Main {
+public enum Saisons { automne, hiver, printemps, été}
+public static void main(String[] args) {
+Scanner s=new Scanner(System.in);
+System.out.println("saisir une saison :");
+String rep=s.next().toLowerCase();
+Saisons sz = Saisons.valueOf(rep);
+switch (sz) {
+case automne : System.out.println("Début"); break;
+case hiver : System.out.println(" Froid"); break;
+case printemps : System.out.println(" Beau"); break;
+case été : System.out.println(" Chaud"); break;
+}
+}
+}
+Java - Dr A. Belangour
+
+100
+
+100
+
+37
+
+

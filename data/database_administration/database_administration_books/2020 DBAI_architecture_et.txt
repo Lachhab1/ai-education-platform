@@ -1,0 +1,682 @@
+Composants de l'architecture Oracle
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Composants de l'architecture Oracle
+
+1-2
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+objetives
+
+1-3
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database innovation
+
+1-4
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Entreprise Cloud Computing
+
+1-5
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Course Examples : HR Sample Schema
+
+1-6
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Exploring Oracle Database Architecture
+
+1-7
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Objectives
+
+1-8
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Server Architecture : Overview
+
+1-9
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Instance Configuraions
+
+1-10
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Connecting to the Database Instance
+
+1-11
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Memory Structures
+
+1-12
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Shared Pool
+
+1-13
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Buffer Cache
+
+1-14
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Redo Log Buffer
+
+1-15
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Large Pool
+
+1-16
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Java pool
+
+1-17
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Streams Pool
+
+1-18
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Program Global Area (PGA)
+
+1-19
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+In-Memory Column Store : Introduction
+
+1-20
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+In-Memory Column Store : Overview
+
+1-21
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Full Database In-memory Caching
+
+1-22
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-23
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : b
+
+1-24
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-25
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : c
+
+1-26
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Architecture
+
+1-27
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Architecture
+
+1-28
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Writer Process (DBWn)
+
+1-29
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Log Writer Process (LGWR)
+
+1-30
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Checkpoint Process (CKPT)
+
+1-31
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+System Monitor Process (SMON)
+
+1-32
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Monitor Process (PMON)
+
+1-33
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Recover Process (RECO)
+
+1-34
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Listener Registration Process (LREG)
+
+1-35
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Archiver Processes (ARCn)
+
+1-36
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Storage Architecture
+
+1-37
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Logical and Physical Database Structures
+
+1-38
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Segment, Extents, and Blocks
+
+1-39
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Tablespaces and Data Files
+
+1-40
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+SYSTEM and SYSAUX Tablespaces
+
+1-41
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Autres fichiers de la base de données
+Le répertoire /app/oracle/oradata/cdb1/ contient les fichiers de la base
+de données « cdb1»
+Le répertoire /app/oracle/admin/cdb1/ contient les répertoires destinés
+aux exports Data Pump ou non de la base de données ainsi qu’au
+fichier de paramètre utilisé lors de la création de la base de données «
+cdb1 ».
+/app/oracle/admin/cdb1/
+Adump
+Dpdump
+pfile
+xdb_wallet
+le répertoire /app/oracle/diag/ contient les répertoires :
+/app/oracle/diag/rdbms/cdb1/cdb1/
+Alert dans lequel est stocké le fichier des alertes en format
+xml
+trace contient un ensemble de fichiers de traces de l’instance
+1-42
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Autres fichiers de la base de données
+Le répertoire /app/oracle/flash_recovery_area/cdb1/ contient les fichiers
+de multiplexés,
+Le répertoire /app/oracle/product/12.1.0.2/db_1 contient les répertoires
+des binaires d’oracle. On y retrouve les répertoires BIN qui contient les
+binaires d’oracle et certains outils comme « sqlplus.exe ».
+
+sous unix, Dbs contient les fichiers de mot de passe et SPFILE ,
+network qui contient le listener et tnsnames.ora
+
+1-43
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Scénario
+
+1-44
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Scénario
+
+1-45
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Scénario
+Security
+Admin
+Network
+Admin
+
+System
+Admin
+
+Database
+Admin
+
+1-46
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Administrateurs Oracle
+Securit
+y
+Admin
+
+System Admin
+
+Networ
+k
+Admin
+
+Syste
+m
+Admin
+
+01.
+02.
+03.
+04.
+
+Installation des logiciels
+Gestion de l'instance
+Sauvegarde et restauration
+Contrôle d'activité et automatisation de l'administration
+
+Database Admin
+
+01. Structures de la base de données
+02. Création, modification, et suppression de bases de
+données
+03. Les tables
+04. Les index
+05. Traitement des requêtes et mécanismes transactionnels
+06. L'outil de chargement SQL*Loader
+07. La technologie Data Pump
+Network Admin
+
+Databas
+e
+Admin
+
+01. Configuration réseau et répartition des données
+Security Admin
+01. Gestion des utilisateurs et sécurité
+Architecture d'Oracle
+
+1-47
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Architecture RAC Vs Single Instance
+Oracle Real Application Clusters
+
+1-48
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Architecture RAC Vs Single Instance
+Oracle Real Application Clusters
+
+1-49
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Architecture RAC Vs Single Instance
+
+1-50
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Container Database CDB
+
+Solution Oracle 12c :
+• Architecture Multitenant (CDB, PDBs)
+• Une CDB contient plusieurs PDBs
+• Migration facile
+• Clonage PDB
+• Application de patch sur la CDB implique les PDBs incluses
+
+1-51
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1. Architecture Multi-tenant
+
+•
+
+1-52
+
+Avant la version 12c, il existait 2 types d’architectures possibles :
+• La première est la plus utilisée et consiste en la création d’une
+seule base de données accessible via une seule instance ou bien
+ce qu’on nomme architecture mono-instance
+• La deuxième architecture utilise le RAC (Real Application Cluster)
+qui consiste à mutualiser les ressources de plusieurs serveur pour
+travailler avec une base de données
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Container Database : Introduction
+
+1-53
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1. Architecture Multi-tenant
+
+Avant la version 12c
+
+1-54
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1. Architecture Multi-tenant
+
+1-55
+
+•
+
+Dans la pratique et pour des raisons de structuration, de sécurité et
+d’applicatif, les entreprises optent pour le choix de plusieurs base
+de données avec une architecture le plus souvent mono-instance.
+
+•
+
+En effet, si plusieurs applications utilisent la même base de
+données, il ya un risque de conflit dans les schémas des
+applications, des utilisateurs, des synonymes publiques…
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1. Architecture Multi-tenant
+
+1-56
+
+•
+
+Avec l’arrivée de la version 12c d’Oracle, une architecture appelée Architecture Multitenant est proposée pour régler
+tous ces problèmes
+
+•
+
+L’idée de l’architecture consiste à créer plusieurs base de données en une seule base de données conteneur
+
+•
+
+Cette architecture permet à Oracle de placer un ensemble de schémas appartenant à une application dans une base
+de données séparée nommée PDB (Pluggable Database ou en français Base de données Insérée), cette dernière est
+logée dans une base de données conteneur nommée CDB (Container Database)
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Multitenant Architecture
+
+1-57
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+2. Séparation entre système et données
+utilisateur
+•
+
+1-58
+
+Dans l’architecture Multitenant, chaque base de données conteneur(CDB) contient les éléments
+suivants :
+•
+
+La base de données nommée CDB$ROOT qui contient le dictionnaire de données global
+contenant les informations sur les PDBs
+
+•
+
+Le modèle type PDB$SEED utilisé comme modèle de création des PDBs
+
+•
+
+L’ensemble des PDBs créées dans le but de gérer les données des applications utilisateurs
+d’une manière séparée et autonome; Ainsi chaque PDBs possède son propre dictionnaire de
+données et les objets de ces utilisateurs
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+2. Séparation entre système et données
+utilisateur
+
+1-59
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+3. Les utilisateurs communs et locaux
+•
+•
+•
+•
+•
+•
+•
+•
+•
+
+1-60
+
+Un utilisateur local est un utilisateur de la PDB
+Il n’est pas connu des autres PDBs
+Il possède des privilèges au sein de sa PDB
+Il possède son propre schéma
+On ne peut pas créer d’utilisateur local à un CDB
+Un utilisateur commun est défini dans le dictionnaire de données de la CDB$ROOT
+Il est connu dans toutes les PDBs appartenant au CDB
+Il peut réaliser des tâches d’administration tel que Insertion ou non des PDBs, Démarrage de la CDB lorsqu’il
+possède les privilèges adéquats
+Son login commence par c##
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+3. Les utilisateurs communs et locaux
+
+1-61
+
+•
+
+Rôle local est un rôle défini au sein d’une PDB et il n’est
+pas connu hors cette PDB
+
+•
+
+Un rôle commun est défini au niveau de la CDB et il peut
+être dupliqué sur l’ensemble des PDBs. Il est affecté aux
+utilisateurs communs
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+3. Les utilisateurs communs et locaux
+
+1-62
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Structure des bases de données pluggables (PDB)
+
+•
+•
+•
+
+•
+
+1-63
+
+Chaque PDB est autonome et fonctionne du point de vue de l’utilisateur comme une base de
+données normale
+Lorsqu’un utilisateur est connecté à une PDB, il n’as pas de visibilité sur le CDB ou les autres
+PDBs
+Chaque PDB contient ses propres tablespaces : SYSTEM(Dictionnaire de données propre),
+SYSAUX (pour les fonctionnalités périphériques : logminer, audit,)et TEMP
+Les PDB peuvent avoir leurs propres jeux de caractères, leurs zones horaires et elle est
+accessible via le réseau
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Structure des bases de données pluggables (PDB)
+
+• La PDB peut être mis hors ligne dans la CDB, les
+autres PDBs ne sont pas influencées
+• Il ya un seul fichier de contrôle, un seul fichier
+d’alertes, un seul tablespace undo et plusieurs
+fichiers de journalisation pour l’ensemble des PDBs
+
+1-64
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Structure des bases de données pluggables (PDB)
+
+1-65
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues CDB_xxx et DBA_xxx
+•
+•
+•
+
+1-66
+
+Pour gérer la compatibilité avec les anciennes versions d’Oracle
+une nouvelle famille de vues a été proposée : CDB_XX
+Pour avoir des informations d’administration, les administrateurs
+dans les anciennes versions d’Oracle utilisaient DBA_XXX
+Pour chaque DBA_XXX, Oracle a proposé une vue équivalente
+portant le même nom CDB_XXX avec en plus une colonne con_id
+qui représente la base de données
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues CDB_xxx et DBA_xxx
+
+1-67
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues CDB_xxx et DBA_xxx
+
+• CDB_USERS est équivalente DBA_USERS pour les
+PDBs
+• Dans la CDB$ROOT, la CDB_USERS affichera
+l’ensemble des utilisateurs communs en plus des
+utilisateurs locaux alors que DBA_USERS
+n’affichera que les utilisateurs communs
+
+1-68
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+ASM
+
+1-69
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+ASM
+
+1-70
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1-71
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1-72
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Automatic Storage Management
+
+1-73
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+ASM Storage Components
+
+1-74
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Interacting with an Oracle Database :
+Memory, Processes, and Storage
+
+1-75
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-76
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : b
+
+1-77
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Summary
+
+1-78
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+

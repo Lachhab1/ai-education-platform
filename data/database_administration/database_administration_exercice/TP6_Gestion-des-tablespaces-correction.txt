@@ -1,0 +1,425 @@
+                                  DBA
+                                Oracle 12c
+                          Département math-info
+
+
+
+                     DBA/ORACLE 12C / TP6
+                      Gestion des tablespaces
+
+
+
+                                                  Smi / s6
+PR.SANAA EL FILALI
+                                                  Année universsitaire : 2021/2022
+Objectifs :
+
+
+
+
+1. Décrire la structure de stockage physique et logique de la base .
+
+2. Enoncer les différents types des tablespaces .
+ 1. Décrire la structure de stockage physique et logique de la base .
+
+
+
+  La base de données Oracle est un ensemble de structures physiques et logiques .
+
+
+
+                                                la structure physique :
+
+
+  •La base se compose de trois fichiers principaux constituant la structure physique de la base .
+
+
+        • Fichiers de données                     : Stocker les données de la base .
+        • Fichiers de contrôle                     : Monter et contrôler la base .
+        • Fichiers de journalisation en ligne      : Stocker les modifications apportées aux blocs de données .
+
+
+
+
+NOTE : Dans ce TP , on se concentre sur les éléments liés aux fichiers de données .
+1. Décrire la structure de stockage physique et logique de la base .
+
+
+
+
+➢Les fichiers de données sont des fichiers qui stockent l’ensemble de données de notre base .
+
+
+➢Ils sont stockés physiquement au niveau du serveur , et regroupés logiquement au niveau d’une
+entité logique nommée TABLESPACE .
+
+
+➢Il s’agit d’un regroupement logique de fichiers de données .
+
+                                                                         Fichiers
+                                                                            de
+                                                                         données
+ 1. Décrire la structure de stockage physique et logique des fichiers de données .
+
+
+
+
+                                             Structures logiques
+
+
+
+
+Ces structures sont créées et reconnues par Oracle Database et ne sont pas connues par le système
+d'exploitation.
+
+
+
+      • Tablespace           : regroupement logique de fichiers de données .
+      • Segments             : Est un ensemble d'extents allouées à un objet de base de données spécifique,
+        tel qu'une table .
+      • Extents        : regroupement de blocs de données .
+1. Décrire la structure de stockage physique et logique des fichiers de données .
+
+
+
+
+      •Blocs de données Est la plus petite unité de stockage de données dans Oracle Database.
+Hiérarchie de stockage logique
+2. Enoncer les différents types des tablespaces .
+
+
+
+
+o Tablespace Permanent          : un espace alloué pour stocker les données définitivement .
+
+o Tablespace Temporaire          : un espace alloué pour les traitement temporaires ( TRIE ) .
+
+o Tablespace d’annulation        : un espace alloué pour les traitements d’annulation (Rollback) .
+                Les différents tablespace spéciaux
+
+
+SYSTEM   Très important , la base ne peut pas fonctionner sans ce tablespace, contient le dictionnaire de
+         données .
+
+SYSAUX   Un assistant pour diminuer la charge . Le tablespace SYSAUX est un tablespace auxiliaire au
+         tablespace SYSTEM.
+
+USERS    Tablespace par défaut de la base .
+
+
+ TEMP    Tablespace temporaire , pour les traitement de tri , ……
+
+
+UNDO     Tablespace d’annulation , pour les traitement de rollback
+Résumé :
+• Un tablespace est une unité de stockage composée
+  d’un ou de plusieurs fichiers physiques.
+• Pour chaque base , il y a au moins un tablespace
+  d’origine , appelé SYSTEM, qui contient le
+  dictionnaire de données (toutes les informations sur
+  la base )
+• Un tablespace peut etre actif (online) ou desactif
+  (offline)
+
+• Un tablespace correspond a un ou plusieurs fichiers
+  physiques
+
+• Un tbalespace peut etre TEMPORARY ou
+  PERMANENT(mode par défaut )
+
+• Un tablespace temporaire contient des données          Ils permettent :
+  temporaires liés au TRI par exemple                    ❑ performance (répartitions des accès disques),
+                                                         ❑ sécurité (séparation des infos systèmes des
+• Un tablesapce peut etre reservé à contenir des
+                                                             données utilisateurs)
+  données ROLLBACK: UNDO TABLESPACE
+TP 6 DBA
+Exercice 1
+         Exercice 2 : fichiers de données : Gestion des tablespaces
+1.  Citez les différents types de tablespaces
+2.  Identifiez les espaces disque logiques de votre base de données et leur type.
+3.  Ajoutez trois tablespaces de types : Permanant, Temporary , UNDO
+   Les recommandations Oracle sont les suivantes pour créer un tablespace :
+          • EXTENT MANAGEMENT LOCAL AUTOALLOCATE : pour les tablespaces de type PERMANENT, UNDO
+          • SEGMENT SPACE MANAGEMENT AUTO pour être en mode ASSM (AUTOMATIC SEGMENT STORAGE MANAGEMENT), connu
+   aussi comme "BITMAP FREELIST" : que pour les tablespaces de type PERMANENT
+1. Ajoutez un nouveau tablespace nommé tbs1à la PDB1en respectant les contraintes suivantes :
+• La taille initiale de l’espace disque logique est de 5 Mo.
+• Lorsque la taille du fichier disque devient insuffisante, il y aura une extension automatique du fichier par tranche de 1 Mo avec une limite à 100 Mo.
+1. Allouez 1Mo d'espace disque supplémentaires au tablespace DATA01 et vérifiez le résultat.
+2. Définissez le tablespace tbs1 comme étant tablespace par défaut de la base.
+3. Réaffichez les espaces disque logiques de votre base de données et leur type.
+4. Ajoutez un tabelspace avec plusieurs fichiers
+5. Créez un objet (une table) dans un tablespace précis
+6. Supprimez le tablespace IDX03 avec son contenu et ses fichiers
+7. Ajoutez un fichier de données au tablespace IDX02
+8. Changement d’état d’un espace disque logique. Si l’espace disque logique est dans l’état en ligne, placez-le temporairement dans un état hors ligne. Si
+    l’espace disque logique est dans l’état hors ligne, replacez-le temporairement dans l’état en ligne.
+9. Créez un nouveau tablespace de type UNDO
+10. Utilisez-le comme le tablespace UNDO par défaut
+ Gestion des tablespaces et Fichiers de données
+                                                                                             Remarques :
+                                                                                             Verifier que vous
+1- Identifiez les fichiers base de données en affichant la taille de chaque fichier          etes dans le ROOT
+                                                                                             sinon vous passez
+ Pour cela on interroge le dictionnaire pour trouver la vue liée aux fichiers de données .   sur le Root de
+                                                                                             contaimer via la
+  sql>Describe    dictionary                                                                 commande suivante :
+                                                                                             Sql> alter session set
+  sql> select   table_name from dictionary where table_name like ‘V$DATAF%’ ;                container =
+                                                                                             CDB$ROOT;
+
+                                                                                             Et verifier que vous
+                                                                                             etes dans le Root via
+                                                                                             : show pdbs;
+  Gestion des tablespaces et Fichiers de données
+
+ 1- Identifiez les fichiers base de données en affichant la taille de chaque fichier
+   Une fois la vue est détectée , on passe à sélectionner les informations désiré .
+
+
+Identifier les champs relatifs aux informations souhaité .
+Gestion des tablespaces et Fichiers de données
+
+1- Identifiez les fichiers base de données en affichant la taille de chaque fichier
+
+Une fois la vue et les champs sont détectés , on passe à sélectionner les informations désiré .
+
+
+ sql>select      name, bytes,status, from v$datafile;
+Gestion des tablespaces et Fichiers de données
+
+2. Citez les différents type de tablespaces
+
+
+
+
+  types :
+
+ Permanant : Espace de stockage de données .
+
+ Temporary : Espace des traitement temporaire (TRI ….)
+
+ UNDO           : Espace des traitements d’annumations (ROLLBACK) .
+Gestion des tablespaces et Fichiers de données
+
+3. Identifiez les espaces disque logiques de votre base de données et leur type.
+ Espace disque logique = tablespace .
+
+sql> select   table_name from dictionary where table_name like ‘%TABELSPACE%’ ;
+
+
+
+
+                                                               On commence par déterminer la vue à interroger .
+  Gestion des tablespaces et Fichiers de données
+
+  3- Identifiez les espaces disque logiques de votre base de données et leur type.
+
+    Espace disque logique = tablespace .
+
+
+
+
+NOTE : Dans la question on nous demande le type , mais au niveau de la vue suivante le type n’apparait pas .
+On cherche une autre vue contenant le type .
+ Autres vue importantes du dictionnaire de données :
+
+ Les vues à interroger :
+
+CDB_..........................; // Affiche les objets appartenant à la base du container multitenant
+DBA_........... …………; // Affiche les objets appartenant à la PDB
+All_..............................; // Affiche les objets aux quels j’ai accès .
+User_..........................; // Affiche mes objets (l’utilisateur courant) .
+Exemple :
+
+
+CDB_tables; // Affiche toutes les tables de la base du container multitenant.
+DBA_tables; // Affiche toutes les tables de la base de PDB .
+All_tables; // Affiche toutes les tables aux quelles j’ai accès .
+User_tables; // Affiche mes propres tables .
+Gestion des tablespaces et Fichiers de données
+
+3- Identifiez les espaces disque logiques de votre base de données et leur type.
+ Espace disque logique = tablespace .
+
+sql> select   table_name from dictionary where table_name like ‘%TABELSPACE%’ ;
+
+
+
+
+                                                               Affiche tous les tablespaces de la base
+Gestion des tablespaces et Fichiers de données
+
+2- Identifiez les espaces disque logiques de votre base de données et leur type.
+
+ Espace disque logique = tablespace .
+
+
+                                                                                   Le nom du tablespace
+
+
+
+
+                                                                                   Le type du tablespace
+Gestion des tablespaces et Fichiers de données
+
+3- Identifiez les espaces disque logiques de votre base de données et leur type.
+Une fois la vue et les champs sont détectés , on passe à sélectionner les informations désiré .
+
+
+ sql> select tablespace_name , contents from dba_tablespaces ;
+  Gestion des tablespaces et Fichiers de données
+ 3- Ajoutez trois tablespaces de types : Permanant, Temporary , UNDO
+    A-permanant : on spécifie pas le type , par défaut le tablespace est permanent .
+
+sql> CREATE TABLESPACE SMI1
+DATAFILE             'C:\Documents and Settings\Administrateur\Bureau\FSBM\file_01.dbf’
+size 10m ;
+
+
+
+
+                                                                                       Fichier crée
+  Gestion des tablespaces et Fichiers de données
+ 4- TPAjoutez trois tablespaces de types : Permanant, Temporary , UNDO
+    b- Temporary :
+
+sql> CREATE TEMPORARY TABLESPACE SMI_T
+TEMPFILE             'C:\Documents and Settings\Administrateur\Bureau\FSBM\file_02.dbf’
+size 10m ;
+  Gestion des tablespaces et Fichiers de données
+ 3- Ajoutez trois tablespaces de types : Permanant, Temporary , UNDO
+    c- UNDO :
+
+sql> CREATE UNDO TABLESPACE SMI_Undo
+datafile            'C:\Documents and Settings\Administrateur\Bureau\FSBM\file_03.dbf’
+size 10m ;
+ Gestion des tablespaces et Fichiers de données
+
+4- Ajoutez un nouveau tablespace nommé fsbm à la PDB1 en respectant les contraintes suivantes :
+• La taille initiale de l’espace disque logique est de 5 Mo.
+• Lorsque la taille du fichier disque devient insuffisante, il y aura une extension automatique du fichier par tranche de 1
+    Mo avec une limite à 100 Mo.
+sql> CREATE TABLESPACE FSBM
+
+DATAFILE 'C:\Documents and Settings\Administrateur\Bureau\FSBM\file_O4.dbf'
+
+size 5m autoextend on next 1m maxsize 100m;
+Gestion des tablespaces et Fichiers de données
+5- Allouez 1Mo d'espace disque supplémentaires au tablespace smi1 et resize vérifiez le résultat.
+NOTE : le tablespace est logique , donc la taille est celle du fichier et non pas tablespace
+
+Notez que la taille déjà affecté = 10m .
+
+sql> alter   database datafile C:\Documents and Settings\Administrateur\Bureau\FSBM\file_01.dbf’ resize 11m ;
+
+
+
+
+Sql -> select name , bytes from v$datafile ;
+Gestion des tablespaces et Fichiers de données
+
+6- Définissez le tablespace fsbm comme étant tablespace par défaut de la base
+
+On commence par Afficher le tablespace par défaut actuel de la base .
+
+
+       sql> SELECT     PROPERTY_VALUE
+
+       FROM DATABASE_PROPERTIES
+       WHERE PROPERTY_NAME = 'DEFAULT_PERMANENT_TABLESPACE';
+Gestion des tablespaces et Fichiers de données
+
+6- Définissez le tablespace fsbm comme étant tablespace par défaut de la base
+ Puis modifions le tablespace par défaut
+
+
+      sql>   alter database   default tablespace    FSBM;
+
+
+
+
+                                                   Vérification
+Gestion des tablespaces et Fichiers de données
+
+7- Réaffichez les espaces disque logiques de votre base de données et leur type.
+
+sql>    select contents , TABLESPACE_NAME
+       from dba_tablespaces ;
+Gestion des tablespaces et Fichiers de données
+
+9- Créez un objet (une table) dans un tablespace précis
+
+      sql> create table TABLE2
+            (ID NUMBER , name VARCHAR2 (50)) tablespace smi1;
+Gestion des tablespaces et Fichiers de données
+
+10- Supprimez le tablespace smi1 .
+
+
+      sql> drop    tablespace smi1 ;
+
+
+
+
+  NOTE : le tablespace n’est pas vide . On vient de créer une table au niveau de ce tablespace
+Gestion des tablespaces et Fichiers de données
+
+10- Supprimez le tablespace SMI1 avec son contenu et ses fichiers
+
+
+      sql> drop    tablespace SMI1 INCLUDING CONTENTS;
+
+
+
+
+Note : La requête suivante permet de supprimer le tablespace avec son contenu .
+Gestion des tablespaces et Fichiers de données
+
+11- Ajoutez un fichier de données au tablespace fsbm
+
+
+      sql>   Alter tablespace FSBM
+
+       add datafile ‘C:\Documents and Settings\Administrateur\Bureau\FSBM\file_05.dbf’
+
+        size 10M
+Gestion des tablespaces et Fichiers de données
+
+12-Changement d’état d’un espace disque logique. Si l’espace disque logique est dans l’état en ligne, placez-le
+temporairement dans un état hors ligne. Si l’espace disque logique est dans l’état hors ligne, replacez-le temporairement
+dans l’état en ligne.
+
+Note : La requête suivante permet de vérifier l’état avant de modifier .
+
+
+
+
+                                                                                                     On choisi de
+                                                                                                     travailler avec
+                                                                                                     le tablespace
+                                                                                                     info
+Gestion des tablespaces et Fichiers de données
+
+12-Changement d’état d’un espace disque logique. Si l’espace disque logique est dans l’état en ligne, placez-le
+temporairement dans un état hors ligne. Si l’espace disque logique est dans l’état hors ligne, replacez-le temporairement
+dans l’état en ligne.
+
+
+     sql>   alter tablespace info offline;
+Gestion des tablespaces et Fichiers de données
+
+13, Créez un nouveau tablespace de type UNDO
+
+
+     sql> CREATE   UNDO TABLESPACE fsbm_undo
+     DATAFILE ‘C:\Documents and Settings\Administrateur\Bureau\FSBM\file_06.dbf’
+     size 10m ;
+Gestion des tablespaces et Fichiers de données
+
+14- Utilisez-le comme le tablespace UNDO par défaut
+
+
+     sql> alter system set undo_tablespace=fsbm_undo scope=spfile;
+

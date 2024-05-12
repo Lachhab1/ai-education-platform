@@ -1,0 +1,400 @@
+                                   DBA
+                                 Oracle 12c
+                           Département math-info
+
+
+
+                     DBA/ORACLE 12C / TP5
+                      le fichier de journalisation
+
+
+
+                                                     Smi / s6
+PR.SANAA EL FILALI
+                                                     Année universsitaire : 2021/2022
+2
+
+
+
+
+    Rappel
+Objectifs :
+
+
+
+
+1. Expliquer le rôle des fichiers de journalisation en ligne
+
+2. Décrire la structure des fichiers de journalisation en ligne
+
+3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+1. Expliquer le rôle des fichiers de journalisation en ligne
+
+
+
+
+Les fichiers de journalisation présentent les caractéristiques suivantes :
+• Ils enregistrent toutes les modifications apportées aux données.
+• Ils offrent un mécanisme de récupération.
+• Ils peuvent être organisés en groupes.
+• Deux groupes au moins sont requis.                                         Fichiers de
+                                                                               journa-
+                                                                               lisation
+2. Décrire la structure des fichiers de journalisation en ligne
+
+
+
+
+                                                                      • Lorsqu'un fichier de ce type est
+ Groupe 1               Groupe 2             Groupe 3
+                                                                        rempli, le processus LGWR passe au
+                                                           Disque 1     groupe de fichiers de journalisation
+
+ Membre                 Membre                Membre                    suivant.
+
+
+
+                                                                      • On parle alors de changement de
+
+                        Membre                Membre       Disque 2     fichier de journalisation.
+ Membre
+
+
+                                                                      • Les fichiers de journalisation sont
+                                                                        utilisés de façon cyclique.
+3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Informations concernant les Groupes                             Informations concernant les Membres
+
+
+• Un ensemble de copies identiques de fichiers de                    • Chaque fichier de journalisation en ligne
+   journalisation en ligne est nommé groupe de fichiers                   d'un groupe est nommé membre.
+   de journalisation en ligne.
+                                                                     • Les membres d'un groupe portent tous le
+• Le processus d'arrière-plan LGWR écrit                                  même numéro de séquence de journal et
+   simultanément les mêmes informations dans tous les                     ont tous la même taille.
+   fichiers de journalisation en ligne d'un groupe.
+
+
+• Le serveur Oracle nécessite au moins deux groupes
+   de fichiers de journalisation en ligne pour garantir un
+   fonctionnement correct de la base de données.
+   3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+Sachant qu’on possède deux fichiers de journalisation , ajoutez un troisième .
+
+
+
+ ALTER DATABASE ADD LOGFILE GROUP 3
+ ('$HOME/ORADATA/u01/log3a.rdo',
+  '$HOME/ORADATA/u02/log3b.rdo')
+ SIZE 1M;
+
+
+
+
+     log1a.rdo                  log2a.rdo                log3a.rdo
+
+          log1b.rdo                  log2b.rdo                log3b.rdo
+
+           Groupe 1                   Groupe 2                 Groupe 3
+ 3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Ajouter des membres à des fichiers de journalisation en ligne
+
+
+ALTER DATABASE ADD LOGFILE MEMBER
+'$HOME/ORADATA/u04/log1c.rdo' TO GROUP 1,
+'$HOME/ORADATA/u04/log2c.rdo' TO GROUP 2,
+'$HOME/ORADATA/u04/log3c.rdo' TO GROUP 3;
+
+
+
+
+    log1a.rdo                  log2a.rdo                 log3a.rdo
+
+        log1b.rdo                  log2b.rdo                  log3b.rdo
+
+                log1c.rdo                  log2c.rdo                  log3c.rdo
+
+                 Groupe 1                   Groupe 2                       Groupe 3
+   3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+
+Supprimer des groupes de fichiers de journalisation en ligne
+
+
+    ALTER DATABASE DROP LOGFILE GROUP 3;
+
+
+
+
+                   log1a.rdo               log2a.rdo                 log3a.rdo
+
+                     Groupe 1                Groupe 2                  Groupe 3
+ 3. Multiplexer et mettre à jour les fichiers de journalisation en ligne
+
+
+
+Supprimer des membres de fichiers de journalisation en ligne
+
+
+
+
+  ALTER DATABASE DROP LOGFILE MEMBER
+  '$HOME/ORADATA/u04/log3c.rdo';
+
+
+
+
+     log1a.rdo                     log1a.rdo
+
+          log1b.rdo                    log1b.rdo
+
+                  log1c.rdo                     log2c.rdo
+
+                    Groupe 1                     Groupe 2
+Obtenir des informations sur les groupes et les membres
+
+
+
+
+ • Pour obtenir des informations sur les groupes et les
+   membres, interrogez les vues suivantes :
+
+    • V$LOG         : les groupes
+    • V$LOGFILE     : les members
+12
+
+
+
+
+     Quelque Problèmes à éviter
+Supprimer des groupes de fichiers de journalisation en ligne :
+
+
+      ALTER DATABASE DROP LOGFILE GROUP 3;
+
+      Sql-> ERROR le Groupe est current
+
+
+
+
+                               log1a.rdo           log2a.rdo     log3a.rd
+                                                                     o
+                                 Groupe              Groupe        Groupe
+                                   1                   2              3
+Supprimer des groupes de fichiers de journalisation en ligne :
+
+La solution proposée est de basculer à un autre groupe . Car ce dernier est
+utilisé actuellement par la base .
+
+SQL-> ALTER SYSTEM SWITCH LOGFILE;
+
+
+
+
+                           log1a.rdo          log2a.rdo          log3a.rd
+                                                                     o
+                             Groupe             Groupe             Groupe
+                               1                  2                   3
+Supprimer des groupes de fichiers de journalisation en ligne :
+
+ALTER DATABASE DROP LOGFILE MEMBER
+'$HOME/ORADATA/u04/log3c.rdo';
+
+SQL-> Erreur impossible de supprimer le dernier member
+
+La solution est de supprimer le groupe        .
+
+ATTENTION : le groupe peut etre current .
+                                                                            CURRENT
+
+
+                                                  log1a.rdo
+
+                                                      log1b.rdo
+
+                                                             log1c.rdo      log2c.rdo
+
+                                                                 Groupe 1    Groupe 2
+Fichiers de journalisation archivés
+
+
+
+
+• Vous pouvez archiver les fichiers de journalisation en ligne complets.
+
+• L'exécution de la base de données en mode ARCHIVELOG et l'archivage des fichiers de journalisation
+  présentent deux avantages :
+
+             • Récupération : La sauvegarde de la base de données et des fichiers de journalisation en
+                ligne et archivés peuvent garantir la récupération de toutes les transactions validées.
+
+             • Sauvegarde : Peut s'effectuer lorsque la base de données est ouverte.
+
+
+
+• Par défaut, une base de données est créée en mode NOARCHIVELOG.
+Vérifier dans quel mode d’archivage la base est configurée
+
+
+     Méthode 1 :
+
+     sql -> archive log list
+
+
+
+
+    Méthode 2 :
+
+    sql -> SELECT archiver FROM v$instance;
+
+
+
+     Méthode 3 :
+
+     Sql ->select log_mode from v$database;
+Vérifier dans quel mode d’archivage la base est configurée
+
+
+     Méthode 1 :
+
+     sql -> archive log list
+Vérifier dans quel mode d’archivage la base est configurée
+
+
+     Méthode 2 intérroger la vue v$instance:
+
+sql -> Describe v$instance ;
+
+
+
+
+sql -> SELECT archiver FROM v$instance;
+Vérifier dans quel mode d’archivage la base est configurée
+
+
+     Méthode 3 intérroger la vue v$database:
+
+sql -> Describe v$database ;
+
+
+
+
+Sql ->select log_mode from v$database;
+                    Activer l’archivage
+
+Sql -> startup mount
+Sql-> alter database archivelog ;
+Sql -> alter database open ;
+
+
+
+
+                    Désactiver l’archivage
+Sql -> startup mount
+Sql-> alter database noarchivelog ;
+Sql -> alter database open ;
+Fichiers de journalisation :
+
+1- Connectez vous et lancer la base
+1- Affichez les groupes de journalisation leurs membres et leurs status .
+
+ sql>   describe v$log ;
+1- Affichez les groupes de journalisation leurs membres et leurs status .
+ sql> select group# , members , status from v$log ;
+2-Affichez les fichiers de journalisation.
+ sql>   describe v$logfile ;
+2-Affichez les fichiers de journalisation.
+ sql>   describe v$logfile ;
+              Comparaison entre v$log et v$logfile
+
+
+v$logfile : fichier journal = member   v$log : groupe = ensemble de membres
+
+
+
+
+                                       Affiche le nombre des membres
+Affiche le chemin des fichiers
+3-basculez entre les groupes et vérifier le résultat ..
+
+sql>   alter system switch logfile;
+4- Ajouter un groupe de journalisation nommé 7 avec un seul membre log07.log.
+4- Ajouter un groupe de journalisation nommé 7 avec un seul membre log07.log.
+
+
+ sql> alter database add logfile group 7
+
+ (‘C:\Documents and settings\Administrateur\Bureau\sanaaelfilali\log07.rdo’)
+ size 9m ;
+5- supprimer le fichier que vous venez de créer .
+
+sql> Alter database drop logfile member ‘C:\Documents and
+settings\Administrateur\Bureau\sanaaelfilali\log07.rdo’ ;
+5- supprimer le fichier que vous venez de créer .
+
+
+On ne peut pas supprimer le dérnier member , donc on supprime le groupe entierement .
+
+
+sql> Alter database drop logfile group7 ;
+
+
+
+
+                                                                                On affiche les
+                                                                                fichiers existants
+                                                                                après suppression .
+5- supprimer le fichier que vous venez de créer .
+
+
+Le fichier à été supprimé logiquement mais pas physiquement .
+5- Essayer d’ajouter un nouveau fichier avec le même nom dans le même emplacement .
+
+ sql> Alter database drop logfile member ‘C:\Documents and
+ settings\Administrateur\Bureau\sanaaelfilali\log07.rdo’ ;
+5- supprimer le groupe 3 .
+
+
+
+
+sql> Alter database drop logfile group 3 ;
+5- ajouter un member au groupe 9 .
+
+sql> alter database add logfile member
+
+‘C:\Documents and settings\Administrateur\Bureau\sanaaelfilali\log09.rdo’ to
+group9 ;
+5- activer l’archivage.
+Vérifier le mode d’archivage
+
+sql> archive log list ;
+
+
+
+
+SQL-> shutdown
+
+Sql-> startup mount
+
+Sql-> alter database archivelog ;
+
+Sql-> alter database open ;
+5- activer l’archivage.
+Vérifier le mode d’archivage après activation
+
+sql> archive log list ;
+
+
+                                                Passez de l’état mount
+                                                à l’état open ;
+

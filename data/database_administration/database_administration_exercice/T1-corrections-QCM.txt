@@ -1,0 +1,1570 @@
+Module 30 : Correction
+QCM
+Oracle 11 g
+Administration
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+1
+
+Correction des exercices
+
+Atelier 1
+
+Questions
+1-1 Quelle est l’unité d'échange entre les fichiers, la mémoire et les processus ?
+A. DB_BLOCK_BUFFERS
+B. DB_KEEP_CACHE_SIZE
+C. DB_RECYCLE_CACHE_SIZE
+D. DB_BLOCK_SIZE
+Réponse :
+
+D
+
+1–2 Quelles sont les tailles possibles pour le bloc de données ?
+A. 1K
+B. 2K
+C. 4K
+D. 6K
+E. 8K
+F. 10K
+G. 14K
+H. 16K
+I.
+
+32K
+
+Réponse :
+
+B, C, E, H, I
+
+1-3 Quels sont les composants de la base de données ?
+Réponse :
+
+Les fichiers de données, contrôle et journaux.
+
+1-4 Peut-on modifier le nom de la base de données ?
+Réponse :
+
+Non
+
+1-5 Peut-on modifier le nom d’instance ?
+Réponse :
+
+Oui
+
+1-6 La taille du bloc de données par défaut peut-elle être changée ?
+Réponse :
+
+Non
+
+1-7 Quelle est la méthode de rafraîchissement des blocs dans le buffer cache (cache
+de tampon) ?
+A. OPT
+B. LRU
+C. FIFO
+Réponse :
+2
+
+B
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 2
+
+Questions
+2-1 Est-ce que l'administrateur de la base de données peut voir les données en train
+d'être modifiées dans une transaction par les utilisateurs de la base ?
+Réponse :
+
+Non
+
+2-2 Peut-on annuler partiellement une transaction ?
+Réponse :
+
+Oui
+
+2-3 Quel est le mode de verrouillage par défaut dans Oracle ?
+A. Enregistrement
+B. Table
+C. Segment
+D. Page des données
+Réponse :
+
+A
+
+2-4 Vous avez ouvert deux sessions avec le même utilisateur. Dans la première
+session, vous modifiez un enregistrement d'une table. Est-ce que dans la
+deuxième session, connectée avec le même utilisateur, vous pouvez voir la
+modification effectuée dans l'autre session ?
+Réponse :
+
+Non
+
+2-5 Quelles sont les commandes SQL qui peuvent être annulées dans une
+transaction ?
+A. INSERT
+B. ALTER
+C. CREATE
+D. DROP
+E. TRUNCATE
+F. DELETE
+G. UPDATE
+Réponse :
+
+A, F, G
+
+2-6 Quelles sont les commandes SQL qui valident automatiquement une transaction ?
+A. INSERT
+B. ALTER
+C. CREATE
+D. DROP
+E. TRUNCATE
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+3
+
+Correction des exercices
+F. DELETE
+G. UPDATE
+Réponse :
+
+B, C, D, E
+
+2-7 Quelle doit être la valeur de la colonne « SALARY » après l'exécution du script
+suivant ?
+SQL> SELECT FIRST_NAME, LAST_NAME, SALARY
+2 FROM HR.EMPLOYEES
+3 WHERE EMPLOYEE_ID = 200;
+FIRST_NAME
+LAST_NAME
+SALARY
+-------------------- ------------------------- ---------Jennifer
+Whalen
+4400
+SQL> UPDATE HR.EMPLOYEES SET SALARY=6000
+2 WHERE EMPLOYEE_ID = 200;
+1 ligne mise à jour.
+SQL> DROP TABLE SCOTT.EMP;
+Table supprimée.
+SQL> ROLLBACK;
+Annulation (rollback) effectuée.
+SQL> SELECT FIRST_NAME, LAST_NAME, SALARY
+2 FROM HR.EMPLOYEES
+3 WHERE EMPLOYEE_ID = 200;
+FIRST_NAME
+LAST_NAME
+SALARY
+-------------------- ------------------------- ---------Jennifer
+
+?
+
+Whalen
+
+Réponse :
+
+6000
+
+2-8 Quelle doit être la valeur de la colonne « SALARY » après l'exécution du script
+suivant ?
+SQL> SELECT FIRST_NAME, LAST_NAME, SALARY
+2 FROM HR.EMPLOYEES
+3 WHERE EMPLOYEE_ID = 200;
+FIRST_NAME
+LAST_NAME
+SALARY
+-------------------- ------------------------- ---------Jennifer
+Whalen
+6000
+SQL> UPDATE HR.EMPLOYEES SET SALARY=8000
+2 WHERE EMPLOYEE_ID = 200;
+1 ligne mise à jour.
+SQL> TRUNCATE TABLE SCOTT.EMP;
+TRUNCATE TABLE SCOTT.EMP
+*
+
+4
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+ERREUR à la ligne 1 :
+ORA-00942: Table ou vue inexistante
+SQL> ROLLBACK;
+Annulation (rollback) effectuée.
+SQL> SELECT FIRST_NAME, LAST_NAME, SALARY
+2 FROM HR.EMPLOYEES
+3 WHERE EMPLOYEE_ID = 200;
+FIRST_NAME
+LAST_NAME
+SALARY
+-------------------- ------------------------- ---------Jennifer
+
+Whalen
+
+Réponse :
+
+?
+
+8000
+
+2-9 Quelle doit être la valeur de la colonne « SALARY » après l'exécution du script
+suivant ?
+SQL> UPDATE HR.EMPLOYEES SET SALARY=5000
+2 WHERE EMPLOYEE_ID = 200;
+1 ligne mise à jour.
+SQL> SAVEPOINT SP1;
+Savepoint créé.
+SQL> UPDATE HR.EMPLOYEES SET SALARY=6000
+2 WHERE EMPLOYEE_ID = 200;
+1 ligne mise à jour.
+SQL> ROLLBACK TO SAVEPOINT SP1;
+Annulation (rollback) effectuée.
+SQL> SELECT FIRST_NAME, LAST_NAME, SALARY
+2 FROM HR.EMPLOYEES
+3 WHERE EMPLOYEE_ID = 200;
+FIRST_NAME
+LAST_NAME
+SALARY
+-------------------- ------------------------- ---------Jennifer
+
+Whalen
+
+Réponse :
+
+?
+
+5000
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+5
+
+Correction des exercices
+
+Atelier 3
+
+Questions
+3-1 Quand le processus « DBWn » écrit-il les données dans les fichiers de données ?
+A. Après chaque validation de la transaction
+B. Avant valider la transaction
+C. Après le processus « LGWR »
+D. Avant ou après la validation de la transaction
+Réponse :
+
+D
+
+3-2 Quel est le processus qui n'est pas démarré par défaut dans une instance Oracle?
+A. DBWn
+B. CKPT
+C. LGWR
+D. ARCn
+Réponse :
+
+D
+
+3-3 Quels sont les processus démarrés par « CKPT » ?
+A. DBWn
+B. SMON
+C. PMON
+D. LGWR
+E. ARCn
+Réponse :
+
+A, D
+
+3-4 Quel est le processus démarré par « DBWn » ?
+A. CKPT
+B. SMON
+C. PMON
+D. LGWR
+E. ARCn
+Réponse :
+
+D
+
+3-5 Quel est le processus qui garantie que les données validées sont enregistrées,
+même si les changements n'ont pas été enregistrées dans les fichiers de données?
+A. CKPT
+B. SMON
+C. PMON
+6
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+D. LGWR
+E. ARCn
+Réponse :
+
+D
+
+3-6 Une erreur réseau est survenue et l'utilisateur a été déconnecté. Quelle est
+l'opération qui s'exécute après la déconnexion forcée de l'utilisateur ?
+A. CKPT
+B. LGWR
+C. SMON
+D. PMON
+Réponse :
+
+C, D
+
+3-7 Quels sont les fichiers mis à jour par le processus « DBWn » pour écrire les blocs
+modifiés ?
+A. Les fichiers de données
+B. Les fichiers de données et les fichiers de contrôles
+C. Les fichiers de données et les fichiers journaux
+D. Les fichiers journaux et les fichiers de contrôles
+Réponse :
+
+A
+
+3-8 Qu'est-ce qui nous permet de récupérer les données qui n'ont pas été mises à jour
+dans les fichiers de données suite à l'arrêt brutal du serveur ?
+A. Les fichiers journaux
+B. Les segments UNDO
+C. Le tablespace « SYSTEM »
+Réponse :
+
+A
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+7
+
+Correction des exercices
+
+Atelier 4
+
+Questions
+4-1 Quel est le nom du répertoire dans lequel OUI stocke l'ensemble des fichiers de
+traces et l’inventaire ? Vous devez donner deux réponse, la première pour
+l'environnement Windows et la deuxième pour l'environnement Unix/Linux.
+Réponse :
+
+Windows
+
+Inventory
+
+Unix/Linux
+
+oraInventory
+
+4-2 Pour installer Oracle vous avez besoin de quelle taille de mémoire physique
+minimum disponible ?
+A. 256Mb
+B. 512Mb
+C. 1Gb
+D. 2Gb
+Réponse :
+
+C
+
+4-3 Pour installer Oracle vous avez besoin de quelle taille de mémoire virtuelle
+minimum disponible ?
+A. 512Mb
+B. 1Gb
+C. 2Gb
+D. 3Gb
+Réponse :
+
+C
+
+4-4 Pour pouvoir bénéficier de la gestion automatique de la mémoire dans
+l’environnement Unix/Linux vous avez besoin de quelle taille de mémoire ?
+A. 512Mb
+B. 1Gb
+C. 2Gb
+D. 3Gb
+Réponse :
+
+8
+
+C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 5
+
+Questions
+5-1 Quel est l'outil que vous retrouvez sur chaque serveur de base de données
+installée ?
+A. SQL*Plus
+B. iSQL*Plus
+C. SQL*Plus Worksheet
+D. Oracle Enterprise Manager
+Réponse :
+
+A
+
+5-2 SQL*Plus est-il un langage ou un environnement ?
+Réponse :
+
+Un langage et en environnement.
+
+5-3 Pour utiliser SQL Developer sur une machine distante, avez-vous besoin
+d'installer le client Oracle ?
+Réponse :
+
+Non
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+9
+
+Correction des exercices
+
+Atelier 6
+
+Questions
+6-1 Quels sont les privilèges que vous devez avoir pour pouvoir créer une base de
+données ?
+A. DBA
+B. SYSDBA
+C. SYSOPER
+D. RESOURCE
+Réponse :
+
+B
+
+6-2 Quels sont les trois composants qui constituent la base de données ?
+A. Table
+B. Extent
+C. Fichier de données
+D. Fichier journaux
+E. Segment
+F. Tablespace
+G. Fichier de contrôle
+Réponse :
+
+C, D, G
+
+6-3 Vous voulez créer une nouvelle base de données. Vous ne voulez pas utiliser
+l'authentification par le système d'exploitation. Quels sont les deux fichiers que
+vous devez créer avant la création de la base de données ?
+A. Fichier de contrôle
+B. Fichier de mot de passe
+C. Fichier journaux
+D. Fichier d’alerte
+E. Fichier de paramètres
+Réponse :
+
+B, E
+
+6-4 Quelles sont les deux variables d'environnement qui doivent être initialisées avant
+la création de la base de données ?
+A. DB_NAME
+B. ORACLE_SID
+C. ORACLE_HOME
+
+10
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+D. SERVICE_NAME
+E. INSTANCE_NAME
+Réponse :
+
+B, C
+
+6-5 Quel est le mode de démarrage de l'instance pour pouvoir créer une base de
+données ?
+A. STARTUP
+B. STARTUP NOMOUNT
+C. STARTUP MOUNT
+D. STARTUP OPEN
+Réponse :
+
+B
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+11
+
+Correction des exercices
+
+Atelier 8
+
+Questions
+8-1 Quelle est la vue du dictionnaire de données qui vous permet d'afficher la liste de
+tous les utilisateurs de la base de données et leurs caractéristiques ?
+A. DBA_USERS
+B. USER_USER
+C. ALL_USER
+D. V$SESSION
+Réponse :
+
+A
+
+8-2 Quelle est la vue qui vous permet d'afficher le nom de toutes les vues du
+dictionnaire de données ?
+A. DBA_NAMES
+B. DBA_TABLES
+C. DBA_DICTIONARY
+D. DICTIONARY
+Réponse :
+
+12
+
+D
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 9
+
+Questions
+9-1 Vous avez besoin d'arrêter la base de données, vous avez demandé à l'ensemble
+de ses utilisateurs de fermer leur session. Il reste un seul utilisateur qui effectue
+des manipulations critiques de la base de données.
+Quel est le mode d'arrêt de la base de données que vous devez choisir ?
+A. SHUTDOWN
+B. SHUTDOWN ABORT
+C. SHUTDOWN NORMAL
+D. SHUTDOWN IMMEDIATE
+E. SHUTDOWN TRANSACTIONAL
+Réponse :
+
+C
+
+9-2 Quand la SGA est-elle créée dans l'environnement de la base de données ?
+A. À la création de la base de données.
+B. Quand l'instance est démarrée.
+C. Quand la base de données est montée.
+D. Quand le processus utilisateur est démarré.
+E. Quand le processus serveur est démarré.
+Réponse :
+
+B
+
+9-3 Vous avez une base de données et l’instance dont les deux paramètres
+« BD_NAME » et « INSTANCE_NAME » sont identiques et égales à « AGATE ».
+Dans
+le
+répertoire,
+« $ORACLE_HOME/dbs »
+pour
+Unix
+ou
+« %ORACLE_HOME%\database » pour Windows, se trouvent les quatre fichiers
+suivants :
+ init.ora
+ initAGATE.ora
+ spfile.ora
+ spfileAGATE.ora
+Dans quelle séquence Oracle va essayer de lire ces fichiers ?
+A. init.ora, initAGATE.ora, spfile.ora, spfileAGATE.ora
+B. spfile.ora, init.ora, initAGATE.ora, spfileAGATE.ora
+C. spfileAGATE.ora, spfile.ora, initAGATE.ora, init.ora
+D. spfile.ora, spfileAGATE.ora, initAGATE.ora, init.ora
+Réponse :
+
+C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+13
+
+Correction des exercices
+9-4 Quel paramètre vous indique l'emplacement du fichier « alert.log » ?
+A. BACKGROUND_DUMP_DEST
+B. USER_DUMP_DEST
+C. MAX_DUMP_FILE_SIZE
+D. CORE_DUMP_DEST
+Réponse :
+
+A
+
+9-5 Quels sont les privilèges que vous devez avoir pour pouvoir créer une base de
+données ?
+A. DBA
+B. SYSDBA
+C. SYSOPER
+D. RESOURCE
+Réponse :
+
+B
+
+9-6 Quel est le mécanisme d'authentification qui vous permet d'être connecté à la base
+de données comme « SYSDBA » et qui vous donne un niveau de sécurité
+maximum ?
+A. Authentification à l'aide du fichier de contrôle
+B. Authentification à l'aide du fichier de mots de passe
+C. Authentification à l'aide du dictionnaire de données
+D. Authentification à l'aide du système d'exploitation
+Réponse :
+
+14
+
+D
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 10
+
+Questions
+10-1 Laquelle de ces affirmations est vraie ?
+A. OracleNet réside uniquement sur les applications client.
+B. OracleNet réside uniquement sur le serveur.
+C. OracleNet réside aussi bien sur les applications client que sur le serveur de
+base de données.
+Réponse :
+
+C
+
+10-2 L'architecture d’OracleNet est basée sur laquelle des architectures suivantes ?
+A. OCI
+B. OSI
+C. TCP/IP
+D. SNMP
+Réponse :
+
+B
+
+10-3 Pour configurer le client vous utilisez lequel de ces fichiers ?
+A. init.ora
+B. sqlnet.ora
+C. listener.ora
+D. tnsnames.ora
+Réponse :
+
+B, D
+
+10-4 Quel est le répertoire où trouver les fichiers de configuration ?
+A. %ORACLE_HOME%\admin\network
+B. %ORACLE_HOME%\network\admin
+C. %ORACLE_HOME%\net90\admin
+Réponse :
+
+B
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+15
+
+Correction des exercices
+
+Atelier 11
+
+Questions
+11-1
+
+Quelle est l’URL par défaut qui vous permet de vous connecter à la console
+d'administration de la base de données ?
+A. https://hôte.domaine:1158/dbcontrol
+B. https://hôte.domaine:1158/em
+C. http://hôte.domaine:1158/em
+D. https://hôte.domaine:1158/emctl
+Réponse :
+
+11-2
+
+Vous êtes dans l'environnement Unix/Linux et vous avez redémarré votre
+serveur, la console d'administration est-elle démarrée ?
+Réponse :
+
+11-3
+
+Non
+
+Pour administrer la base de données à travers la console, a-t-on besoin du Server
+Manager ?
+Réponse :
+
+16
+
+B
+
+Non
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 12
+
+Questions
+12-1 Votre base de données travaille avec un seul fichier de contrôle. Pour des raisons
+de sécurité, vous voulez multiplexer le fichier contrôle. Pour accomplir cette
+tâche, vous modifiez votre fichier de paramètres « SPFILE », vous arrêtez votre
+base de données et copiez les fichiers dans les emplacements définis auparavant
+dans le fichier de paramètres. Vous essayez de démarrer la base de données mais
+une erreur se produit lors de l’identification d’un des fichiers de contrôle. Vous
+visualisez le fichier d'alertes et vous voyez que l’emplacement est incorrect dans
+le fichier paramètres « SPFILE ».
+Quels sont les étapes que vous devez effectuer pour résoudre ce problème ?
+A.
+1. Connexion comme SYSDBA
+2. SHUTDOWN
+3. STARTUP NOMOUNT
+4. ALTER SYSTEM SET CONTROL_FILES=…
+5. SHUTDOWN
+6. STARTUP
+B.
+1. Connexion comme SYSDBA
+2. SHUTDOWN
+3. STARTUP MOUNT
+4. Déplacer le fichier « SPFILE » à l’aide des commandes OS
+5. Créer un nouveau « SPFILE » à partir d’un fichier « PFILE »
+6. ALTER SYSTEM SET CONTROL_FILES=…
+7. ALTER DATABASE OPEN
+C.
+1. Connexion comme SYSDBA
+2. SHUTDOWN
+3. Déplacer on le fichier « SPFILE » à l’aide des commandes OS
+4. Créer un nouveau « SPFILE » à partir d’un fichier « PFILE »
+5. STARTUP NOMOUNT
+6. ALTER SYSTEM SET CONTROL_FILES=…
+7. ALTER DATABASE OPEN
+Réponse :
+
+A
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+17
+
+Correction des exercices
+12-2 Lesquelles de ces vues vous permettent d’afficher le nom et l'emplacement du
+fichier de contrôle ?
+A. V$PARAMETER
+B. V$DATABASE
+C. V$CONTROLFILE_RECORD_SECTION
+D. V$CONTROLFILE
+Réponse :
+
+A, D
+
+12-3 Vous voulez définir le multiplexage dans votre base de données. Laquelle des
+définitions suivantes définit pour Oracle l'emplacement des fichiers de contrôle ?
+A. Valeur spécifiée dans « CONTROL_FILES »
+B. Valeur spécifiée dans V$DATABASE
+C. Valeur spécifiée dans « BACKGROUND_DUMP_DEST »
+D. Aucun choix, Oracle connaît automatiquement l'emplacement de ces fichiers
+Réponse :
+
+18
+
+A
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 13
+
+Questions
+13-1 Votre base de données travaille en mode « ARCHIVELOG ». Quel est le
+processus qui va lire les fichiers journaux et écrire ces informations dans les
+fichiers journaux archivés ?
+A. LGWR
+B. CKPT
+C. DBWn
+D. ARCn
+Réponse :
+
+D
+
+13-2 Vous voulez réduire la fréquence des points de contrôle, les checkpoints.
+Laquelle de ces options vous devez choisir, qui ne modifie pas le fichier de
+paramètres « SPFILE » ?
+A. FAST_START_MTTR_TARGET
+B. LOG_CHECKPOINT_TIMEOUT
+C. Arrêter le processus « ARCn »
+D. Augmenter la taille des fichiers journaux
+Réponse :
+
+D
+
+13-3 Les fichiers journaux dans votre base de données sont les suivants :
+SQL> select GROUP#, MEMBER from v$logfile;
+GROUP#
+---------1
+1
+2
+2
+3
+3
+
+MEMBER
+-------------------------------------------------------C:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG01A.LOG
+D:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG01B.LOG
+C:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG02A.LOG
+D:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG02B.LOG
+C:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG03A.LOG
+D:\ORACLE\ORADATA\DBA\DBA\ONLINELOG\REDOLOG03B.LOG
+
+SQL> SELECT GROUP#, MEMBERS, STATUS FROM V$LOG;
+GROUP#
+MEMBERS STATUS
+---------- ---------- ---------------1
+2 INACTIVE
+2
+2 INACTIVE
+3
+2 CURRENT
+
+Vous exécutez la commande suivante :
+SQL> ALTER DATABASE DROP LOGFILE GROUP 3;
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+19
+
+Correction des exercices
+La commande a échoué, pour quelle raison ?
+A. Chaque groupe de fichiers journaux doit avoir au moins deux membres.
+B. Vous ne pouvez pas effacer les membres des groupes de fichiers journaux.
+C. Vous ne pouvez pas effacer un membre de groupe « CURRENT ».
+D. Vous devez effacer d'abord le fichier physique avant d'effacer le membre.
+Réponse :
+
+C
+
+13-4 Une des tâches des administrateurs de base de données est d'analyser
+périodiquement le fichier d'alerte et les fichiers de trace des processus d'arrièreplan. Dans ces fichiers vous retrouvez la mention que le processus « LGWR » a
+dû attendre à cause d'un point de contrôle qui n'a pas été complété ou un groupe
+des fichiers journaux qui n'a pas été archivé.
+Quelle est l'opération que vous devez accomplir pour éliminer ces erreurs ?
+A. Augmenter le nombre des groupes des fichiers journaux pour garantir qu'ils
+sont toujours disponibles au processus « LGWR ».
+B. Diminuer le nombre des groupes des fichiers journaux pour garantir qu'ils
+sont toujours disponibles au processus « LGWR ».
+C. Augmenter la taille du buffer journaux (buffer redo-log).
+D. Diminuer la taille du buffer journaux (buffer redo-log).
+E. Modifier la valeur du paramètre « FAST_START_MTTR_TARGET ».
+Réponse :
+
+A
+
+13-5 Votre base de données travaille en mode « ARCHIVELOG ». Quels sont les deux
+opérations qui sont exécutées avant que le processus « LGWR » réutilise le
+fichier journaux ?
+A. Le fichier journal correspondant doit être archivé.
+B. Toutes les données de toutes les transactions doivent être sauvegardées.
+C. Les modifications enregistrées dans le fichier journal correspondant doivent
+être écrites sur disque.
+D. Toutes les données appartenant au tablespace « SYSTEM » doivent être
+sauvegardées.
+Réponse :
+
+20
+
+A, C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 17
+
+Questions
+17-1 Oracle garantie la lecture cohérente pour les requêtes. Quels composants assurent
+la lecture cohérente ?
+A. Les fichiers journaux
+B. Les fichiers de contrôles
+C. Les segments UNDO
+D. Le dictionnaire de données
+Réponse :
+
+C
+
+17-2 Quel est le paramètre qui vous permet de configurer la gestion automatique des
+segments UNDO ?
+A. UNDO_MANAGEMENT
+B. UNDO_TABLESPACE
+C. UNDO_RETENTION
+D. UNDO_SUPPRESS_ERRORS
+Réponse :
+
+A
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+21
+
+Correction des exercices
+
+Atelier 18
+
+Questions
+18-1 Quel est le type de données qui peut stocker jusqu'à 2 000 octets des données de
+type caractère à longueur fixe ?
+Réponse :
+
+CHAR
+
+18-2 Pouvez-vous interroger le ROWID d'un enregistrement comme vous interrogez
+n'importe quelle autre colonne ?
+Réponse :
+
+Oui
+
+18-3 Lequel de ces types des données n'est pas reconnu par Oracle ?
+A. TIMESTAMP WHITH TIME ZONE
+B. BINARY
+C. BLOB
+D. UROWID
+E. INTERVAL YEAR TO MONTH
+Réponse :
+
+B
+
+18-4 Lequel de ces types des données numériques peut représenter l'infini ?
+A. DOUBLE
+B. FLOAT
+C. BINARY_FLOAT
+D. BINARY_DOUBLE
+E. Vous ne pouvez pas représenter l'infini dans la base de données.
+Réponse :
+
+C,D
+
+18-5 Lequel de ces types de caractères n'est pas reconnu par Oracle ?
+A. CHAR
+B. VARCHAR
+C. STRING
+D. NVARCHAR2
+E. NCHAR
+Réponse :
+
+22
+
+C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 19
+
+Questions
+19-1 Quels sont les noms de table valides ?
+A. TEST_DE_NOM_DE_TABLE
+B. P#_$TEST_TABLE
+C. 7_NOM_TABLE
+D. SELECT
+Réponse :
+
+A, B
+
+19-2 Quelles sont les erreurs de syntaxe ou de nom dans la requête suivante ?
+CREATE TABLE NOUVELLE_TABLE (
+ID NUMBER,
+CHAMP_1 char(40),
+CHAMP_2 char(80),
+ID char(40);
+
+Réponse : Le nom de la colonne ID est dupliqué et il manque une parenthèse
+avant le point-virgule final.
+19-3 Quelles sont les instructions d’insertion non valides dans la table suivante ?
+SQL> DESC UTILISATEURS
+Nom
+-----------------------------------NO_UTILISATEUR
+NOM_PRENOM
+DATE_CREATION
+UTILISATEUR
+
+NULL ?
+-------NOT NULL
+NOT NULL
+NOT NULL
+NOT NULL
+
+Type
+--------------NUMBER(6)
+VARCHAR2(20)
+DATE
+VARCHAR2(20)
+
+A.
+SQL> INSERT INTO UTILISATEURS( NO_UTILISATEUR, NOM_PRENOM)
+2
+VALUES ( 1, 'Razvan BIZOÏ');
+
+B.
+SQL> INSERT INTO UTILISATEURS( NO_UTILISATEUR, NOM_PRENOM,
+2
+UTILISATEUR) VALUES ( 2, 'Razvan BIZOÏ', 'razvan');
+
+C.
+SQL> INSERT INTO UTILISATEURS( NO_UTILISATEUR, NOM_PRENOM,
+2
+DATE_CREATION, UTILISATEUR)
+3 VALUES ( 3, 'Razvan BIZOÏ', 'razvan');
+
+D.
+SQL> INSERT INTO UTILISATEURS( NO_UTILISATEUR, DATE_CREATION,
+2
+UTILISATEUR)
+VALUES ( 4, SYSDATE, 'razvan');
+
+E.
+SQL> INSERT INTO UTILISATEURS( NO_UTILISATEUR, NOM_PRENOM,
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+23
+
+Correction des exercices
+2
+
+UTILISATEUR)VALUES ( 5, 'BERNHARD Marie-Thérèse', 'razvan');
+
+F.
+SQL> INSERT INTO UTILISATEURS
+2 VALUES ( 5, 'BERNHARD Marie-Thérèse', 'razvan', sysdate);
+
+Réponse :
+
+F
+
+19-4 Est-ce que la syntaxe de création de table suivante est valide ?
+SQL>
+2
+3
+4
+
+CREATE TABLE
+"N° employé"
+"Nom"
+"Prénom"
+
+Réponse :
+
+"Employés"(
+NUMBER(6)
+NOT NULL,
+VARCHAR2(20) NOT NULL,
+VARCHAR2(20) NOT NULL);
+
+Oui
+
+19-5 Quelle est la syntaxe correcte pour visualiser les enregistrements de l’exercice
+précédent ?
+A.
+SQL> SELECT Nom, Prénom FROM Employés;
+
+B.
+SQL> SELECT Nom, Prénom FROM "Employés";
+
+C.
+SQL> SELECT Nom, Prénom FROM Employés;
+
+D.
+SQL> SELECT "Nom", "Prénom"
+
+Réponse :
+
+24
+
+FROM "Employés";
+
+D
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 20
+
+Questions
+20-1 Voici différents types de contraintes de la table « EMPLOYEES » de l'utilisateur
+« HR ».
+SQL> SELECT CONSTRAINT_NAME, CONSTRAINT_TYPE, DEFERRABLE,
+2
+DEFERRED, VALIDATED
+3 FROM DBA_CONSTRAINTS
+4 WHERE OWNER = 'HR' AND TABLE_NAME='EMPLOYEES';
+CONSTRAINT_NAME
+-----------------------------EMP_LAST_NAME_NN
+EMP_EMAIL_NN
+EMP_HIRE_DATE_NN
+EMP_JOB_NN
+EMP_SALARY_MIN
+EMP_EMAIL_UK
+EMP_EMP_ID_PK
+EMP_DEPT_FK
+EMP_JOB_FK
+EMP_MANAGER_FK
+
+C
+C
+C
+C
+C
+C
+U
+P
+R
+R
+R
+
+DEFERRABLE
+-------------NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+NOT DEFERRABLE
+
+DEFERRED
+--------IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+IMMEDIATE
+
+VALIDATED
+---------VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+VALIDATED
+
+De quel type est la contrainte « EMP_EMAIL_NN » ?
+Réponse :
+
+De type « NOT NULL ».
+
+20-2 Vous avez besoin pour une colonne de vérifier qu'il n'existe pas deux fois la
+même valeur dans la table en même temps, la colonne ne doit pas contenir des
+valeurs nulles. Quel est le type de contraintes que vous devez utiliser pour
+satisfaire les deux conditions ?
+A. CHECK
+B. UNIQUE
+C. NOT NULL
+D. PRIMARY KEY
+E. FOREIGN KEY
+Réponse :
+
+D
+
+20-3 Quel est l’avantage de déclarer une contrainte « CHECK » ?
+Réponse :
+La contrainte « CHECK » permet de contrôler la cohérence des
+données dans une table.
+20-4 Quelle est la différence entre une contrainte « CHECK » de colonne et une
+contrainte « CHECK » de table ?
+Réponse :
+colonnes.
+
+Une contrainte « CHECK » de table peut référer plusieurs
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+25
+
+Correction des exercices
+20-5 Argumentez pourquoi la syntaxe suivante, de création d’une clé étrangère, est
+incorrecte ?
+SQL> CREATE TABLE CATEGORIE (
+2
+CODE_CATEGORIE
+NUMBER(6)
+3
+NOM_CATEGORIE
+VARCHAR2(25)
+
+PRIMARY KEY,
+NOT NULL);
+
+Table créée.
+SQL> CREATE TABLE PRODUIT (
+2
+REF_PRODUIT
+3
+NOM_PRODUIT
+4
+CODE_CATEGORIE
+5
+6
+7
+
+NUMBER(6)
+PRIMARY KEY,
+VARCHAR2(40)
+NOT NULL,
+NUMBER(6)
+NOT NULL
+CONSTRAINT PRODUITS_CATEGORIES_FK
+FOREIGN KEY
+REFERENCES CATEGORIE);
+
+Réponse :
+Dans le cadre d’une contrainte de type colonne, « FOREIGN
+KEY » ne figure pas dans la syntaxe.
+20-6 Quelles sont les requêtes qui créent une table comme la suivante ?
+SQL> DESC PRODUIT
+Nom
+----------------------------------------REF_PRODUIT
+NOM_PRODUIT
+CODE_CATEGORIE
+
+NULL ?
+-------NOT NULL
+NOT NULL
+NOT NULL
+
+Type
+------------NUMBER(6)
+VARCHAR2(40)
+NUMBER(6)
+
+A.
+SQL> CREATE TABLE PRODUIT (
+2
+REF_PRODUIT
+NUMBER(6)
+PRIMARY KEY,
+3
+NOM_PRODUIT
+VARCHAR2(40)
+NOT NULL,
+4
+CODE_CATEGORIE
+NUMBER(6)
+NOT NULL
+5
+REFERENCES CATEGORIE ON DELETE SET NULL);
+
+B.
+SQL> CREATE TABLE PRODUIT (
+2
+REF_PRODUIT
+NUMBER(6)
+PRIMARY KEY,
+3
+NOM_PRODUIT
+VARCHAR2(40)
+NOT NULL,
+4
+CODE_CATEGORIE
+NUMBER(6)
+5
+REFERENCES CATEGORIE ON DELETE SET NULL);
+
+C.
+SQL> CREATE TABLE PRODUIT (
+2
+REF_PRODUIT
+NUMBER(6)
+NOT NULL,
+3
+NOM_PRODUIT
+VARCHAR2(40)
+NOT NULL,
+4
+CODE_CATEGORIE
+NUMBER(6)
+NOT NULL
+5
+REFERENCES CATEGORIE ON DELETE SET NULL);
+
+Réponse :
+
+A, C
+
+20-7 Est-ce que la commande « DROP TABLE TABLE_NAME » est équivalente à la
+commande « DELETE FROM TABLE_NAME » ?
+Réponse :
+Non « DROP » détruit l’objet et « DELETE » n’efface que les
+enregistrements.
+20-8 Est-ce que les colonnes supprimées sont récupérables ?
+Réponse :
+
+26
+
+Les colonnes supprimées ne peuvent pas être récupérées.
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+20-9 Est-ce que l’activation de la contrainte de la table maître active les contraintes
+d’intégrité référentielle désactivées avec cette contrainte par la clause
+« CASCADE » ?
+Réponse :
+
+Non
+
+20-10Argumentez pourquoi la syntaxe suivante, de suppression de plusieurs colonnes,
+est incorrecte ?
+SQL> ALTER TABLE CLIENTS DROP COLUMNS (TELEPHONE ,FAX );
+
+Réponse :
+
+Lors de la suppression de plusieurs colonnes, le mot-clé
+
+« COLUMN » ne devrait pas être utilisé dans la commande « ALTER TABLE ».
+
+20-11Décrivez une instruction SQL qui pourrait entraîner le message d’erreur
+suivant :
+ERREUR à la ligne 1 : ORA-00955: Ce nom d'objet existe déjà
+
+Réponse :
+La création d’un objet qui existe déjà, une table, un index, une
+contrainte etc.
+20-12Décrivez une instruction SQL qui pourrait entraîner le message d’erreur
+suivant :
+ERREUR à la ligne 1 :
+ORA-02273: cette clé unique/primaire est référencée par des clés
+étrangères
+
+Réponse :
+Lors de la suppression d’une contrainte de clé primaire, il faut
+utiliser la clause « CASCADE ».
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+27
+
+Correction des exercices
+
+Atelier 21
+
+Questions
+21-1 Décrivez une instruction SQL qui pourrait entraîner le message d’erreur suivant :
+ERREUR à la ligne 1 :
+ORA-01733: les colonnes virtuelles ne sont pas autorisées ici
+
+Réponse :
+
+La modification des vues en lecture seule.
+
+21-2 Décrivez une instruction SQL qui pourrait entraîner le message d’erreur suivant :
+ERREUR à la ligne 1 :
+ORA-01402: vue WITH CHECK OPTION - violation de clause WHERE
+
+Réponse :
+
+La modification d’une vue sans le respect de la clause
+
+« CHECK OPTION ».
+
+28
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 22
+
+Questions
+22-1 Vous voulez limiter le nombre de transactions simultanées qui peuvent changer
+les données dans un bloc. Quel est le paramètre que vous devez initialiser ?
+A. INITTRANS
+B. MAXTRANS
+C. PCTUSED
+D. PCTFREE
+Réponse :
+
+B
+
+22-2 Qu'est-ce qui détermine la taille initiale d’un tablespace ?
+A. L'argument « INITIAL » de la commande « CREATE TABLESPACE… »
+« MINEXTENTS »
+TABLESPACE… »
+
+B. L'argument
+
+de
+
+la
+
+commande
+
+« CREATE
+
+C. La somme des arguments « INITIAL » et « NEXT » de la commande
+« CREATE TABLESPACE… »
+
+D. La somme des tailles des fichiers des données de la commande « CREATE
+TABLESPACE… »
+
+Réponse :
+
+D
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+29
+
+Correction des exercices
+
+Atelier 24
+
+Questions
+Dans le module précédent vous avez utilisé la syntaxe suivante :
+SQL> CREATE TABLE EX_COMMANDES (
+2
+NO_COMMANDE
+NUMBER(6)
+NOT NULL
+3
+CONSTRAINT PK_EX_COMMANDES PRIMARY KEY
+4
+USING INDEX TABLESPACE GEST_INDX,
+
+24-1 Quel est le type d'index que vous avez créé ?
+Réponse :
+
+B-Tree
+
+24-2 Vous avez besoin de créer un index pour une table qui contient plus de dix
+millions d'enregistrements. La colonne choisie pour définir l'index est utilisée
+dans de multiples conditions de la clause « WHERE » combinées avec l'opérateur
+logique « OR ». Pour les dix millions d'enregistrements, la colonne ne contient
+que trois valeurs distinctes. Quel est le type d'index le plus approprié pour cette
+colonne ?
+Réponse :
+
+Bitmap
+
+24-3 Quel est la vue du dictionnaire de données qui vous permet d’afficher la location
+des tables et des index qui appartiennent à l’utilisateur de la base de données ?
+A. USER_TABLES
+B. USER_INDEXES
+C. USER_SEGMENTS
+D. USER_TABLESPACES
+
+Réponse :
+
+30
+
+C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 27
+
+Questions
+27-1 L’utilisateur est verrouillé après cinq échecs de connexion.
+SQL> ALTER PROFILE DEFAULT
+2 LIMIT
+3
+FAILED_LOGIN_ATTEMPTS
+4
+PASSWORD_LIFE_TIME
+5
+PASSWORD_REUSE_TIME
+6
+PASSWORD_REUSE_MAX
+7
+PASSWORD_LOCK_TIME
+8
+PASSWORD_GRACE_TIME
+9
+PASSWORD_VERIFY_FUNCTION
+
+5
+60
+1800
+UNLIMITED
+1/1440
+10
+DEFAULT ;
+
+Combien de temps doit-on attendre avant de pouvoir se reconnecter de nouveau ?
+A. 1 minute
+B. 5 minutes
+C. 10 minutes
+D. 14 minutes
+E. 18 minutes
+F. 60 minutes
+Réponse :
+A - Le paramètre « PASSWORD_LOCK_TIME » indique le temps
+en jours pendant lequel l’utilisateur ne peut pas se connecter.
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+31
+
+Correction des exercices
+
+31
+Module 31 : Correction
+QCM T2
+
+31-32
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+Correction des exercices
+
+Atelier 1
+
+Questions
+1-1 Quel est le privilège qui vous permet de démarrer et d'arrêter l'instance Oracle
+ASM ?
+A. DBA
+B. SYSDBA
+C. SYSOPER
+D. SYSASM
+Réponse :
+
+D
+
+1-2 Quelles sont les quatre étapes d’installation de l’infrastructure ?
+Réponse :
+1. La préparation de l’installation
+2. Le paramétrage du système au prérequis nécessaire pour installer Oracle 11g.
+3. L’installation avec les options choisies
+4. Les tâches post-installation
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+31-33
+
+Correction des exercices
+
+Atelier 2
+
+Questions
+2-1 Quelle est la syntaxe de connexion pour pouvoir arrêter et redémarrer l’instance
+ASM ?
+A. sqlplus sys/password
+B. sqlplus sys/password as sysdba
+C. sqlplus sys/password as sysasm
+D. sqlplus sys/password as sys
+Réponse :
+
+C
+
+2-2 Quelle est la syntaxe correcte pour initialiser la variable d’environnement
+ORACLE_SID pour pouvoir se connecter à l’instance ASM ?
+A. ORACLE_SID=ASM
+B. ORACLE_SID=GRIDASM
+C. ORACLE_SID=+ASM
+D. ORACLE_SID=ASMDBA
+Réponse :
+
+31-34
+
+C
+
+© Tsoft/Eyrolles – Oracle 11g Administration
+
+

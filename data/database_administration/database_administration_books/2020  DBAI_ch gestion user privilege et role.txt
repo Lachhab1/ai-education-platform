@@ -1,0 +1,831 @@
+Départements des Mathématiques et Informatique
+
+Cours Administration des Bases de
+Données
+DBA1 Oracle12c
+Niveau Licence
+SMI/S6
+
+Année universitaire
+2019 / 2020
+
+Pr . ELFILALI SANAA
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les utilisateurs
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Utilisateurs et sécurité
+Mécanisme d'authentification
+Trois méthodes permettent
+d'authentifier un utilisateur qui
+souhaite accéder à la base de
+données :
+Par le dictionnaire de données
+Par le système d'exploitation
+Par le réseau
+Verrouillage de compte
+
+active le verrouillage
+automatique d'un compte
+lorsque l'utilisateur ne
+parvient pas à se connecter
+au système après un nombre
+défini de tentatives
+
+Verrouillage Tablespace
+de compte par défaut
+Mécanisme
+d'authentification
+
+Tablespace
+temporaire
+Domaine de
+sécurité
+
+Privilèges
+de rôle
+
+Quotas de
+tablespace
+Privilèges
+directs
+
+Tablespace par défaut
+définit l'emplacement de stockage des
+segments créés par un utilisateur
+1-3
+
+Limites
+relatives aux
+ressources
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Utilisateurs et sécurité
+Tablespace temporaire
+définit l'emplacement d'allocation des
+extents (ensembles de blocs contigus)
+par le serveur Oracle lorsque l'utilisateur
+exécute une opération dans laquelle les
+données triées sont écrites sur disque.
+Quotas de tablespace
+Les quotas de tablespace
+contrôlent la quantité d'espace
+physique de stockage allouée à
+un utilisateur dans les
+tablespaces de la base de
+données.
+
+Limites relatives aux ressources
+Vous pouvez définir des limites pour
+l'utilisation de ressources telles que le
+temps CPU, les entrées/sorties (E/S)
+logiques et le nombre de sessions
+ouvertes par l'utilisateur.
+1-4
+
+Verrouillage Tablespace
+de compte par défaut
+Mécanisme
+d'authentification
+
+Tablespace
+temporaire
+Domaine de
+sécurité
+
+Privilèges
+de rôle
+
+Quotas de
+tablespace
+Privilèges
+directs
+
+Limites
+relatives aux
+ressources
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Utilisateurs et sécurité
+Privilèges directs
+Les privilèges directs permettent de
+contrôler les actions qu'exécute
+l'utilisateur dans la base de données.
+
+Verrouillage Tablespace
+de compte par défaut
+Mécanisme
+d'authentification
+
+Tablespace
+temporaire
+Domaine de
+sécurité
+
+Privilèges
+de rôle
+
+Privilèges de rôle
+Vous pouvez accorder indirectement
+des privilèges à un utilisateur à l'aide de
+rôles.
+
+1-5
+
+Quotas de
+tablespace
+Privilèges
+directs
+
+Limites
+relatives aux
+ressources
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Schéma de base de données
+•
+
+Un schéma est un ensemble
+nommé d'objets.
+
+•
+
+Lorsqu'un utilisateur est
+créé, un schéma
+correspondant est
+également créé.
+
+•
+•
+
+Objets de schéma
+Tables
+Déclencheurs
+Contraintes
+Index
+Vues
+
+Un utilisateur ne peut être
+associé qu'à un seul
+schéma.
+
+Séquences
+
+Le nom utilisateur et le nom
+de schéma sont souvent
+utilisés indifféremment
+
+Types de données définis
+par l'utilisateur
+
+1-6
+
+Programmes stockés
+Synonymes
+
+Liens de base de données
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Liste de contrôle pour la création
+d'utilisateurs
+• Identifiez les tablespaces dans lesquels l'utilisateur
+a besoin de stocker des objets.
+• Déterminez les quotas applicables pour chaque
+tablespace.
+• Affectez un tablespace par défaut et un tablespace
+temporaire.
+• Créez un utilisateur.
+• Accordez des privilèges et des rôles à l'utilisateur.
+
+1-7
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Créer un utilisateur : authentification par la
+base de données
+• Définissez le mot de passe initial :
+CREATE USER USER1
+IDENTIFIED BY oracle
+DEFAULT TABLESPACE data01
+DEFAULT TEMPORARY TABLESPACE temp
+QUOTA 15M ON data01
+QUOTA 10M ON temp
+PASSWORD EXPIRE;
+
+1-8
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Créer un utilisateur
+Chaque compte utilisateur de base de données
+comporte :
+Un nom utilisateur unique
+ Une méthode d'authentification
+ Un tablespace par défaut
+ Un tablespace temporaire
+ Un profil utilisateur
+
+
+1-9
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Comptes d'administration prédéfinis
+• Deux administrateurs par défaut de la BD : SYS et
+SYSTEM
+• SYS : Administration de la BD et l’instance
+• SYSTEM : Administration de la BD
+• Deux rôles utilisés par les administrateur SYSDBA
+et SYSOPER (Hérite de SYSDBA sauf CREATE
+DATABASE)
+
+1-10
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Créer un utilisateur : authentification par le
+système d'exploitation
+• Le paramètre d'initialisation OS_AUTHENT_PREFIX
+indique le format des noms utilisateur.
+• Sa valeur par défaut est OPS$.
+CREATE USER OPS$SANAA
+IDENTIFIED EXTERNALLY
+DEFAULT TABLESPACE USERS
+TEMPORARY TABLESPACE temp
+QUOTA 15m ON data
+PASSWORD EXPIRE;
+Authentification par le système d'exploitation
+IDENTIFIED EXTERNALLY pour indiquer que l'utilisateur doit être authentifié par le système
+d'exploitation.
+Cette option est généralement utile lorsque l'utilisateur se connecte directement à la machine sur
+laquelle s'exécute le serveur Oracle.
+
+1-11
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modifier les quotas de tablespace d'un
+utilisateur
+• Vous pouvez modifier les quotas de tablespace d'un
+utilisateur dans les cas suivants :
+• lorsque la taille des tables appartenant à l'utilisateur
+augmente de manière imprévue,
+• lorsqu'une application est étendue et nécessite des
+tables ou des index supplémentaires,
+• lorsque les objets sont réorganisés et placés dans
+des tablespaces différents.
+• Procédez comme suit pour modifier le quota de
+tablespace d'un utilisateur :
+ALTER USER aaron
+QUOTA 0 ON USERS;
+1-12
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Supprimer un utilisateur
+• Supprimer un utilisateur
+DROP USER aaron;
+
+• La clause CASCADE permet de supprimer tous les objets
+d'un schéma avant de supprimer l'utilisateur.
+DROP USER aaron CASCADE;
+
+NB : Vous ne pouvez pas supprimer les utilisateurs qui
+sont connectés au serveur Oracle.
+
+1-13
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Obtenir des informations sur les
+utilisateurs
+• Interrogez les vues suivantes pour obtenir des
+informations sur les utilisateurs :
+• DBA_USERS
+• DBA_TS_QUOTAS
+SQL> SELECT username, default_tablespace
+2
+FROM dba_users;
+USERNAME
+--------SYS
+SYSTEM
+OUTLN
+DBSNMP
+HR
+OE
+1-14
+
+DEFAULT_TABLESPACE
+-----------------SYSTEM
+SYSTEM
+SYSTEM
+SYSTEM
+SAMPLE
+SAMPLE
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les privilèges
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les privilèges
+
+Qu’est ce qu'un privilège ?
+• Un privilège est un droit d'exécution d'un type donné
+d'instruction SQL ou un droit d'accès à l'objet d'un autre
+utilisateur.
+• Il autorise son propriétaire à :
+– se connecter à une base de données,
+– créer une table,
+– sélectionner des lignes dans la table d'un autre utilisateur,
+– exécuter la procédure stockée d'un autre utilisateur.
+
+1-16
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les privilèges
+• Il existe deux types de privilèges utilisateur Oracle :
+Privilèges système
+Chaque privilège système permet à un utilisateur d'effectuer une opération
+spécifique ou une catégorie d'opérations sur la base de données. Par exemple,
+le privilège lié à la création de tablespaces est un privilège système.
+
+Privilèges objet
+Chaque privilège objet autorise un utilisateur à exécuter une action spécifique
+sur un objet tel qu'une table, une vue, une séquence, une procédure, une
+fonction ou un package.
+
+1-17
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les privilèges
+• Dans sa tâche de contrôle des privilèges, un
+administrateur de base de données est chargé :
+– d'autoriser un utilisateur à effectuer un type d'opération,
+– d'accorder et de révoquer le droit d'effectuer certaines
+opérations système,
+– d'accorder des privilèges directement à des utilisateurs ou à
+des rôles,
+– d'accorder des privilèges à tous les utilisateurs (PUBLIC).
+
+1-18
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Privilèges système
+• Ces privilèges peuvent être classés comme suit :
+– Privilèges autorisant l'exécution d'opérations sur l'ensemble du
+système, tels que CREATE SESSION, CREATE TABLESPACE
+– Privilèges autorisant la gestion d'objets dans un schéma propre à
+l'utilisateur, tels que CREATE TABLE
+– Privilèges autorisant la gestion d'objets de n'importe quel schéma,
+tels que CREATE ANY TABLE
+
+• Les privilèges peuvent être gérés à l'aide des commandes
+LDD GRANT et REVOKE, qui permettent d'accorder et de
+révoquer des privilèges système à un utilisateur ou à un rôle
+
+1-19
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Accorder des privilèges système
+•
+
+•
+•
+
+•
+
+Commande :
+GRANT [Priv_SYSTEM|ROLE|ALL PRIVILEGES]
+To [USER|ROLE|PUBLIC]
+[WITH ADMIN OPTION]
+PUBLIC :affecté à tous les utilisateurs
+WITH ADMINOPTIONS : autorise celui qui a reçu le privilège de l’octroyer à
+un autre utilisateurs (Si l’utilisateur qui l’a octroyé est supprimé, les autres
+utilisateurs continueront le travail avec le privilège)
+Vue DBA_SYS_PRIVS : liste les privilèges systèmes dont les utilisateurs
+disposent actuellement
+
+1-20
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Accorder des privilèges système
+• Utilisez la commande GRANT pour accorder des
+privilèges système.
+• Le bénéficiaire peut ensuite accorder le privilège
+système à d'autres utilisateurs grâce à l'option
+ADMIN.
+
+GRANT CREATE SESSION TO emi;
+
+GRANT CREATE SESSION TO emi WITH ADMIN OPTION;
+
+1-21
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer des privilèges système
+• Utilisez la commande REVOKE pour révoquer un
+privilège système accordé à un utilisateur.
+• Les utilisateurs qui disposent d'un privilège système
+avec l'option ADMIN OPTION peuvent révoquer des
+privilèges système.
+• Seuls les privilèges accordés via la commande GRANT
+peuvent être révoqués.
+
+REVOKE CREATE TABLE FROM emi;
+
+1-22
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer des privilèges système accordés avec
+l'option ADMIN OPTION
+Scénario
+
+DBA
+
+Jeff
+
+Emi
+
+GRANT
+
+1. L'administrateur de base de données accorde le privilège système CREATE
+TABLE à Jeff avec l'option ADMIN OPTION.
+2. Jeff crée une table.
+3. Jeff accorde le privilège système CREATE TABLE à Emi.
+4. Emi crée une table.
+
+1-23
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer des privilèges système accordés avec
+l'option ADMIN OPTION
+1. L'administrateur de base de données révoque le privilège
+système CREATE TABLE précédemment accordé à Jeff.
+
+REVOKE
+
+DBA
+
+Jeff
+
+Emi
+
+Résultat :
+1. La table de Jeff n'est pas supprimée, mais il ne peut plus créer de
+table.
+2. La table d'Emi n'est pas supprimée et cette dernière dispose toujours
+du privilège système CREATE TABLE.
+
+1-24
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer des privilèges système accordés avec
+l'option ADMIN OPTION
+DBA
+
+Jeff
+
+Emi
+
+DBA
+
+Jeff
+
+Emi
+
+GRANT
+
+REVOKE
+
+1-25
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Privilèges Objet
+Q’u’est ce qu’un Privilèges Objet?
+
+• Un privilège d'objet est le droit d'effectuer une action
+particulière sur un objet ou d'accéder à l'objet d'un autre
+utilisateur. .
+•
+
+Les objets comprennent des tables, des vues, des index, des synonymes,
+…………
+
+. Le propriétaire d'un objet dispose de tous les privilèges d'objet pour cet
+objet, et ces privilèges ne peuvent pas être révoqués.
+Le propriétaire de l'objet peut accorder des privilèges d'objet pour cet objet
+à d'autres utilisateurs de la base de données.
+Un utilisateur avec le privilège ADMIN peut accorder et révoquer des
+privilèges d'objet aux utilisateurs qui ne sont pas propriétaires des objets
+
+1-26
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Privilèges Objet
+• Commande :
+GRANT [Priv_OBJET|[ALL] PRIVILEGES] ON object
+To [USER|ROLE|PUBLIC]
+[WITH GRANT OPTION]
+• WITH GRANT OPTIONS
+
+autorise celui qui a reçu le privilège de
+
+l’octroyer à un autre utilisateurs (Si l’utilisateur qui l’a octroyé est
+supprimé, les autres utilisateurs n’auront pas le privilège)
+• DBA_TAB_PRIVS : liste les privilèges objets dont les utilisateurs
+disposent actuellement
+
+1-27
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Accorder des privilèges objet
+• Utilisez la commande GRANT pour accorder des
+privilèges objet.
+• L'objet doit se trouver dans votre schéma ou vous
+devez avoir reçu le privilège avec l'option GRANT
+OPTION.
+
+GRANT EXECUTE ON dbms_output TO jeff;
+GRANT UPDATE ON emi.customers TO jeff WITH
+GRANT OPTION;
+
+1-28
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer des privilèges objet
+
+• Utilisez la commande REVOKE pour révoquer des
+privilèges objet.
+• Seul l'utilisateur qui a accordé un privilège objet
+peut le révoquer.
+REVOKE SELECT ON emi.orders FROM jeff;
+
+1-29
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer les privilèges objet accordés avec
+l'option WITH GRANT OPTION
+Scénario
+
+Bob
+
+Jeff
+
+Emi
+
+GRANT
+
+1. Jeff reçoit le privilège objet SELECT sur la table EMPLOYEES avec
+l'option GRANT OPTION.
+2. Jeff accorde ce privilège sur la table EMPLOYEES à Emi.
+
+1-30
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer les privilèges objet accordés avec
+l'option WITH GRANT OPTION
+1. le privilège SELECT de Jeff est révoqué
+REVOKE
+
+Bob
+
+Jeff
+
+Emi
+
+Résultat :
+1. le privilège d’Emi a été révoqué .
+
+1-31
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Révoquer les privilèges objet accordés avec
+l'option WITH GRANT OPTION
+Bob
+
+Jeff
+
+Emi
+
+Bob
+
+Jeff
+
+Emi
+
+GRANT
+
+REVOKE
+
+1-32
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Obtenir des informations sur les privilèges
+• Interrogez les vues suivantes pour obtenir des informations sur les
+privilèges :
+• DBA_SYS_PRIVS affiche la liste des privilèges système accordés
+aux utilisateurs et aux rôles.
+• SESSION_PRIVS affiche la liste des privilèges auxquels l'utilisateur
+a accès.
+• DBA_TAB_PRIVS affiche la liste de toutes les autorisations de
+privilèges sur les objets de la base de données.
+• DBA_COL_PRIVS décrit toutes les autorisations de privilèges sur
+les colonnes de la base de données.
+1-33
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gérer les rôles
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Rôles
+Qu’est ce q’un rôle ?
+
+Les rôles sont des groupes nommés de privilèges associés
+qui sont accordés à des utilisateurs ou à d'autres rôles. Ils
+facilitent l'administration des privilèges dans une base de
+données.
+
+1-36
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Rôles
+Utilisateurs
+
+SMI
+
+Rôles
+
+Privilèges
+
+CREATE
+TABLE
+
+1-37
+
+SMA
+
+HR_MGR
+
+HR_CLERK
+
+SELECT ON
+JOBS
+
+INSERT ON
+JOBS
+CREATE
+SESSION
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+SMP
+
+UPDATE
+ON JOBS
+
+Rôles
+CREATE ROLE role [NOT IDENTIFIED |
+IDENTIFIED
+{BY password | EXTERNALLY | GLOBALLY |
+USING package}]
+•
+
+Non identifié :
+
+CREATE ROLE oe_clerk;
+
+•
+
+Identifié par mot de passe :
+
+CREATE ROLE hr_clerk
+IDENTIFIED BY bonus;
+
+•
+
+Identifié de manière externe :
+
+CREATE ROLE hr_manager
+IDENTIFIED EXTERNALLY;
+1-38
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modifier les rôles
+• Utilisez ALTER ROLE pour modifier la méthode
+d'authentification.
+• Cette commande requiert l'option ADMIN ou le privilège
+ALTER ANY ROLE.
+ALTER ROLE oe_clerk
+IDENTIFIED BY order;
+ALTER ROLE hr_clerk
+IDENTIFIED EXTERNALLY;
+ALTER ROLE hr_manager
+NOT IDENTIFIED;
+
+1-39
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Activer et désactiver les rôles
+Commande :
+SET ROLE {role [ IDENTIFIED BY password ]
+[, role [ IDENTIFIED BY password
+]]...
+| ALL [ EXCEPT role [, role ]
+...]
+| NONE }
+
+• SET ROLE hr_clerk;
+SET ROLE oe_clerk IDENTIFIED BY order;
+
+SET ROLE ALL EXCEPT oe_clerk;
+
+1-40
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Supprimer des rôles
+•
+
+Lorsque vous supprimez un rôle :
+– il est retiré à tous les utilisateurs et rôles auxquels il
+était accordé,
+– il est supprimé de la base de données.
+
+•
+
+La suppression d'un rôle requiert l'option ADMIN
+OPTION ou le privilège DROP ANY ROLE.
+
+•
+
+Pour supprimer un rôle, utilisez la syntaxe suivante :
+
+DROP ROLE hr_manager;
+
+1-41
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Rôles prédéfinis
+CONNECT
+
+CREATE SESSION, SET CONTAINER
+
+SCHEDULER_
+ADMIN
+
+CREATE ANY JOB, CREATE JOB, EXECUTE ANY
+CLASS, EXECUTE ANY PROGRAM, MANAGE
+SCHEDULER
+
+DBA
+
+La plupart des privilèges système et plusieurs autres
+rôles. Ce rôle ne doit pas être accordé aux
+utilisateurs qui ne sont pas administrateurs.
+
+SELECT_
+CATALOG_ROLE
+
+Pas de privilèges système, mais plus de
+1600 privilèges objet sur le dictionnaire de données.
+
+1-42
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+1-43
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+

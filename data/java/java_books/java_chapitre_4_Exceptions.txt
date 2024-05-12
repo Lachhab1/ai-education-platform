@@ -1,0 +1,670 @@
+Chapitre 4
+
+La gestion des exceptions
+
+236
+
+Introduction
+ Une exception est une erreur qui se produit lors de
+l'exécution d'un programme.
+ Le langage Java offre un mécanisme qui permet de :
+1. Isoler la partie du code générant l'erreur
+2. Dissocier la détection et le traitement de cette erreur.
+
+ Lorsqu’une erreur est détectée, un objet Exception est
+créé : on dit qu'une exception est levée
+ Lorsqu’elle est traitée on dit qu’elle est capturée.
+
+Java - Dr A. Belangour
+
+237
+
+237
+
+1
+
+Rôle d’un objet exception
+ Un objet exception fournit une description de l'erreur
+qui s’est produite
+ Son rôle est de :
+
+
+Signaler qu’une erreur s’est produite
+
+
+
+Fournir un message décrivant l’erreur
+
+
+
+Fournir le numéro de la ligne où l’erreur s’est produite
+
+
+
+Fournir l’enchainement des appels des fonctions ou l’erreur
+s’est produite (pile des appels ou Stack trace)
+
+Java - Dr A. Belangour
+
+238
+
+238
+
+Rôle d’un objet exception
+ La classe exception
+
+
+Le Constructeur Exception(String message): prend en
+paramètre le message à afficher en cas d’erreur
+
+
+
+Quelques méthodes:
+ String getMessage( ) : retourne le message d’erreur
+ String toString() : retourne le nom de l’exception et le
+message d’erreur
+ void printStackTrace( ) : affiche le nom de
+l’exception, le message d’erreur et l’enchainement des
+appels des fonctions avec les numéros des lignes de
+code ou se trouve l’erreur.
+Java - Dr A. Belangour
+
+239
+
+239
+
+2
+
+Exceptions prédéfinis
+ Java dispose d’un ensemble d’exceptions prédéfinies
+ Ces exceptions correspondent aux erreurs les plus
+communes
+ La plupart des exceptions appartiennent au package
+java.lang et héritent de la classe RuntimeException
+ Les exceptions plus spécialisées sont intégrées dans
+les packages de leurs technologies respectives
+
+Java - Dr A. Belangour
+
+240
+
+240
+
+Exceptions prédéfinis
+ Exemples :
+
+
+ArithmeticException : erreurs arithmétiques comme dans la
+division par zéro
+
+
+
+ArrayIndexOutOfBoundsException : index d’un tableau
+endehors de ses limites
+
+
+
+NullPointerException : tentative d’utiliser un objet qui est
+null
+
+
+
+ClassCastException : Cast invalide.
+
+Java - Dr A. Belangour
+
+241
+
+241
+
+3
+
+Exceptions personnalisées
+ Il existe des situations ou nous aimerions détecter un
+type personnalisé d’erreurs
+ Exemple :
+
+
+Une note en dehors de l’intervalle [0,20]
+
+
+
+Un nom ne respectant pas une forme particulière
+
+
+
+…etc
+
+ Dans ce cas il faut définir une classe pour cette
+exception.
+ Cette dernière dois hériter de la classe Exception.
+
+Java - Dr A. Belangour
+
+242
+
+242
+
+Exceptions personnalisées
+ Exemple :
+ Classe Exception pour Une note en dehors de
+l’intervalle [0,20]:
+public class NoteDebordanteException extends Exception {
+public NoteDebordanteException (String message){
+super(message);
+}
+}
+
+Java - Dr A. Belangour
+
+243
+
+243
+
+4
+
+Lever une exception
+ Dans une méthode, la détection d’une erreur est faite
+grâce au code suivant : throw new ClasseDeLexception()
+ Cette méthode doit aussi l’indiquer dans sa signature
+comme suit : throws ClasseDeLexception
+ Pour permettre d’informer les méthodes appelantes
+ Exemple :
+public int diviser(int x, int y) throws ArithmeticException {
+if (y==0)
+throw new ArithmeticException();
+return (x/y);
+}
+Java - Dr A. Belangour
+
+244
+
+244
+
+Lever une exception
+ Remarque :
+
+
+Une méthode peut détecter plusieurs exceptions et doit les
+déclarer dans son en-tête comme suit :
+
+
+
+…methode (arguments) throws Exception1, Exception2,..{
+}
+
+Java - Dr A. Belangour
+
+245
+
+245
+
+5
+
+Lever une exception personnalisée
+ Exemple d’Utilisation :
+public void setNote (float note) throws NoteDebordanteException {
+if ((note<0)||(note>20))
+throw new NoteDebordanteException(" Erreur note qui
+déborde" );
+this.note=note;
+}
+
+Java - Dr A. Belangour
+
+246
+
+246
+
+Comportement face à une exception
+ Soit une méthode methode1() qui lève une exception
+ Et soit une méthode methode2() appelant methode1()
+
+ Methode2 a deux choix :
+1) Ne pas traiter l’exception : Dans ce cas elle doit déclarer
+l’exception dans sa signature avec « throws »
+2) Capturer ou traiter l’exception : Dans ce cas elle doit
+recourir à try/catch
+
+Java - Dr A. Belangour
+
+247
+
+247
+
+6
+
+Capture d'une exception
+ La gestion d'une exception se fait selon le
+schéma suivant :
+try{
+appel de la fonction susceptible de générer l'exception
+}
+catch (Exception e){
+traiter l'exception e
+}
+instruction suivante
+
+ Remarque :
+
+
+En cas d'exception les instructions qui suivent le lancement
+de l'exception sont ignorées.
+Java - Dr A. Belangour
+
+248
+
+248
+
+Capture d'une exception : Exemple
+ Soit Etudiant une classe composée de :
+
+
+
+
+
+Attributs : nom de type String et moyenne de type float
+Constructeur paramétré
+Getters et setters
+toString()
+
+ Ecrire une Classe MoyenneDebordanteException
+permettant de signaler la non appartenance de la note
+à l’intervalle [0,20]
+ Ecrire une classe Main pour le test.
+public class MoyenneDebordanteException extends Exception {
+public MoyenneDebordanteException(String msg) {
+super(msg);
+}
+}
+Java - Dr A. Belangour
+
+249
+
+249
+
+7
+
+Capture d'une exception : Exemple
+public class Etudiant {
+private String nom;
+private float moyenne;
+public Etudiant(String nom, float moyenne) throws MoyenneDebordanteException {
+if ((moyenne<0)||(moyenne>20))
+throw new MoyenneDebordanteException("La moyenne déborde de l'intervalle 0,20");
+this.nom = nom;
+this.moyenne = moyenne;
+}
+public String getNom() { return nom; }
+public void setNom(String nom) {this.nom = nom;}
+public float getMoyenne() {return moyenne;}
+public void setMoyenne(float moyenne) throws MoyenneDebordanteException {
+if ((moyenne<0)||(moyenne>20))
+throw new MoyenneDebordanteException("La moyenne déborde de l'intervalle 0,20");
+this.moyenne = moyenne;
+}
+@Override
+public String toString() {
+return "Etudiant{ nom = " + nom + ", moyenne=" + moyenne + '}';
+}
+Java - Dr A. Belangour
+250
+}
+
+250
+
+Capture d'une exception : Exemple
+public class Main {
+public static void main(String[] args) {
+try { Etudiant etudiant1=new Etudiant("Omar",16);
+System.out.println(etudiant1.toString());
+Etudiant etudiant2=new Etudiant("Ali",22);
+System.out.println(etudiant2.toString());
+} catch (MoyenneDebordanteException ex) {
+ex.printStackTrace();
+}
+}
+}
+
+ Résultat de l’exécution :
+
+Java - Dr A. Belangour
+
+251
+
+251
+
+8
+
+Capture de plusieurs exceptions
+ Cas d'une instruction levant plusieurs
+exceptions :
+try {
+fonction susceptible de générer l'exception }
+catch (Exception1 e){ traitement 1 }
+catch (Exception2 e){traitement 2 }
+…
+catch (ExceptionN e){traitement N }
+instruction suivante
+Java - Dr A. Belangour
+
+252
+
+252
+
+Capture de plusieurs exceptions
+ Depuis la version 7 de Java, il est possible de réécrire
+le code précédent sous la forme :
+try {
+fonction susceptible de générer l'exception }
+catch (Exception1 | ... | ExceptionN e){
+traitement ;
+}
+instruction suivante
+
+ Remarque : Dans catch il faut commencer par
+exceptions les plus précises en premier sinon
+Un message d'erreur est émis par le compilateur.
+Java - Dr A. Belangour
+
+253
+
+253
+
+9
+
+Capture de plusieurs exceptions
+ Cas de plusieurs instructions levant plusieurs
+exceptions :
+try {
+
+}
+
+catch (){ }
+try {
+
+}
+
+catch (){ }
+try {
+
+}
+
+catch (){ }
+…
+Java - Dr A. Belangour
+
+254
+
+254
+
+Le bloc finally
+ Certaines ressources peuvent rester non libérée après
+qu’une exception sois levée.
+ Pour forcer le compilateur à exécuter certaines
+instructions, qu’il y ait exception ou non, ils doivent être
+placées dans un bloc finally.
+ Remarque :
+
+
+Ce bloc est facultatif !
+
+Java - Dr A. Belangour
+
+255
+
+255
+
+10
+
+Le bloc finally
+ Structure
+try {
+}
+catch (){
+}
+finally {
+}
+instruction suivante
+
+Java - Dr A. Belangour
+
+256
+
+256
+
+Hiérarchie des exceptions
+• Erreur grave dans machine
+virtuelle ou sous système Java.
+• Arrêt immédiat de l’application
+
+Object
+• Erreurs moins graves
+
+Throwable
+Error
+
+Exception
+
+RunTimeException
+
+IOException
+
+• N'ont pas besoin d'être
+détectées impérativement par
+des blocs try/catch
+
+Java - Dr A. Belangour
+
+257
+
+257
+
+11
+
+Hiérarchie des exceptions
+ La classe Throwable
+ Classe de base pour le traitements des erreurs.
+ Possède quatre constructeurs :
+ Throwable() : constructeur par défaut
+ Throwable(String) : constructeur avec un message
+qui décrit l'exception.
+ Throwable(Throwable cause) : dans le cas ou
+l’exception est causée par une autre exception.
+ Throwable(String message, Throwable cause) :
+constructeur avec message et cause.
+
+Java - Dr A. Belangour
+
+258
+
+258
+
+Hiérarchie des exceptions
+ Principales méthodes :
+ String getMessage( ) : lecture du message
+ void printStackTrace( ) : affiche l'exception et l'état
+de la pile d’exécution au moment de son appel
+
+Java - Dr A. Belangour
+
+259
+
+259
+
+12
+
+Hiérarchie des exceptions
+
+
+Exemple:
+public class TestException {
+public static void main(java.lang.String[] args) {
+int i = 3; int j = 0;
+try { System.out.println("résultat = " + (i / j)); }
+catch (ArithmeticException e) {
+
+}
+
+System.out.println("getmessage="+e.getMessage());
+System.out.println("toString = "+e.toString());
+e.printStackTrace();
+}
+}
+
+Résultat :
+
+getmessage = / by zero
+toString = java.lang.ArithmeticException: / by zero
+printStackTrace = java.lang.ArithmeticException: / by
+zero at tests.TestException.main(TestException.java:24)
+Java - Dr A. Belangour
+
+260
+
+260
+
+Contrôle des exceptions
+ Lorsque Java oblige la déclaration des exceptions dans
+l'en tête de la méthode, ces exceptions sont dites
+contrôlées (checked).
+ Message de Java : « nom-exception must be caught or it
+must be declared in the throws clause of this method ».
+ Les exceptions et erreurs héritant de RunTimeException
+et Error sont non contrôlées (unchecked)
+ ils peuvent être capturées mais n'ont pas a être
+déclarées.
+ Toutes les autres exceptions sont contrôlées.
+Java - Dr A. Belangour
+
+261
+
+261
+
+13
+
+Chaînage des exceptions
+ Dans le traitement d’une exception on ne se
+contente pas que d’afficher le message d’erreur.
+ Souvent on a recours à un traitement durant lequel
+nous faisons appel à une instruction qui peut lever
+une autre exception.
+ Cette nouvelle exception doit être liée avec
+l’exception d’origine pour conserver l'empilement
+des exceptions levées durant les traitements.
+
+Java - Dr A. Belangour
+
+262
+
+262
+
+Chaînage des exceptions
+ Il y a deux façons de chaîner deux exceptions :
+1) Utiliser le constructeur de Throwable qui attend un
+paramètre Throwable représentant la cause.
+Exemple :
+
+catch(Exception1 e1) {
+….
+throw new Exception2(e1);
+// ou throw new Exception2 ("un message" , e);
+}
+
+2) Utiliser la méthode initCause() d'une instance de Throwable
+Exemple :
+catch(Exception1 e1) {
+throw (Exception2) new Exception2().initCause(e1);
+}
+Java - Dr A. Belangour
+
+263
+
+263
+
+14
+
+Chaînage des exceptions
+ Exemple :
+package testchainageexception;
+public class MonException extends Exception{
+// constructeur 1
+MonException(String message){
+super(message);
+}
+// constructeur 2
+MonException(String message , Throwable cause){
+super(message, cause);
+}
+}
+
+Java - Dr A. Belangour
+
+264
+
+264
+
+Chaînage des exceptions
+package testchainageexception;
+public class TestChainageException {
+public static int Division (int x, int y) throws MonException{
+int resultat=0;
+try { resultat=x/y; }
+catch(ArithmeticException e){
+throw new MonException("Attention Il y a une exception !!",e);
+}
+return resultat;
+}
+
+Java - Dr A. Belangour
+
+265
+
+265
+
+15
+
+Chaînage des exceptions
+public static void main(String[] args) {
+int a=3,b=0,z;
+try { z=Division(a, b); }
+catch(MonException e){
+e.printStackTrace();
+// e.getCause().printStackTrace(); pour n’afficher que la cause
+}
+}
+}
+
+Java - Dr A. Belangour
+
+266
+
+266
+
+Chaînage des exceptions
+ Résultat :
+testchainageexception.MonException: Attention Il y a une exception !!
+
+at
+
+testchainageexception.TestChainageException.Division(TestChainageExcepti
+on.java:27) at
+testchainageexception.TestChainageException.main(TestChainageException
+.java:15)
+Caused by: java.lang.ArithmeticException: / by zero
+
+at
+
+testchainageexception.TestChainageException.Division(TestChainageExcepti
+on.java:25)
+... 1 more
+
+Java - Dr A. Belangour
+
+267
+
+267
+
+16
+
+

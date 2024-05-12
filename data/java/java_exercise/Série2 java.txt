@@ -1,0 +1,127 @@
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Java : Série 2
+Exercice 1 :
+Ecrire un programme java qui recueille une somme d’argent en dirhams et qui
+permet de dire combien de billets de 200 dh, de 100 dh, de 50 dh, de 20 dh et de
+pièces de 1 dh elle contient.
+Exemple : 2773 dh contient 13 billets de 200 dh, 1 billet de 100 dh,1 billet de 50 dh, 1
+billet de 20 dh et 3 dirhams.
+Reprendre le programme précédent (décomposition d’une somme d’argent) en
+réalisant une décomposition en procédures permettant de faire les calculs et
+l'affichage et de réduire les instructions qui se reproduisent dans le programme.
+
+Exercice 2 :
+Écrire des fonctions effectuant les traitements suivants :
+1- le produit des éléments d’un tableau d’entiers.
+2- si un tableau est l’inverse d’un autre tableau qui a la même taille.
+Exemple : le tableau suivant
+11
+
+34
+
+77
+
+31
+
+87
+
+97
+
+100
+
+66
+
+92
+
+678
+
+77
+
+34
+
+11
+
+Est l’inverse du tableau
+678
+
+92
+
+66
+
+100
+
+97
+
+87
+
+31
+
+3- décalage des éléments d’un tableau d’un certain nombre de positions
+(sans passer par un autre tableau).
+Exemple : Tableau avant décalage
+11
+
+34
+
+77
+
+31
+
+87
+
+97
+
+100
+
+66
+
+92
+
+678
+
+31
+
+87
+
+97
+
+100
+
+66
+
+Tableau après décalage de 2 positions :
+92
+
+678
+
+11
+
+34
+
+77
+
+Ecrire un programme java qui fait un appel à ces fonctions.
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Exercice 3 :
+- Ecrire un programme java qui calcule le produit des éléments de l’anti-diagonale
+d’une matrice carrée d’ordre n.
+Exemple : Dans la matrice 4x4 suivante l’anti-diagonale est représentée en gris.
+
+- Reprendre le programme précédent en réalisant une décomposition en fonctions
+permettant de faire les calculs et l'affichage et de réduire les instructions qui se
+reproduisent dans le programme.
+
+

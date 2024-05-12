@@ -1,0 +1,148 @@
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Java- Série 4
+Exercice 1
+1- Écrire une classe Point permettant de décrire les coordonnées d'un point dans le plan. Cette
+classe a :
+- Deux attributs x (l’abscisse) et y (l’ordonnée) de type double
+- Un attribut nom de type caractère représente le nom d’un point.
+- Un constructeur public Point(double x, double y, char nom) qui permet d'initialiser le
+point lors de sa création.
+- Des méthodes public double getNom(), public double getX() et public double getY() qui
+retournent, respectivement les valeurs de x, de y et de l’attribut nom.
+2. Ecrire une classe Polygone représentant un polygone par un tableau d’objet de type Point.
+Cette classe comportera les méthodes suivantes :
+- public Polygone(Point[] sommets) : construction d’un polygone à partir du tableau de ses
+sommets, si le nombre de sommets est inférieur ou égale à 2 il faut lever une exception
+InvalideNombreSommetException (Cette exception de type Exception est à définir).
+- public double aire() : calcul de la surface du polygone. Sachant que l’aire S d'un polygone
+ayant les sommets est :
+
+- public String type() : La fonction type rendra le type du polygone dont il s’agit (“polygone”
+dans le cas présent).
+On ne demande pas d’implémenter les méthodes pour l’instant (elle peuvent renvoyer 0).
+- public Point getSommetMaxX() : permet d’obtenir le point d’abscisse maximale du
+polygone. Au cas où il y en aurait plusieurs, on retournera celui ayant la plus petite ordonnée.
+3. Ecrire une classe de Test qui crée un Polygone et appelle les différentes méthodes.
+Exercice 2
+a. Ecrire une classe Triangle qui hérite de la classe Polygone. Elle comportera un constructeur
+Triangle(Point p1, Point p2, Point p3) qui permet de construire un triangle ayant les trois
+sommets indiqués.
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+b. De la même façon, écrire une classe Quadrilatere qui hérite de la classe Polygone. Puis une
+classe Rectangle qui hérite de Quadrilatere et implémenter la fonction type() sur ces classes.
+c. Implémenter la fonction aire() sur les classes Rectangle, Triangle et Quadrilatere.
+d. Définir une classe PolygoneRegulier, sous-classe de Polygone, disposant d’un
+constructeur :
+
+
+public PolygoneRegulier(Point C, Point P, int nombreSommets) /*construction d’un
+polygone régulier ayant C pour centre, le nombre de sommets indiqués et dont le
+point P est un des sommets (voir la figure ; quelques indications sont données cidessous).*/et implémenter sa fonction aire (). Implémenter une nouvelle fonction
+perimetre().
+
+e. Écrivez une classe TestPolygone avec une méthode main construisant et affichant des
+polygones de diverses sortes et permettant de vérifier que la méthode aire est correcte.
+f. Voyez-vous pourquoi certains membres de la classe Polygone ont été déclarés protected au
+lieu de private ? Aurions-nous pu faire autrement ?
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Exercice 3 : (devoir)
+1. Ecrire le code de la classe Point3D qui permet de modéliser un point de l’espace ayant les
+coordonnées x, y et z. Doter cette classe des méthodes suivantes :
+- Constructeur avec arguments.
+- La méthode equals
+- La méthode toString
+- Méthodes pour accéder aux différents attributs.
+- Méthode deplacer(double dx, double dy, double dz) qui permet de déplacer un point dans
+l’espace. (Exemple M(x,y,z) deviendra M(x+dx, y+dy, z+dz) après le déplacement) .
+2. On souhaite disposer d’une hiérarchie de classe permettant de manipuler des formes
+tridimensionnelles. Pour cela on propose la hiérarchie de classes ci-dessous :
+
+On veut qu’il soit toujours possible d’étendre la hiérarchie en dérivant de nouvelles classes,
+mais on souhaite pouvoir imposer que ces dernières disposent toujours des méthodes
+suivantes :
+- calculerSurface : calculant la surface de la forme.
+- calculerVolume : calculant le volume de la forme.
+- calculerPoids : calculant le poids de la forme. (poids = volume × densité).
+Quelle solution proposez-vous ?
+3. Les contraintes sur les autres classes sont les suivantes :
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+- La classe Cube ne pourra pas être dérivée.
+- Chaque forme possède un attribut de type Point3D qui représente son centre de gravité et un
+attribut réel représentant sa densité. Ces deux attributs sont accessibles via des accesseurs.
+La classe forme dispose d’une méthode deplacer permet de déplacer une forme en prenant
+comme paramètres trois réels représentants les composantes x, y et z d’un vecteur de
+translation.
+- Un objet de type Boule est caractérisé par son centre de gravité, sa densité et son rayon.
+- Un objet de type CylindrePlein est caractérisé par son centre de gravité, sa densité, une
+hauteur et un rayon.
+- Un objet de type Brique est caractérisé par son centre de gravité, sa densité, une largeur, une
+longueur et une hauteur.
+- Un objet de type Cube est une brique pour laquelle largeur = longueur = hauteur.
+De plus, toute forme est capable de donner sa représentation sous la forme d’une chaîne de
+caractères contenant le nom de sa classe et la description textuelle de chacun de ses attributs.
+Exemple : la chaîne de caractères produite pour un objet de la classe Brique : [Brique centre
+de gravité : [Point3D x :10.0 , y : 4.0, z : 3.0] densité : 1.2 largeur : 10.5 longueur : 14.3
+hauteur : 4.6]
+
+-
+
+Ecrire le code des classes Forme, Brique et Cube.
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+4- L’application permet de créer des documents graphiques, chaque document est constitué de
+plusieurs formes géométriques. On représente sur les deux diagrammes de classes ci-dessous
+(Figure 1 et Figure 2) deux approches pour implémenter les classes de domaine de cette
+application.
+
+- Donner deux inconvénients de l’approche présentée par le diagramme de la figure 2.
+- Expliquer les avantages de l’approche présentée par le diagramme de la figure 1.
+- Quel est le mécanisme de la programmation orientée objet qu’il faut mettre en œuvre pour
+réaliser la conception présentée sur la figure 1.
+- Implémenter la classe DocumentGraphique selon l’approche de la figure 1. Doter cette
+classe des méthodes
+- addForme : Ajoute une forme au document.
+- removeForme(int pos) : Supprime une forme du document.
+- getAllCubes : retourne la liste des cubes dessinés sur un document. –
+poidsTotal qui permet de calculer le poids total des formes contenues dans le document.
+
+

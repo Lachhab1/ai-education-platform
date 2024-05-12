@@ -1,0 +1,527 @@
+J2EELes Servlets
+Benlahmar El habib
+Partie trois
+
+
+INTRODUCTION
+Une servlet est un programme qui s'exécute côté serveur en tant qu'extension du serveur.
+La technique des CGI en Java, MAIS
+Sans créer de processus + toute la puissance de Java (accès aux divers domaines de l'informatique: BD, multimédia, réseau, objets distribués, composants, etc.)
++ indépendance de la plate-forme et du serveur
+
+INTRODUCTION
+Servlets
+Scripts serveur écrit en Java
+Servlets de Base : FileServlet, CGIServlet, …
+HttpServlet
+Exécution dans un espace isolé (Web Application)
+ Spécification : Sun (sous partie de J2EE)
+ Implémentation de référence : Apache Group (Jakarta Tomcat)
+ Différence avec les CGI et les LD (NSAPI, ISAPI)
+performance sur les passages des paramêtres (vs CGI)
+sûreté de fonctionnement (NSAPI, ISAPI)
+
+Moteurs de servlets
+Pour exécuter des servlets, il faut un moteur de servlets dans le serveur Web.
+Ces moteurs sont des plug-in pour des serveurs Web existants
+ou bien des serveurs Web aux mêmes
+Plug-in : deux candidats : Jrun (www.allaire.com), tomcat (jakarta.apache.org)
+
+Programmation des servlets
+Utilise deux paquetages :
+javax.servlet : paquetage générique
+javax.servlet.http : paquetage pour serveurs Web
+Ces paquetages ne sont pas dans J2SE 1.3
+Sont des paquetages supplémentaires.
+Il sont aussi intégrés dans J2EE voir à http://java.sun.com/j2ee/
+
+L'API servlet
+L'API servlet regroupe un ensemble de classes dans deux packages :
+javax.servlet : contient les classes pour développer des serlvets génériques indépendantes d'un protocole.
+javax.servlet.http : contient les classes pour développer des servlets qui reposent sur le protocole http utilisé par les serveurs web.
+
+L'API servlet
+
+L'API servlet
+javax.servlet
+Nom 
+Role
+Les interfaces
+RequestDispatcher
+Définition d'un objet qui permet le renvoi d'une requête vers une autre ressource du serveur (une autre servlet, une JSP ...)
+Servlet
+Définition de base d'une servlet
+ServletContext 
+Définition d'un objet pour obtenir des informations sur le contexte d'execution de la servlet
+
+ServletConfig 
+Définition d'un objet pour configurer la servlet
+ServletRequest 
+Définition d'un objet contenant la requête du client
+ServletResponse 
+Définition d'un objet qui contient la reponse renvoyée par la servlet
+SingleThreadModel 
+Permet de définir une servlet qui ne répondra qu'à une seule requête à la fois
+
+L'API servlet
+javax.servlet
+Nom 
+Role
+Les classes
+GenericServlet
+Classe définissant une servlet indépendante de tout protocole
+ServletInputStream 
+Flux permet la lecture des donnes de la requête cliente
+ServletOutPutStream 
+Flux permettant l'envoie de la reponse de la servlet
+
+Les exceptions 
+SevletException
+Exception générale en cas de problème durant l'exécution de la servlet
+UnavailableException 
+Exception levée si la servlet n'est pas disponible
+
+L'API servlet
+javax.servlet.http
+Nom 
+Role
+Les interfaces
+HttpServletRequest 
+Hérite de ServletRequest : définit un objet contenant une requête selon le protocole http
+HttpServletResponse 
+Hérite de ServletResponse : définit un objet contenant la reponse de la servlet selon le protocole http
+HttpSession 
+Définit un objet qui représente une session
+
+Les classes
+
+Cookie
+Classe représentant un cookie (ensemble de données sauvegardées par le brower sur le poste client)
+HttpServlet 
+Hérite de GenericServlet : classe définissant une servlet utilisant le protocole http
+HttpUtils 
+Classe proposant des méthodes statiques utiles pour le développement de servlet http
+
+L'interface Servlet
+Cette interface définit 5 méthodes qui permettent au conteneur web de dialoguer avec la servlet:
+void service (ServletRequest req,ServletResponse res)
+void init(ServletConfig conf)
+ServletConfig getServletConfig()
+void destroy()
+String getServletInfo()
+
+Les méthodes init(), service() et destroy() assurent le cycle de vie de la servlet en étant respectivement appelées lors de la création de la servlet, lors de son appel pour le traitement d'une requête et lors de sa destruction.
+
+La requête et la réponse
+L'interface ServletRequest définit plusieurs méthodes qui permettent d'obtenir des données sur la requête du client :
+ServletInputStream getInputStream()  
+//Permet d'obtenir un flux pour les données de la requête
+BufferedReader getReader() 
+//Idem
+L'interface ServletResponse définit plusieurs méthodes qui permettent de fournir la réponse faite par la servlet suite à ces traitements :
+SetContentType  	
+//Permet de préciser le type MIME de la réponse
+ServletOutputStream getOutputStream()
+ // Permet d'obtenir un flux pour envoyer la réponse
+PrintWriter getWriter()  	
+//Permet d'obtenir un flux pour  envoyer la réponse
+
+Gestion des servlets
+
+Les états d'une servlet
+Le passage d'un état à un autre est automatique fait par le conteneur de servlets.
+
+Exemple de ServletHello World !
+import java.io.*; import javax.servlet.*; 
+public class HelloServlet extends GenericServlet  { public void service(ServletRequest req, ServletResponse res)        throws ServletException, IOException {   PrintStream out = new PrintStream(res.getOutputStream());   out.println("Hello World!");   } public String getServletInfo() {   return "Hello World Servlet";   } } 
+
+
+L'interface ServletRequest
+permet de repérer tous les paramètres de la requête au moyen des méthodes:
+public abstract int getContentLength() 
+public abstract String getContentType() 
+public abstract String getProtocol() 
+public abstract String getScheme() 
+public abstract String getServerName() 
+public abstract int getServerPort() 
+public abstract String getRemoteAddr() 
+public abstract String getRemoteHost() 
+public abstract String getRealPath(String path) 
+public abstract ServletInputStream getInputStream() throws IOException 
+public abstract String getParameter(String name) 
+public abstract String[] getParameterValues(String name) 
+public abstract Enumeration getParameterNames() 
+public abstract Object getAttribute(String name) 
+
+L'interface ServletResponse
+dispose de trois méthodes qu'il faut utiliser pour retourner une réponse. 
+
+public abstract void setContentLength(int len)
+public abstract void setContentType(String type) 
+public abstract ServletOutputStream getOutputStream() throws IOException 
+
+
+
+Descripteur de déploiement
+
+Creation
+A partir de quel moment la servlet est réellement créée et quel est l'événement qui fait qu'elle n'existe plus ?
+Pour la phase de création, c'est au développeur de décider. Pour cela, il indique dans le descripteur de déploiement ce qu'il désire faire grâce à l'élément <load-on-start-up>. 
+<servlet> 
+<load-on-start-up>5</load-on-start-up>... 
+</servlet> 
+L'élément <load-on-start-up> lorsqu'il est présent, contient un entier positif qui indique qu'il faut charger la servlet au démarrage du serveur.
+ L'ordre de chargement des servlets est déterminé par cette valeur. 
+Les servlets ayant la plus petite valeur sont chargées les premières. En cas de valeurs égales, l'ordre de chargement est arbitraire. 
+Si l'élément <load-on-start-up> est absent dans le descripteur de déploiement, la servlet est chargée lors de la première requêtes donnée par le client.
+
+
+javax.servlet.http
+Une servlet doit implémenter l'interface javax.servlet.http
+
+Elle doit comporter l’une des deux méthodes :
+doGet() pour les requêtes http de type GET
+doPost() pour les requêtes http de type POST
+
+
+Récupération de paramètres 
+public void doGet(HttpServletRequest req, HttpServletResponse rep)
+      throws ServletException, IOException{
+
+  Enumeration liste =req.getParameterNames();
+  String [] valeurs = req.getParameterValues();
+  String val1 = req.getParameter(''param1'');
+
+
+Exemple : annuaire Mastere
+<HTML>
+<HEAD><TITLE> ANNUAIRE </TITLE></HEAD>
+<BODY BGCOLOR="#FFFFFF"<CENTER>
+<CENTER><H1>ANNUAIRE DU DESS TIIR </H1></CENTER>
+<HR><CENTER>
+<H2>Recherche de coordonnées </H2></CENTER>
+<P> Tapez le début du nom de la personne recherchée:
+<P><FORM METHOD=POST ACTION=annuaire >
+<INPUT TYPE=TEXT NAME="nom" SIZE=20  MAXLENGTH=30 VALUE="">
+<P><INPUT TYPE=SUBMIT NAME="go" VALUE="RECHERCHER">
+<INPUT TYPE=RESET NAME="reset" VALUE="ANNULER">
+</FORM>
+</BODY></HTML>
+
+
+Annuaire (Servlet) 
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+ public class Annuaire extends HttpServlet{
+ public void doPost( HttpServletRequest req, HttpServletResponse res)
+   throws ServletException, IOException{
+    res.setContType("text/html");
+    PrintWriter out=res.getWriter();
+    out.println("<HEAD><TITLE>Réponse annuaire </TITLE></HEAD><BODY>");
+    out.println("<HR>");
+    try{
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
+      String url ="jdbc:odbc:mabase";
+      java.sql.Connection c=DriverManager.getConnection(url,"","");
+
+
+ Annuaire Mastere(Servlet)-Suite-
+java.sql.Statement st = c.createStatement();
+     java.sql.ResultSet rs = 
+       st.executeQuery("Select * from matable where nom like '"
+          +req.getParameter("nom"+"*'"));
+     rs.next();
+     out.println(rs.getString("prenom")+" "+rs.getString("nom") );
+   }
+   catch (SQLException e){
+      out.println("Cette personne n'existe pas");
+   }
+   out.println("<P><A href = annuaire.html> Retour</A>"</P>);
+   out.println("</BODY>");
+   out.close();
+ }
+  public String getServletInfo(){
+   return "Servlet Annuaire";
+  }
+
+
+Autre technique (param ds web.xml)
+
+Autre technique
+
+Autre technique (dans init() )
+
+Autre technique
+
+Autre technique
+
+Paramètres de l'application Web
+
+Paramètres de l'application Web
+
+Les pages d'erreur : <error-page>
+Au lieu du try …catch
+<error-page> 
+<exception-type> java.lang.NumberFormatException
+</exception-type> 
+<location>/WEB-INF/NombreIncorrect.html
+</location> 
+</error-page> 
+ou/et les sous-éléments suivant :
+<error-page> 
+<code-type>500</exception-type> 
+<location>
+/WEB-INF/ErreurServeur.html
+</location> 
+</error-page>
+
+Exemple
+
+Les cookies
+Ajout de cookies à l ’entête de la réponse
+void HttpServletResponse. addCookie( Cookie  cookie)
+Le cookie peut être un cookie récupéré dans la requête
+Et modifié avant d’être ajouté à la réponse
+
+Sessions : javax. servlet. http. HttpSession
+Garder la mémoire des informations d'une page à l'autre :
+Utiliser les cookies (sécurité!)
+Syntaxe CGI : paramètres dans l'URL
+Champs ``HIDDEN'' de formulaires
+<INPUT TYPE=''HIDDEN'' NAME=''PARAM1''VALUE=''VAL1''>
+Objet HttpSession
+ HttpSession session=request.getSession(true);
+ Classe objet = (Classe) session.getValue(''param1'');
+Méthodes : getValue(), putValue(), removeValue()
+HttpSession session = req.getSession(true);
+If (session.isNew()){
+    session.putValue('‘toto'', new int[] {0});
+ }
+Int[] toto = (int[]) session.getValue('‘toto'');
+
+
+
+Le suivi de session
+Le serveur maintient une session de 2 manières :
+Cookie (Name: SESSIONID Value: To1010mC8601021835741167At)  
+les cookies peuvent être désactivés sur le navigateur
+Réécriture des URLs
+ Ouverture/récupération d ’une session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+	// la  session  est  récupérée  ou  null si  elle  n ’existait  pas  déjà
+javax. servlet. http. HttpSession session =  req. getSession( true);
+ 	//la  session  est  récupérée  ou  ouverte  si  elle  n ’existait  pas  déjà
+ Invalidation d ’une session
+	javax. servlet. http. HttpSession session =  req. getSession( false);
+	session. invalidate();   la  session  est  invalidée ( i. e.  fermée)
+
+Information sur la session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+ L ’identifiant
+String  sessionid=  session. getId(); // par  exemple: To1010mC8601021835741167At
+ La date de création
+long  datecreation=  session. getCreationTime(); // nb  de  ms  depu s  1/ 1/ 1970: 00: 00
+ La date du dernier accès
+long  datelastaccess=  session. get astAccessedTime(); 
+ Exemple
+HttpSession session =  req. getSession( true);
+if( session. get astAccessedTime() - session. getCreationTime() >  5* 60* 1000 ) {
+session. invalidate();
+}
+
+Information sur la session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+ Méthode de suivi de session
+boolean HttpServletRequest. isRequestedSessionIdFromCookie()
+	// test  si  le  suivi  de  session  utilise  un  cookie
+boolean HttpServletRequest. isRequestedSessionIdFromUR ()
+	// test  si  le  suivi  de  session  utilise  la  réécriture  d ’UR
+ Réécriture des URL (cas isRequestedSessionIdFromURL )
+les URL générées doivent être encodées pour intégrer le suivi de session
+String  HttpServletResponse. encodeRedirectUR (String  url) 
+String  HttpServletResponse. encodeUR (String  url)
+Exemple
+res. sendRedirect( res. encodeRedirectUR (" servlet login");
+
+Liaison d ’objets à une session
+javax. servlet. http. HttpSession session =  req. getSession( true);
+ Ajout/remplacement d ’une valeur
+void HttpSession. setAttribute( String  name,  Object  value)
+ Suppression d ’une valeur
+void HttpSession. removeAttribute( String  name)
+ Récupération des valeurs/d ’une valeur
+String[]  HttpSession. getAttributeNames()
+Object  HttpSession. getAttribute( String  name)
+
+Exemple 
+
+Motivations
+réagir face à des événements intervenants dans la/les sessions
+ 4 interfaces Listeners
+	HttpSessionActivationListener
+		la  session  peut  être  passivée  puis  réactivée
+	HttpSessionListener
+		changement  sur  la  liste  des  sessions  actives  de  l'application  Web.
+	HttpSessionAttributeListener
+		changement  sur  les  attributs  d’une  des  sessions  de  l’application  Web.
+	HttpSessionBindingListener
+		un  objet  peut  être  notifié de  sa  liaison rupture  à un  session
+Observateurs sur la session
+
+Observateurs sur la session
+HttpSessionActivationListener
+la  session  peut  être  passivée  puis  réactivée
+		void sessionDidActivate( HttpSessionEvent se)
+		void sessionWillPassivate( HttpSessionEvent se)
+HttpSessionListener
+changement  sur  la  liste  des  sessions  actives  de  l'application  Web.
+		void sessionCreated( HttpSessionEvent se) 
+		Void sessionDestroyed( HttpSessionEvent se)   invalidation
+HttpSessionAttributeListener
+attribute lists of  sessions  within this web  application.
+		void attributeAdded( HttpSessionBindingEvent se) 
+		void attributeRemoved( HttpSessionBindingEvent se) 
+		void attributeReplaced( HttpSessionBindingEvent se) 
+HttpSessionBindingListener
+un  objet  peut  être  notifié de  sa  liaison rupture  à un  session
+		void valueBound( HttpSessionBindingEvent event)
+		void valueUnbound( HttpSessionBindingEvent event)
+
+Observateur de liaison
+Motivations
+faire réagir les objets liés aux liaisons et « déliaisons »
+fermer des fichiers, des connexions, valider des transactions, ...
+ API
+		interface  HttpSessionBinding istener
+		public  void valueBound( HttpSessionBindingEvent event)
+		public  void valueUnbound( HttpSessionBindingEvent event)
+		class  HttpSessionBindingEvent extends EventObject
+		public  Session  getSession()   la  session  concernée
+		public  String  getName()   le  nom  de  la  liaison
+ Principe
+l ’objet lié doit implanté HttpSessionBinding istener
+valueBound () est invoqué quand l ’objet est lié ( putValue ())
+valueUnbound () est invoqué quand la session est invalidé ou expire ou quand l ’objet est délié ( setAttribute ()/ removeAttribute ()).
+
+Exemple de Observateur de Liaison
+import java.io.IOException;import java.io.PrintWriter;import javax.servlet.ServletContext;import javax.servlet.ServletException;import javax.servlet.http.HttpServlet;import javax.servlet.http.HttpServletRequest;import javax.servlet.http.HttpServletResponse;import javax.servlet.http.HttpSession;import javax.servlet.http.HttpSessionBindingEvent;import javax.servlet.http.HttpSessionBindingListener;public class Binder extends HttpServlet {  public void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException,      IOException {    resp.setContentType("text/html");    PrintWriter out = resp.getWriter();    HttpSession session = req.getSession(true);    SessionObject o = new SessionObject(getServletContext());    session.setAttribute("Binder.object", o);    out.println("<html>");    out.println("<head>");    out.println("<title>Session Binder</title>");    out.println("</head>");    out.println("<body>");    out.println("Object bound to session " + session.getId());    out.println("</body>");    out.println("</html>");    out.flush();  }}
+
+Exemple de Observateur de Liaison
+class SessionObject implements HttpSessionBindingListener {  ServletContext context;  public SessionObject(ServletContext context) {    this.context = context;  }  public void valueBound(HttpSessionBindingEvent event) {    context.log("" + (new java.util.Date()) + " Binding " + event.getName() + " to session "        + event.getSession().getId());  }  public void valueUnbound(HttpSessionBindingEvent event) {    context.log("" + (new java.util.Date()) + " Unbinding " + event.getName() + " from session "        + event.getSession().getId());  }}
+
+
+session listener
+import java.util.Date;import javax.servlet.http.HttpSession;import javax.servlet.http.HttpSessionEvent;import javax.servlet.http.HttpSessionListener;public class SessionListen implements HttpSessionListener {  private int sessionCount;  public SessionListen() {    this.sessionCount = 0;  }  public void sessionCreated(HttpSessionEvent se) {    HttpSession session = se.getSession();    session.setMaxInactiveInterval(60);    synchronized (this) {      sesesionCount++;    }    String id = session.getId();    Date now = new Date();    String message = nw StringBuffer("New Session created on ").append(        now.toString()).append("\nID: ").append(id).append("\n")        .append("There are now ").append("" + sessionCount).append(            " live sessions in the application.").toString();    System.out.println(message);  }
+ public void sessionDestroyed(HttpSessionEvent se) {    HttpSession session = se.getSession();    String id = session.getId();    synchronized (this) {      --sessionCount;    }    String message = new StringBuffer("Session destroyed"        + "\nValue of destroyed session ID is").append("" + id).append( "\n").append("There are now ").append("" + sessionCount)        .append(" live sessions in the application.").toString();    System.out.println(message);  }}
+
+
+Partage d ’objets entre servlets
+Motivation
+partager une information commune entre servlets, ...
+ Plusieurs
+ S1 : utilisez les Properties de java. lang. System
+ S2 : classe commune avec des membres statiques
+ S3 : utilisez le contexte de l’application
+
+Partage d ’objets entre servlets
+Solution 1 : utilise les Properties de java. lang. System
+		String  java. lang. System. getProperty( String  key)
+		String  java. lang. System. setProperty( String  key, String value)
+Remarque : les Properties sont partagées par toutes les WebApps du serveur J2EE
+ Solution 2 : classe commune avec des membres statiques
+l ’initialisation des membres statiques XXX peut se faire au moment du premier accès par une des servlets
+Remarque pour une meilleure programmation
+les membres statiques sont privés et sont accédés par des méthodes statiques setXXX() et getXXX()
+la classe n ’est accessible que par les servlets du même package et chargée par le même ClassLoader (un par WebApp)
+
+Partage d ’objets entre servlets
+Solution 3 : utiliser les <env- entry>  du contexte JNDI de l’application
+Paires typées (name, value, classname) appartenant au contexte de l’application Web
+<env- entry>
+<env- entry- name> defaultCurrency< env- entry- name>
+<env- entry- value> EUR< env- entry- value>
+<env- entry- type> java. lang. String< env- entry- type>
+< env- entry>
+<env- entry>
+<env- entry- name> default anguage< env- entry- name>
+<env- entry- value> 33< env- entry- value>
+<env- entry- type> java. lang. Integer< env- entry- type>
+< env- entry>
+
+Partage d ’objets entre servlets
+Récupération des <env- entry>  via JNDI
+Context ctx =  new  InitialContext();
+Object  value =  ctx. lookup(" java: comp env defaultCurrency");
+out. println(" Default  currency value : " +  value);
+Context envCtx = ( Context)  ctx. lookup(" java: comp env ");
+NamingEnumeration enum =  ctx. list(" java: comp env ");
+while (enum. hasMoreElements()) {
+out. print(" Binding : "+ ( enum. nextElement(). toString());
+}
+NamingEnumeration enumbinding =  envCtx. listBindings(" java: comp env ");
+while (enumbinding. hasMoreElements()) {
+out. print(" Binding : "+(  enumbinding. nextElement(). toString());
+
+Sécurité Pour implémenter les procédures de sécurité de base, il n'est pas nécessaire d'ajouter du code à vos servlets
+Deux types d'entrées du fichier web.xml contrôlent la sécurité et l'authentification (avec toutefois un troisème pour la définition du rôle) : 
+<security-contraint> : qui fournissent des autorisations basées sur les rôles utilisateurs et, si vous le souhaitez, sur le transport sécurisé de données.
+<login-config> : qui détermine le type d'authentification utilisée pour l'application Web.
+<security-role> : qui définit un rôle de sécurité pour l'application web. (A placer avant la balise <security-contraint>). 
+
+
+Exemple: Attribution de rôles aux utilisateurs
+le modèle d'URL est “/”, ce qui signifie que toute l'application Web est sécurisée. Nous pourrions sécuriser qu'une seule partie de l'application Web, par exemple un répertoire de l'application qui ne sera accessible que par mot de passe.
+le modèle d'identification BASIC, qui affiche dans le navigateur une simple boîte de dialogue : nom d'utilisateur/mot de passe 
+
+Exemple: Attribution de rôles aux utilisateurs
+Avant que cela fonctionne, il reste toutefois une étape à franchir : créer le rôle utilisateur "personnel",
+
+Transport de données sécurisées
+Pour que votre application Web soit parfaitement sécurisée, il faudrait également protéger les informations qui transitent sur le réseau. Il nous faut donc aborder un élément supplémentaire de la contrainte de sécurité : la garantie de transport. 
+Chaque bloc <security-contraint> peut finir par une entrée <user-data-contraint>, qui indique lequel des trois niveaux de sécurité de transport est retenu pour le protocole utilisé lors du transfert de données de et vers la zone protégées
+
+Les trois niveaux de sécurité
+NONE : qui est équivalent à une sortie de section , sans transport spécial. C'est le mode standard pour le trafic web, qui en général véhicule du texte plein via le réseau.
+INTEGRAL : précise que le protocole de transport utilisé doit garantir que les données envoyées ne sont pas modifiées durant le transit. Ceci implique l'utilisation de signatures digitales ou de tout autre méthode de validation des données à l'arrivée, mais n'impose pas que les données soient chiffrées et cachées durant le transport.
+CONFIDENTIAL : ajoute le chiffrement à la méthode INTEGRAL. En pratique, le seul mode de transport sécurisé largement utilisé dans les navigateurs web est SSL. Exiger une garantie de transport autre que NONE impose l'utilisation du SSL au navigateur client.
+
+
+Authentification des utilisateurs
+La section <login-config> détermine exactement comment un utilisateur s'authentifie à l'entrée de la zone protégée. La balise <auth-method> permet d'utiliser quatre types d'authentification :
+
+Authentification des utilisateurs
+BASIC : utilise la boîte de dialogue standard "nom/mot de passe" du navigateur web. L'authentification BASIC envoie le nom et le mot de passe utilisateur en texte plein sur le réseau, à moins qu'une garantie de transport n'ait été utilisée séparément pour démarrer SSL et chiffrer le stream de données.
+DIGEST : est une variante de BASIC qui cache le texte de mot de passe mais n'est pas vraiment beaucoup plus sécurisée ; elle est peu utilisée.
+
+
+Authentification des utilisateurs
+FORM : est équivalente à BASIC, mais permet d'utiliser, au lieu de la boîte de dialogue standard, son propre formulaire HTML ou servlet.
+CLIENT-CERT : est une option intéressante. Elle impose que l'utilisateur soit identifié via un certificat de clé publique côté client. Ceci implique l'utilisation d'un protocole comme SSL, qui permet des échanges sécurisés et l'authentification mutuelle en utilisant des certificats numériques.
+
+
+Authentification
+Méthodes relatives à l’authentification :
+public String getAuthType() : renvoie BASIC_AUTH, DIGEST_AUTH, CLIENT_CERT_AUTH ou FORM_AUTH
+public String getUserName()
+public Principal getUserPrincipal() à utiliser avec le package java.security
+public boolean isUserInRole()
+
+Exemple:
+out.println("Est-un administrateur : " + req.isUserInRole("admin"));.
+
+
+Request Dispatch
+Redirige la traitement de la requête vers une autre servlet ou JSP
+Utilisé pour le MVC
+ Exemple
+public  class  ForwardServlet extends HttpServlet {
+public  void doGet (HttpServletRequest request,
+HttpServletResponse response) {
+ //Set  the  attribute and  forward to  hello. jsp
+request. setAttribute (" action", " hello");
+ServletContext context= getServletConfig(). getServletContext().
+context. getRequestDispatcher(" hello. jsp"). forward( request,  response);
+}
+}

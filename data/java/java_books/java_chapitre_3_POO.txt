@@ -1,0 +1,3238 @@
+Chapitre 3
+
+POO en Java
+
+101
+
+Application Orientée Objet
+ Une application est créée à partir d’un ensemble de
+classes qui coopèrent pour effectuer une tâche.
+Classe 1
+
+Classe 2
+Classe 3
+
+Classe Principale
+…main(…)
+Classe 4
+Classe N
+
+Classe 5
+
+……..
+Java - Dr A. Belangour
+
+102
+
+102
+
+1
+
+Classe
+ Une classe est une collection
+
+
+D’attributs contenant des valeurs
+
+
+
+De méthodes définissant des traitements
+
+ Les attributs et les méthodes sont nommés membres
+de la classe:
+
+
+Les attributs sont les membres données
+
+
+
+Les opérations sont les membres fonctions
+
+Java - Dr A. Belangour
+
+103
+
+103
+
+Classe
+ Exemple :
+public class Etudiant {
+// les attributs
+private String CNE;
+private String nom;
+private String prenom;
+// constructeur paramétré
+public Etudiant(String CNE, String nom, String prenom) {
+this.CNE = CNE;
+this.nom = nom;
+this.prenom = prenom;
+}
+
+Java - Dr A. Belangour
+
+104
+
+104
+
+2
+
+Classe
+// getters & setters
+public String getCNE() {
+return CNE;
+}
+public void setCNE(String CNE) {
+this.CNE = CNE;
+}
+public String getNom() {
+return nom;
+}
+public void setNom(String nom) {
+this.nom = nom;
+}
+public String getPrenom() {
+return prenom;
+}
+public void setPrenom(String prenom) {
+this.prenom = prenom;
+}
+Java - Dr A. Belangour
+
+105
+
+105
+
+Classe
+// méthode afficher
+public void afficher(){
+System.out.println (" CNE = " + this.CNE+ " Nom = " + this.nom
+}
+
++ " Prénom = "
+
++ this.prenom );
+
+}
+
+Java - Dr A. Belangour
+
+106
+
+106
+
+3
+
+Classe : Utilisation
+ Pour pouvoir utiliser une classe il faut créer un objet.
+ Relation entre Objet et Classe :
+
+
+Une classe peut être considérée comme un Plan à partir
+duquel on crée une ou plusieurs maisons qui sont des
+objets.
+
+ Un objet est appelé instance d'une classe
+ Un objet est caractérisé par :
+
+
+Un état (valeur pour des attributs) et
+
+
+
+Un ensemble d’opérations qui décrivent son
+comportement
+Java - Dr A. Belangour
+
+107
+
+107
+
+Classe : Utilisation
+
+
+Pour créer un objet, il faut :
+1.
+
+Déclarer une variable qui va le contenir.
+
+
+2.
+
+Lui allouer de la mémoire en appelant son constructeur.
+
+
+
+
+Ex : Etudiant e;
+
+Ex : e= new Etudiant ("1712150256", "Ali", "Taha");
+
+Remarque :
+
+
+Il est possible de tout réunir en une seule déclaration :
+Etudiant e=new Etudiant ("1712150256", "Ali", "Taha");
+
+Java - Dr A. Belangour
+
+108
+
+108
+
+4
+
+Classe : Utilisation
+ Appel des attributs et des méthodes selon visibilité :
+
+
+Attributs : nomObjet.nomAttributs
+
+
+
+Méthodes : nomObjet.nomMethodes()
+
+ Exemple:
+
+
+e.afficher()
+
+Java - Dr A. Belangour
+
+109
+
+109
+
+Classe : Utilisation
+ Application:
+
+
+Écrire une classe Traitement dans laquelle vous allez :
+
+
+Créer un objet e1 de type Etudiant et l’afficher
+
+
+
+Modifier son nom et le réafficher
+
+
+
+Créer un objet e2 de type Etudiant et l’afficher
+
+
+
+Affecter le prénom de e1 à e2 et le réafficher
+
+Java - Dr A. Belangour
+
+110
+
+110
+
+5
+
+Classe : Utilisation
+public class Traitement {
+//méthode
+public static void main (String args[]) {
+Etudiant e1= new Etudiant ("1712150256", "Ali", "Taha");
+e1. afficher();
+e1.setNom("Tahiri") ;
+e1. afficher();
+Etudiant e2=new Etudiant("1712130251", "Omar", "Omari");
+e2.afficher();
+
+}
+}
+
+e2.setPrenom(e1.getPrenom());
+e2.afficher();
+
+Java - Dr A. Belangour
+
+111
+
+111
+
+Classe : Constructeurs
+ Un objet est toujours créé par le biais d’une méthode
+appelée constructeur.
+ Un constructeur est une méthode spéciale qui sert à
+initialiser les attributs (après réservation de la
+mémoire) d’un objet lors de sa création.
+ Il porte toujours le nom de la classe pour laquelle il
+est définie.
+ Il est public et n’as pas de type de retour
+ Une classe peut avoir un ou plusieurs constructeurs.
+Java - Dr A. Belangour
+
+112
+
+112
+
+6
+
+Classe : Constructeurs
+ Il existe trois types de constructeurs :
+
+
+Par défaut : pour la création puis l’initialisation d’un objet
+dans le cas ou le programmeur omet de donner des
+valeurs.
+
+
+
+Paramétré: pour la création puis l’initialisation d’un objet
+avec des valeurs données par le programmeur .
+
+
+
+Par recopie: pour la création puis l’initialisation d’un objet
+en copiant les valeurs d’un autre objet.
+
+Java - Dr A. Belangour
+
+113
+
+113
+
+Classe : Constructeurs
+ La classe Etudiant de l’exemple précédent comporte
+un constructeur paramétré.
+ Dans le cas ou l’utilisateur ne fournit pas de valeurs
+explicites, des valeurs par défaut peuvent être
+proposées.
+ Ce type de constructeurs est appelé : constructeur
+par défaut
+
+Java - Dr A. Belangour
+
+114
+
+114
+
+7
+
+Classe : Constructeurs
+ Exemple 1:
+public Etudiant() { }
+Dans ce type de constructeur Java fournit des valeurs par
+défaut aux attributs en accord avec leurs types au moment de
+leurs création.
+
+ Ce constructeur est équivalent à :
+public Etudiant() {
+this.CNE = null;
+this.nom = null;
+this.prenom = null;
+}
+Java - Dr A. Belangour
+
+115
+
+115
+
+Classe : Constructeurs
+ Les valeurs par défaut lors de l'initialisation sont :
+
+
+boolean : false
+
+
+
+byte, short, int, long : 0
+
+
+
+float, double : 0.0
+
+
+
+Char : \u0000
+
+
+
+Classe : null
+
+Java - Dr A. Belangour
+
+116
+
+116
+
+8
+
+Classe : Constructeurs
+ Exemple 2 :
+
+public Etudiant() {
+this.CNE = "0000000000";
+this.nom = "Pas de nom";
+this.prenom = "Pas de prénom";
+}
+
+ Dans cet exemple nous avons choisi de donner
+d'autres valeurs par défaut en accord avec notre
+besoin
+
+Java - Dr A. Belangour
+
+117
+
+117
+
+Classe : Constructeurs
+ Un constructeur par recopie permet la recopie des
+attributs d’un objet dans un autre:
+ Exemple :
+public Etudiant(Etudiant etudiant) {
+this.CNE = etudiant.CNE;
+this.nom = etudiant.nom;
+this.prenom = etudiant.prenom;
+}
+
+ Remarque : this veut dire l’objet en cours de création
+
+Java - Dr A. Belangour
+
+118
+
+118
+
+9
+
+Classe : Destructeurs
+
+
+Un destructeur est une méthode qui libère la
+mémoire allouée par les constructeurs.
+
+
+
+En java, cette fonction est prise en charge
+automatiquement par le garbage collector
+
+
+
+Cependant pour des traitements avancés referez
+vous à la méthode finalize() de la classe Object.
+
+Java - Dr A. Belangour
+
+119
+
+119
+
+Classe : Unicode
+ Java adopte Unicode comme jeu de caractères
+ Unicode est un jeu de caractère standards englobant
+les alphabets du monde entier.
+ Grace à Unicode on peut coder dans n’importe quelle
+langue (à condition de respecter les mots réservés)
+ Un caractère Unicode est codé sur 16 bits
+ Ceci permet de coder 65536 caractères
+ Programmer en arabe est juste une décision :)
+
+Java - Dr A. Belangour
+
+120
+
+120
+
+10
+
+Classe : Unicode
+Exemple :
+
+public class ‫{إﻧﺴﺎن‬
+private String ‫;اﺳﻢ‬
+private String ‫;ﻟﻘﺐ‬
+public ‫{)(إﻧﺴﺎن‬
+‫;" ﻋﻠﻲ"=اﺳﻢ‬
+‫;" ﻳﺎﺳﻴﻦ"=ﻟﻘﺐ‬
+}
+public String ‫ { )(ﺧﺬ_اﻻﺳﻢ‬return ‫;اﺳﻢ‬
+public void ‫( ﺑﺪﻟـ_اﻻﺳﻢ‬String ‫{)اسم_جديد‬
+
+}
+
+‫; اﺳﻢ_ﺟﺪﻳﺪ=اﺳﻢ‬
+
+}
+public String ‫ { )(ﺧﺬـ_اﻟﻠﻘﺐ‬return ‫} ;ﻟﻘﺐ‬
+public void ‫ (ﺑﺪل_اﻟﻠﻘﺐ‬String ‫{ )لقب_جديد‬
+
+‫; ﻟﻘﺐ_ﺟﺪﻳﺪ=ﻟﻘﺐ‬
+
+}
+public void ‫{)(إﻋﺮض‬
+}
+}
+
+System.out.println( ‫اﺳﻢ‬+","+‫;) ﻟﻘﺐ‬
+
+Java - Dr A. Belangour
+
+121
+
+121
+
+Classe : Unicode
+//‫الصنف تجربة‬
+public class
+
+‫{ﺗﺠﺮﺑﺔ‬
+
+//‫الطريقة الرئيسية‬
+public static void main (String args[]) {
+
+}
+}
+
+‫= م إﻧﺴﺎن‬new ‫;)(إﻧﺴﺎن‬
+‫م‬. ‫;)(إﻋﺮض‬
+‫= ن إﻧﺴﺎن‬new ‫;)(إﻧﺴﺎن‬
+‫ن‬. ‫;)"ﻋﻤﺮ"(ﺑﺪﻟـ_اﻻﺳﻢ‬
+‫ن‬. ‫;)"اﻟﻔـﺎروق"(ﺑﺪل_اﻟﻠﻘﺐ‬
+‫ن‬. ‫;)(إﻋﺮض‬
+
+Java - Dr A. Belangour
+
+122
+
+122
+
+11
+
+Classe : déclaration
+ Syntaxe de déclaration d'une classe :
+
+modificateur class NomClasse [extends ClasseMere]
+[implements interface1,interface2,…]
+{
+// liste des attributs
+// liste des constructeurs
+// liste des méthodes
+}
+
+Java - Dr A. Belangour
+
+123
+
+123
+
+Classe : déclaration
+ Les modificateurs de classe sont :
+
+
+abstract : Nous y reviendrons dans les classes abstraites
+
+
+
+final : L’héritage de la classe est bloqué.
+
+
+
+private : La classe n'est accessible qu'à partir du fichier où
+elle est définie
+
+
+
+public : La classe est accessible partout
+
+
+
+Remarque :
+
+
+Les modificateurs public et private , abstract et final ainsi que
+sont mutuellement exclusifs.
+
+Java - Dr A. Belangour
+
+124
+
+124
+
+12
+
+Classe : Syntaxe de déclaration
+ Le mot clé extends fait référence à l'héritage.
+ Le mot clé implements fait référence à
+l’implémentation des interfaces.
+ Nous reparlerons de ces mots clés lorsque nous
+verrons l’héritage et les interfaces.
+
+Java - Dr A. Belangour
+
+125
+
+125
+
+Attributs : modificateurs
+ Les données d'une classe sont contenues dans des
+variables nommées attributs.
+ Il existe 3 modificateurs de visibilité pour un attribut :
+
+
+public : n’importe quel autre objet d’une autre classe peut
+lire et modifier cet attribut
+
+
+
+protected : seules les méthodes de la classe en question ou
+ses sous-classes ont le droit de modifier cet attribut et
+aussi les classes du même package.
+
+
+
+private : seules les méthodes de la classe en question ont
+le droit de modifier cet attribut.
+
+Java - Dr A. Belangour
+
+126
+
+126
+
+13
+
+Attributs : modificateurs
+ Autres modificateurs
+
+
+volatile: prévient le compilateur de ne pas mettre les valeurs
+de l’attribut en cache de peur d’avoir des inconsistances dans
+le cas ou de multiple threads accèdent à cet attribut.
+
+
+
+transient : empêche la sauvegarde de la valeur de l’attribut
+en cas de sérialisation de son objet car la valeur de l’objet
+peut changer en cours de temps.
+
+Java - Dr A. Belangour
+
+127
+
+127
+
+Attributs : encapsulation
+ Il est déconseillé de déclarer les attributs comme public.
+ Il faut les déclarer private (protected à la rigueur) et
+les doter de méthodes d'accès qui ont la forme :
+
+
+getNomAttribut () : pour lire un attribut
+
+
+
+setNomAttribut (nouvelleValeur) : pour le modifier
+
+ L'emploi de ces méthodes garantit la protection des
+attributs de fausses modifications.
+ C’est le fameux principe de l’encapsulation.
+ Remarque : un attribut disposant de getter/setter est
+appelé propriété
+Java - Dr A. Belangour
+
+128
+
+128
+
+14
+
+Attributs : types
+ Un attribut peut être :
+1) Une constante
+2) Une variable d'instance,
+3) Ou une variable de classe
+
+ Les attributs constantes :
+
+
+Les constantes sont définies avec le mot clé final
+
+ leur valeur ne peut pas être modifiée une fois qu'elles sont
+initialisées..
+
+
+
+Exemple :
+
+
+
+
+public class MaClasse {
+final double pi=3.14 ;
+}
+
+Java - Dr A. Belangour
+
+129
+
+129
+
+Attributs : variables d'instances
+ Les variables d'instances :
+
+
+Une variable d'instance nécessite simplement une
+déclaration de la variable dans le corps de la classe.
+
+
+
+Chaque instance de la classe a sa propre valeur de la
+variable.
+
+
+
+Exemple :
+ Dans la classe Etudiant, les attributs nom et prenom
+sont des variables d’instances.
+ Ainsi, dans un objet e1 l’attribut nom, par exemple,
+vaut « Ahmed » et dans un autre objet e2 elle vaut
+« Omar ».
+Java - Dr A. Belangour
+
+130
+
+130
+
+15
+
+Attributs : variables de classes
+ Les variables de classes :
+
+
+Exercice : Dans un parc de voitures, à chaque achat d’une
+voiture un objet de type de classe Voiture doit être créé.
+Écrire une classe voiture ayant :
+ Un attribut marque de type String
+ Un attribut total de type int (représentant le nombre total d’objets
+Voiture créés)
+ Un constructeur paramétré
+ Une fonction qui affiche la marque de la voiture
+ Une fonction qui affiche le nombre total de voitures
+
+Écrire un programme d’essai
+
+Java - Dr A. Belangour
+
+131
+
+131
+
+Attributs : variables de classes
+ La classe Voiture :
+public class Voiture {
+private String marque;
+private int total=0;
+
+}
+
+public Voiture(String m) {
+marque=m;
+total++;
+}
+public void afficherMarque(){
+System.out.println("la marque est "+marque);
+}
+public void afficherTotal(){
+System.out.println("le nombre de voitures est "+total);
+}
+Java - Dr A. Belangour
+
+132
+
+132
+
+16
+
+Attributs : variables de classes
+ Le programme d’essai
+public class Essai {
+public static void main(String[] args) {
+Voiture v1= new Voiture("Laraki Fulgura");
+v1.afficherMarque(); v1.afficherTotal();
+Voiture v2= new Voiture("Laraki Borac");
+v2. afficherMarque(); v2.afficherTotal();
+Voiture v3= new Voiture("Laraki Epitome");
+v3. afficherMarque(); v3.afficherTotal();
+}
+}
+Java - Dr A. Belangour
+
+133
+
+133
+
+Attributs : variables de classes
+ Le résultat de l’exécution :
+
+
+
+
+
+
+
+la marque de la voiture est Laraki Fulgura
+le nombre de voitures est 1
+la marque de la voiture est Laraki Borac
+le nombre de voitures est 1
+la marque de la voiture est Laraki Epitome
+le nombre de voitures est 1
+
+ problème : Le nombre de voitures n’augmente pas.
+ Cause : chaque objet Voiture a sa propre version de
+l’attribut total.
+ Solution : l’attribut total doit être commun à tous les
+objets Voitures
+Java - Dr A. Belangour
+
+134
+
+134
+
+17
+
+Attributs : variables de classes
+ L’attribut total doit être une variable de classe et
+non d’instance.
+ Les variables de classes sont définies avec le mot
+clé static
+ Chaque objet de la classe partage la même
+variable.
+ La classe voiture devient :
+
+Java - Dr A. Belangour
+
+135
+
+135
+
+Attributs : variables de classes
+ La classe Voiture modifiée:
+public class Voiture {
+private String marque;
+private static int total=0;
+
+public Voiture(String m) {
+marque=m;
+total++;
+}
+public void afficherMarque(){
+System.out.println("la marque est "+marque);
+}
+public static void afficherTotal(){
+System.out.println("le nombre de voitures est "+total);
+}
+}
+
+Java - Dr A. Belangour
+
+136
+
+136
+
+18
+
+Méthodes : déclaration
+ Les méthodes sont des fonctions qui implémentent les
+traitements de la classe.
+ L’ordre des méthodes n’as pas d’importance
+ Une méthode est identifiée par sa signature
+ La signature comprend, le nom de la méthode , les
+types des paramètres et le type de retour.
+ Exemple :
+
+public int somme(int a, int b)
+
+Java - Dr A. Belangour
+
+137
+
+137
+
+Méthodes : arguments
+ En Java les arguments d’une méthode sont passés :
+
+
+Par valeur : lorsqu'il s'agit d'un type primitif
+
+
+
+Par Reference : lorsqu'il s'agit d'un objet
+
+ La possession de la référence d’un objet permet de le
+modifier par le biais de ses méthodes.
+
+Java - Dr A. Belangour
+
+138
+
+138
+
+19
+
+Méthodes : arguments
+ Exemple :
+public class Point {
+private int x;
+private int y;
+public Point(int x, int y) {
+this.x = x;
+this.y = y;
+}
+//on suppose que nous avons les getters et setters
+public void afficher() {
+System.out.println("Point : x=" + x + ", y=" + y );
+}
+}
+
+Java - Dr A. Belangour
+
+139
+
+139
+
+Méthodes : arguments
+public class PassageDeParametres {
+public static void modifier(int x) {
+x = x + 5;
+System.out.println(" A l'intérieur de la méthode : " + x);
+}
+public static void modifier(Point p) {
+p.setX(30);
+p.setY(40);
+System.out.println("A l'intérieur de la méthode :");
+p.afficher();
+}
+
+Java - Dr A. Belangour
+
+140
+
+140
+
+20
+
+Méthodes : arguments
+public static void main(String[] args) {
+System.out.println("-------- Cas d'un argument primitif------------");
+int y = 10;
+System.out.println(" Avant la méthode = " + y);
+modifier(y);
+System.out.println(" Après la méthode = " + y);
+System.out.println("-------- Cas d'un argument objet ---------------");
+Point pt=new Point(10,20);
+System.out.print(" Avant la méthode = ");
+pt.afficher();
+modifier(pt);
+System.out.print(" Après la méthode = ");
+pt.afficher();
+}
+
+Java - Dr A. Belangour
+
+141
+
+141
+
+Méthodes : arguments
+ Résultat de l'exécution :
+-------- Cas d'un argument primitif-----------Avant la méthode = 10
+A l'intérieur : 15
+Après la méthode = 10
+-------- Cas d'un argument objet --------------Avant la méthode = Point : x=10, y=20
+A l'intérieur : Point : x=30, y=40
+Après la méthode = Point : x=30, y=40
+
+Java - Dr A. Belangour
+
+142
+
+142
+
+21
+
+Méthodes : modificateurs
+ Les modificateurs de méthodes sont :
+
+
+public : La méthode est accessible aux méthodes des autres
+classes
+
+
+
+private : L'usage de la méthode est réservé aux méthodes de
+la même classe
+
+
+
+protected : La méthode ne peut être invoquée que par des
+méthodes de la classe ou de ses sous classes ou package.
+
+
+
+final : La méthode ne peut être modifiée (redéfinition lors de
+l'héritage interdite)
+
+
+
+static : la méthode appartient simultanément à tous les objets
+de la classe.
+Java - Dr A. Belangour
+
+143
+
+143
+
+Méthodes : modificateurs
+
+
+abstract : la méthode n’as pas de corps et doit être redéfinie
+par les sous-classes. Exemple : abstract void afficher();
+
+
+
+Sans modificateur : Utilisation réservée exclusivement aux
+classes du même package.
+
+ Autres modificateurs
+
+
+synchronized : la méthode fait partie d'un thread.
+Lorsqu'elle est appelée, elle barre l'accès à son instance
+jusqu’à la fin de son exécution.
+
+
+
+native : le code source de la méthode est écrit dans un autre
+langage et appelée en Java.
+
+Java - Dr A. Belangour
+
+144
+
+144
+
+22
+
+Méthodes : modificateurs
+
+
+Exemple :
+
+
+La méthode afficherTotal() de la classe voiture est statique.
+
+
+
+Il est inutile d'instancier la classe pour appeler la méthode.
+Il suffit d’écrire : Voiture.afficherTotal()
+
+
+
+Une méthode statique ne peut manipuler que des attributs
+statiques.
+
+
+
+Remarque :
+
+
+Une méthode doit être déclarée comme statique lorsqu'elle
+manipule un attribut statique ou qu'elle ne manipule aucun
+attribut.
+
+Java - Dr A. Belangour
+
+145
+
+145
+
+Méthodes : modificateurs
+ Une méthode ne peut pas être à la fois
+
+
+public et private (resp. public et protected ou private et
+protected)
+
+
+
+abstract et final
+
+
+
+abstract et static
+
+Java - Dr A. Belangour
+
+146
+
+146
+
+23
+
+Méthodes : surcharge
+ Lorsque dans une classe, plusieurs méthodes portent :
+Le même nom, Le même type de retour, des arguments
+différents : On dit que la méthode est surchargée
+ Exemple:
+class Affichage{
+public void afficherValeur(int i) {
+System.out.println(" nombre entier =" + i);
+}
+public void afficherValeur(float f) {
+System.out.println(" nombre flottant = " + f);
+}
+}
+
+ Le compilateur choisi la méthode qui doit être appelée en
+fonction du nombre et du type des arguments.
+Java - Dr A. Belangour
+
+147
+
+147
+
+Méthodes : surcharge
+ La méthode println() est surchargée !!!
+void
+
+println()
+
+void
+
+println(boolean x) Prints a boolean and then terminate the line.
+
+void
+
+println(char x)
+
+Prints a character and then terminate the line.
+
+void
+
+println(char[] x)
+
+Prints an array of characters and then terminate the line.
+
+void
+
+println(double x)
+
+Prints a double and then terminate the line.
+
+void
+
+println(float x)
+
+Prints a float and then terminate the line.
+
+void
+
+println(int x)
+
+Prints an integer and then terminate the line.
+
+void
+
+println(long x)
+
+Prints a long and then terminate the line.
+
+void
+
+println(Object x)
+
+Prints an Object and then terminate the line.
+
+void
+
+println(String x)
+
+Prints a String and then terminate the line.
+
+Terminates the current line by writing the line separator string.
+
+Java - Dr A. Belangour
+
+148
+
+148
+
+24
+
+Méthodes : surcharge
+ Remarque :
+
+
+Il n'est pas possible d'avoir deux méthodes qui ont deux
+signatures identiques.
+
+ Exemple FAUX de surcharge:
+class Affichage{
+public float convertir (int i){
+return((float) i);
+}
+public double convertir (int i){
+return((double) i);
+}
+}
+Java - Dr A. Belangour
+
+149
+
+149
+
+Méthodes : surcharge
+ Résultat à la compilation :
+
+
+C:\>javac Affiche.java
+
+
+
+Affiche.java:5: Methods can't be redefined with a different
+return type: double
+
+
+
+convert(int) was float convert(int)
+
+
+
+public double convert(int i){
+
+
+
+^ 1 error
+
+Java - Dr A. Belangour
+
+150
+
+150
+
+25
+
+Méthodes : Enchaînement de
+références
+ Une classe peut disposer d'un attribut qui est de type
+une classe aussi.
+ On peut à partir d'un objet de la première classe,
+accéder à l'attribut objet de la deuxième classe et
+appeler ses méthodes.
+ Ceci est appelé enchainement des références.
+ On peut aller dans la chaine aussi longtemps que nous
+avons des relations entre les objets.
+
+Java - Dr A. Belangour
+
+151
+
+151
+
+Méthodes : Enchaînement de
+références
+ Exemple:
+ Soit l'instruction System.out.println("bonjour");
+ Deux classes sont impliquées dans l'instruction :
+ System et PrintStream.
+
+ La classe System possède un attribut nommé out qui
+est un objet de type PrintStream. Println() est une
+méthode de la classe PrintStream.
+ L'instruction signifie : utilise la méthode Println() de la
+variable out de la classe System
+
+Java - Dr A. Belangour
+
+152
+
+152
+
+26
+
+Héritage
+
+
+L'héritage est un mécanisme qui facilite la réutilisation
+du code et la gestion de son évolution.
+
+
+
+Il définit une relation entre deux classes :
+1. une classe mère ou super-classe ou classe de base
+2. une classe fille ou sous-classe ou classe dérivée qui
+hérite de sa classe mère
+
+
+
+Grâce à l'héritage, les objets d'une classe fille ont accès
+aux données et aux méthodes de la classe parent et
+peuvent les étendre.
+
+Java - Dr A. Belangour
+
+153
+
+153
+
+Héritage : mise en œuvre
+ Mise en œuvre de l'héritage :
+
+
+On utilise le mot clé extends pour indiquer qu'une classe
+hérite d'une autre.
+
+
+
+Exemple : class Fille extends Mere { ... }
+
+ Une classe peut avoir plusieurs sous-classes.
+ Par contre : elle ne peut hériter que d'une seule
+classe (pas d'héritage multiple en Java).
+
+Java - Dr A. Belangour
+
+154
+
+154
+
+27
+
+Héritage : mot clé super
+ Appel des méthodes héritées :
+ Pour invoquer une méthode d'une classe parent, il
+suffit de la préfixer par super.
+ Pour appeler le constructeur de la classe parent il
+suffit d'écrire super(paramètres) avec les
+paramètres adéquats.
+
+Java - Dr A. Belangour
+
+155
+
+155
+
+Héritage : Exemple
+public class Personne {
+private String nom;
+private String prenom;
+public Personne(String nom,String prenom){
+this.nom=nom; this.prenom=prenom;
+}
+public void afficher(){
+System.out.println(" nom= " +nom+"prenom= "+prenom);
+}
+}
+Java - Dr A. Belangour
+
+156
+
+156
+
+28
+
+Héritage : Exemple
+public class Etudiant extends Personne{
+private String CNE;
+public Etudiant (String CNE, String nom, String prenom){
+super(nom,prenom);
+this.CNE=CNE;
+}
+public void afficherTout(){
+super.afficher();
+System.out.println("CNE = "+CNE);
+}
+}
+Java - Dr A. Belangour
+
+157
+
+157
+
+Héritage : Exemple
+public class Main{
+public static void main(String[] args) {
+Etudiant e=new Etudiant("2008/201","Alaoui","Omar" );
+e.afficherTout();
+}
+}
+
+ Remarque 1:
+
+
+Dans le constructeur de la classe fille, l'appel à
+super(paramètres) se fait en premier avant l’initialisation
+des attributs de la classe fille.
+Java - Dr A. Belangour
+
+158
+
+158
+
+29
+
+Héritage : affectation mère/fille
+ Il est possible d'affecter un objet de la classe Fille à
+un objet de la classe Mère :
+
+
+Exemple : ClasseMere m=new ClasseFille()
+
+
+
+Le contraire est FAUX
+
+ Etudiant hérite de Personne, nous pouvons écrire :
+
+
+Personne p= new Etudiant("Ali", "Omari", "2008/201");
+
+ En général, il est possible d'affecter un objet de la
+classe Fille à n'importe quel objet de ses ancêtres.
+ En particulier on peut affecter n’importe quelle
+instance de classe à une instance de type Object.
+Java - Dr A. Belangour
+
+159
+
+159
+
+Héritage : blocage
+ Il est possible de bloquer l’héritage à partir d’une classe
+en lui ajoutant le mot clé « final »
+ Exemple : public final class Personne {…..}
+
+Java - Dr A. Belangour
+
+160
+
+160
+
+30
+
+Redéfinition
+ Les sous-classes peuvent redéfinir les attributs
+et les méthodes héritées :
+ Pour les attributs: il suffit de les redéclarer
+sous le même nom avec un type différent.
+ Pour les méthodes : elle sont redéfinies avec
+exactement la même signature des méthodes de
+la classe mère, en la faisant précéder du mot clé
+@Override
+
+Java - Dr A. Belangour
+
+161
+
+161
+
+Redéfinition
+ Remarques :
+ La redéfinition d'une méthode héritée doit
+impérativement conserver la déclaration de la
+méthode parent
+ Si la signature de la méthode change, ce n'est
+plus une redéfinition mais une surcharge.
+ Cette nouvelle méthode n'est pas héritée : la
+classe mère ne possède pas de méthode
+possédant cette signature.
+
+Java - Dr A. Belangour
+
+162
+
+162
+
+31
+
+Redéfinition : Exemple
+public class Employe {
+private int code;
+
+public class Secretaire extends Employe{
+private String code;
+
+private String nom;
+
+public Secretaire(String code,String
+
+public Employe(int code, String nom) {
+
+nom) {
+
+this.code = code; this.nom = nom;
+
+super(nom); this.code = code;
+
+}
+
+}
+@Override
+public void afficher(){
+System.out.println("code = "+this.code
++ " nom =" + super.getNom()); }
+
+public Employe(String nom) {
+this.nom = nom;
+}
+public String getNom(){ return nom; }
+}
+
+public void afficher() {
+System.out.println("code="+
+this.code+"nom="+ this.nom ); }
+}
+
+Java - Dr A. Belangour
+
+163
+
+163
+
+Redéfinition : Exemple
+public class Main {
+public static void main(String[] args) {
+Employe emp=new Employe(2019123,"Ali");
+emp.afficher();
+Secretaire sec=new Secretaire("2019/124", "Samira");
+sec.afficher();
+}
+}
+
+Java - Dr A. Belangour
+
+164
+
+164
+
+32
+
+Redéfinition
+ Remarque :
+
+
+Il est possible de bloquer la redéfinition d’une méthode en
+ajoutant le mot clé « final »
+
+
+
+Exemple : public final void afficher(){…..}
+
+
+
+Une méthode statique ne peut pas être redéfinie
+
+Java - Dr A. Belangour
+
+165
+
+165
+
+Conseils sur l'héritage
+ Au niveau de la classe Mère:
+ L’accès aux attributs doit être réfléchi entre
+« protected » et « private »
+ Le blocage de la redéfinition d'une méthode doit
+être déclaré avec « final »
+
+Java - Dr A. Belangour
+
+166
+
+166
+
+33
+
+Conseils sur l'héritage
+ Au niveau de la classe fille :
+1. la méthode héritée convient : à ne pas
+redéfinir
+2. la méthode héritée convient partiellement :
+Redéfinition ou surcharge (utilisation partielle de
+la méthode héritée)
+3. la méthode héritée ne convient pas :
+Redéfinition ou surcharge sans appel de la
+méthode héritée
+Java - Dr A. Belangour
+
+167
+
+167
+
+Héritage & constructeurs
+ Dans un constructeur, il est possible d’initialiser un
+attribut par appel d’une méthode.
+ Exemple :
+public Etudiant (String CNE, String nom){
+this.CNE=CNE;
+this.Nom=nom;
+this.moyenne=calculerMoyenne();
+}
+
+ Dans ce cas il faut bloquer la redéfinition de la méthode
+appelée pour ne pas avoir un comportement anormal.
+Java - Dr A. Belangour
+
+168
+
+168
+
+34
+
+Héritage & constructeurs
+ Liste des risques:
+
+
+Le constructeur de la classe mère s’exécute avant celui de
+la classe fille.
+
+
+
+Alors la méthode redéfinie de la classe fille est appelée
+avant que le constructeur de la classe fille soit exécutée.
+
+
+
+Si la méthode redéfinie dépend de n’importe quelle
+initialisation exécutée par le constructeur de la classe fille,
+la méthode ne se comportera pas comme prévu.
+
+Java - Dr A. Belangour
+
+169
+
+169
+
+Héritage & constructeurs
+ Dans ce cas la redéfinition peut être bloquée des
+façons suivantes :
+
+
+Rendre la classe finale
+
+
+
+Rendre la méthode finale
+
+
+
+Rendre la méthode privée
+
+
+
+Rendre la méthode statique
+
+Java - Dr A. Belangour
+
+170
+
+170
+
+35
+
+Classe Object
+ Object est la classe mère de toutes les classes en
+Java.
+ Une classe qui n'hérite d'aucune autre classe, hérite
+implicitement de Object.
+ Ainsi, on peut affecter n’importe quelle instance de
+classe à une instance de type Object.
+
+
+Object obj=new Fille();
+
+Java - Dr A. Belangour
+
+171
+
+171
+
+Classe Object
+ Elle se compose d'un ensemble de méthodes qu'il
+faudra redéfinir au besoin.
+ Quelques Méthodes :
+
+
+String toString()
+
+: retourne une chaine de caractères
+
+qui représente l'objet.
+
+
+protected Object clone() : crée une copie de l'objet sur
+lequel elle est définie.
+
+
+
+boolean equals(Object obj) : test l'égalité entre le
+contenu de deux objets (== pour les primitifs)
+
+
+
+Class <? extends Object> getClass() : retourne la classe
+de l'objet sur lequel elle est appelée.
+Java - Dr A. Belangour
+
+172
+
+172
+
+36
+
+Objets : référence
+ Chaque instance d'une classe nécessite sa propre
+variable.
+ Plusieurs variables peuvent désigner un même objet.
+ Soit les instructions :
+ Personne p1= new Personne("Ali","Alaoui");
+ Personne p2;
+ p2=p1;
+
+ L’instruction « p2=p1 » :
+ Ne définit pas un nouvel objet
+ Elle copie la référence de l'objet p2 dans p1
+Java - Dr A. Belangour
+
+173
+
+173
+
+Objets : comparaison
+ Deux objets avec des propriétés identiques sont deux
+objets distincts.
+ Pour comparer l'égalité des variables de deux instances,
+il faut redéfinir la méthode equals() héritée de Object.
+ Signature de la méthode :
+public boolean equals(Object obj) {}
+
+ L'objet défini en paramètre doit toujours être casté à
+l'objet d'origine :
+
+
+Exemple : Etudiant et= (Etudiant) obj;
+
+Java - Dr A. Belangour
+
+174
+
+174
+
+37
+
+Objets : comparaison
+ Exemple :
+@Override
+public boolean equals(Object obj) {
+if (this == obj) { return true; }
+if (obj == null) { return false; }
+if (getClass() != obj.getClass()) { return false;}
+final Etudiant other = (Etudiant) obj;
+if (!Objects.equals(this.cne, other.cne)) { return false;}
+if (!Objects.equals(this.nom, other.nom)) { return false;}
+if (!Objects.equals(this.prenom, other.prenom)) {
+return false;}
+return true;
+}
+
+Java - Dr A. Belangour
+
+175
+
+175
+
+Objets : comparaison et hachage
+ Lors de la recherche d'un objet dans un ensemble
+d'objets existants, il faut les parcourir et les comparer
+avec notre objet un à un avec la méthode equals().
+ Cela prend un temps proportionnel au nombre
+d'élément de l'ensemble.
+ La méthode hashCode() permet de générer un code
+de hachage qui permet de diviser les instances dans
+des sous-ensembles ayant chacune un code de
+hachage commun.
+
+Java - Dr A. Belangour
+
+176
+
+176
+
+38
+
+Objets : comparaison et hachage
+ Ainsi lors de la recherche, si le code de hachage de
+l'objet recherché ne correspond pas au code du
+hachage d'un sous-ensemble d'objets il l'ignore.
+ Signature de hashCode : public int hashCode()
+
+Java - Dr A. Belangour
+
+177
+
+177
+
+Objets : méthode hashCode()
+ Contrat respecté par la méthode hashCode():
+
+
+Plusieurs appels renvoient la même valeur entière
+
+
+
+La valeur de hachage peut changer dans différentes
+exécutions de la même application.
+
+
+
+Si deux objets sont égaux selon la méthode equals(), alors
+leur code de hachage doit être le même.
+
+
+
+Si deux objets ne sont pas égaux selon la méthode
+equals(), leur code de hachage ne doit pas forcement être
+différent.
+
+Java - Dr A. Belangour
+
+178
+
+178
+
+39
+
+Objets : méthode hashCode()
+ Exemple de redéfinition de hashCode():
+@Override
+public int hashCode() {
+int hash = 5;
+hash = 17 * hash + Objects.hashCode(this.cne);
+hash = 17 * hash + Objects.hashCode(this.nom);
+hash = 17 * hash + Objects.hashCode(this.prenom);
+return hash;
+}
+
+Java - Dr A. Belangour
+
+179
+
+179
+
+Polymorphisme
+ Soit l’exemple de code suivant :
+class Humain{
+public void parler(){
+System.out.println("Je
+parle");
+}
+}
+
+class Anglais extends Humain{
+@Override
+
+public void parler(){
+System.out.println("I speak
+english");
+}
+
+class Arabe extends Humain{
+
+}
+class Francais extends Humain{
+@Override
+
+@Override
+
+}
+
+public void parler(){
+System.out.println(" ‫أنا أتحدث‬
+‫;)"بالعربية‬
+}
+
+}
+
+public void parler(){
+System.out.println("Je parle
+français");
+}
+
+Java - Dr A. Belangour
+
+180
+
+180
+
+40
+
+Polymorphisme
+class Main {
+public static void main (String[] args) {
+Humain h;
+h=new Arabe();
+h.parler();//  « ‫» أنا أتحدث بالعربية‬
+h=new Anglais();
+h.parler(); //  « I speak English »
+h=new Français();
+h.parler(); //  « je parle Français »
+}
+}
+
+ La méthode parler() prend différents aspects selon
+l'objet affecté à l'objet Humain. D’où le nom
+polymorphisme !!
+Java - Dr A. Belangour
+
+181
+
+181
+
+Polymorphisme
+ Même exemple avec une boucle:
+
+class Main {
+public static void main (String[] args) {
+Humain[] tab={new Arabe(), new Anglais(), new Arabe(), new Français(), new Anglais() };
+for(Humain h : tab)
+h.parler();
+}
+}
+
+Java - Dr A. Belangour
+
+182
+
+182
+
+41
+
+Classes abstraites
+ Soit deux classes Enseignant et Etudiant.
+ La classe Enseignant est composée de :
+
+
+attributs :
+
+
+PPR : int
+
+
+
+nom : String
+
+
+
+prenom : String
+
+
+
+Constructeur paramétré
+
+
+
+Méthodes setters et getters
+
+
+
+Une méthode toString() transformant l’objet en String
+
+
+
+Une méthode quiSuisJe() qui affiche le travail de
+l'enseignant
+Java - Dr A. Belangour
+
+183
+
+183
+
+Classes abstraites
+ La classe Etudiant est composée de :
+
+
+attributs :
+
+
+CNE: String
+
+
+
+nom : String
+
+
+
+prenom : String
+
+
+
+Constructeur paramétré
+
+
+
+Getters et setters
+
+
+
+Une méthode toString() transformant l’objet en String
+
+
+
+Une méthode quiSuisJe() qui affiche le travail de l'étudiant
+
+Java - Dr A. Belangour
+
+184
+
+184
+
+42
+
+Classes abstraites
+public class Enseignant {
+private int PPR;
+private String nom;
+private String prenom;
+// constructeur
+public Enseignant(int PPR, String nom, String prenom) {
+this.PPR = PPR;
+this.nom = nom;
+this.prenom = prenom;
+}
+//getters setters
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+Java - Dr A. Belangour
+
+185
+
+185
+
+Classes abstraites
+public int getPPR() { return PPR; }
+public void setPPR( int PPR ) { this.PPR = PPR; }
+public String getPrenom() { return prenom; }
+public void setPrenom(String prenom) { this.prenom = prenom; }
+@Override
+public String toString() {
+return " PPR = " + this.PPR + ", Nom = " + this.nom
++ ", Prénom = " + this.prenom ;
+}
+//méthode
+public void quiSuisje(){ System.out.println("je suis un enseignant"); }
+}
+
+Java - Dr A. Belangour
+
+186
+
+186
+
+43
+
+Classes abstraites
+public class Etudiant {
+private String CNE;
+private String nom;
+private String prenom;
+// constructeur
+public Etudiant (String CNE, String nom, String prenom) {
+this.CNE = CNE;
+this.nom = nom;
+this.prenom = prenom;
+}
+//getters setters
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+Java - Dr A. Belangour
+
+187
+
+187
+
+Classes abstraites
+public String getCNE() { return CNE; }
+public void setCNE( String CNE) { this.CNE = CNE; }
+public String getPrenom() { return prenom; }
+public void setPrenom(String prenom) { this.prenom = prenom; }
+@Override
+public String toString() {
+return " CNE = " + this.CNE + ", Nom = " + this.nom
++ ", Prénom = " + this.prenom ;
+}
+//méthode
+public void quiSuisje(){ System.out.println("je suis un étudiant"); }
+}
+
+Java - Dr A. Belangour
+
+188
+
+188
+
+44
+
+Classes abstraites
+ Nous remarquons que les deux classes ont des
+points en communs :
+
+
+Attributs : nom, prenom
+
+
+
+Getters /setters : getNom(), setNom(),getPrenom(),
+setPrenom()
+
+
+
+Méthode toString() sauf pour le PPR et le CNE
+
+
+
+Méthode : quiSuisje() même signature mais un
+comportement différent
+
+
+
+Constructeurs : même initialisation pour le nom et le
+prenom
+Java - Dr A. Belangour
+
+189
+
+189
+
+Classes abstraites
+ Pour « factoriser » nous créerons une classe de base
+appelée Personne qui contiendra les méthodes et les
+attributs en commun entre Etudiant et Enseignant.
+ Les classes Etudiant et Enseignant hériteront de la classe
+Personne qui n'est là que pour la généralisation en plus
+ce n'est pas une classe métier.
+ Il faut bloquer son instanciation : déclaration avec le
+moté clé abstract !!
+
+Java - Dr A. Belangour
+
+190
+
+190
+
+45
+
+Classes abstraites
+ La classe Personne sera composée de :
+
+
+attributs :
+
+
+nom : String
+
+
+
+prenom : String
+
+
+
+Constructeur paramétré pour initialiser le nom et le prenom
+
+
+
+Des getters et setters pour lire et modifier le nom et le
+prenom
+
+
+
+Une méthode Une méthode toString() transformant l’objet
+en String
+
+
+
+Une méthode quiSuisJe()
+
+Java - Dr A. Belangour
+
+191
+
+191
+
+Classes abstraites
+ Au niveau de la classe Personne on ne sait pas encore
+ce qu'on va afficher avec la méthode quiSuisJe().
+ Solution :
+
+
+la déclarer comme abstraite aussi (sans corps).
+
+
+
+Les classes Etudiant et Enseignant redéfiniront cette
+méthode selon leurs besoins.
+
+Java - Dr A. Belangour
+
+192
+
+192
+
+46
+
+Classes abstraites
+
+
+Le code de la classe Personne est comme suit :
+
+public abstract class Personne{
+protected String nom;
+protected String prenom;
+// constructeur
+public Personne(String nom, String prenom) {
+this.nom = nom;
+this.prenom = prenom;
+}
+//getters setters
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+
+Java - Dr A. Belangour
+
+193
+
+193
+
+Classes abstraites
+public String getPrenom() { return prenom; }
+public void setPrenom(String prenom) { this.prenom = prenom; }
+//méthode
+public abstract void quiSuisje();
+}
+
+Java - Dr A. Belangour
+
+194
+
+194
+
+47
+
+Classes abstraites
+public class Enseignant extends Personne{
+private int PPR;
+public Enseignant(int PPR, String nom, String prenom) {
+super(nom,prenom); this.PPR = PPR;
+}
+//getters setters
+public int getPPR() { return PPR; }
+public void setPPR( int PPR ) { this.PPR = PPR; }
+@Override
+public String toString() { return " PPR = " + this.PPR + super.toString();}
+@Override
+public void quiSuisje(){ System.out.println("je suis un enseignant"); }
+}
+Java - Dr A. Belangour
+
+195
+
+195
+
+Classes abstraites
+public class Etudiant extends Personne{
+private String CNE;
+public Etudiant (String CNE, String nom, String prenom) {
+super(nom,prenom);
+
+this.CNE = CNE;
+
+}
+//getters setters
+public String getCNE() { return CNE; }
+public void setCNE( String CNE) { this.CNE = CNE; }
+@Override
+public String toString() { return " CNE = " + this.CNE + super.toString();
+@Override
+public void quiSuisje(){ System.out.println("je suis un etudiant"); }
+}
+Java - Dr A. Belangour
+
+196
+
+196
+
+48
+
+Classes abstraites
+public class Main {
+public static void main(String[] args) {
+Enseignant ens=new Enseignant(“12354”,”Alaoui”,”Ali”);
+ens.quiSuisJe();
+System.out.println(ens.toString());
+Etudiant et=new Etudiant(“125468”,”Omari”,”Omar”);
+ens.quiSuisJe();
+System.out.println(et.toString());
+}
+}
+
+Java - Dr A. Belangour
+
+197
+
+197
+
+Classes abstraites
+ Remarques
+
+
+Une classe abstraite ne peut pas être instanciée
+
+
+
+Une méthode abstraite doit forcement être redéfinie au
+niveau de la classe fille (sauf si elle abstraite aussi)
+
+
+
+Une classe abstraite peut ne pas contenir de méthodes
+abstraites.
+
+
+
+Une classe doit être déclarée abstraite dès qu'une de ses
+méthodes est déclarée abstraite.
+
+Java - Dr A. Belangour
+
+198
+
+198
+
+49
+
+Classes abstraites
+ Il est possible d'affecter un objet de la classe Fille à
+un objet de la classe abstraite Mère :
+
+
+Exemple : ClasseAbstraiteMere m=new ClasseFille()
+
+
+
+Le contraire est FAUX
+
+Java - Dr A. Belangour
+
+199
+
+199
+
+Classes abstraites
+ Polymorphisme avec une classe abstraite
+public abstract class Humain{
+public abstract void parler();
+}
+class Arabe extends Humain{
+@Override
+public void parler(){
+System.out.println(" ‫أنا أتحدث‬
+‫;)"بالعربية‬
+}
+}
+
+class Français extends Humain{
+@Override
+
+public void parler(){
+System.out.println("Je parle
+Français");
+}
+
+}
+class Anglais extends Humain{
+@Override
+
+}
+
+public void parler(){
+System.out.println("Is peak
+english");
+}
+
+Java - Dr A. Belangour
+
+200
+
+200
+
+50
+
+Interfaces
+ Une interface définit un ensemble de services
+(méthodes) attendus par un client externe.
+ L’implémentation de ces services est assurée par une
+classe cachée du client
+ On dit que la classe implémente l’interface
+ L’implémentation est une forme d’héritage
+ Ainsi : InterfaceMere f=new ClasseFille()
+ Une classe peut hériter d’une classe (une seule) et
+implémenter plusieurs interfaces (séparées par « , »)
+Java - Dr A. Belangour
+
+201
+
+201
+
+Interfaces
+ Exemple :
+
+interface AffichageType {
+void afficher();
+}
+
+class Personne implements AffichageType{
+@Override
+public void afficher() {
+System.out.println(" Je suis une personne ");
+}
+}
+class Voiture implements AffichageType{
+@Override
+public void afficher() {
+System.out.println(" Je suis une voiture ");
+}
+}
+Java - Dr A. Belangour
+
+202
+
+202
+
+51
+
+Interfaces
+class Main {
+public static void main (String[] args) {
+AffichageType f;
+f=new Personne();
+f.afficher();
+f=new Voiture();
+f.afficher();
+}
+}
+
+Java - Dr A. Belangour
+
+203
+
+203
+
+Interfaces
+ Une interface se compose de:
+
+
+Méthodes abstraites (sans le mot clé abstract)
+
+
+
+Constantes (sans mot clé final)
+
+
+
+Méthodes par défaut (mot clé défault)
+
+
+
+Méthodes statiques (mot clé static)
+
+ Une classe implémente une interface :
+
+
+Lorsqu’elle fournit une redéfinition pour ses méthodes
+abstraites
+
+
+
+Elle est obligée de redéfinir toutes les méthodes
+abstraites de l’interface.
+Java - Dr A. Belangour
+
+204
+
+204
+
+52
+
+Interfaces: Exemple
+import java.time.LocalDate;
+public interface ICalcul {
+int effectuerCalcul(int a, int b);
+default void direBonjour() {System.out.println("Bonjour");};
+default void direAurevoir() {System.out.println("Au revoir");};
+static void afficherDate() {System.out.println(LocalDate.now());}
+}
+public class Somme implements ICalcul {
+@Override
+public int effectuerCalcul(int a, int b) { return a+b; }
+}
+public class Multiplication implements ICalcul {
+@Override
+public int effectuerCalcul(int a, int b) { return a*b; }
+@Override
+public void direAurevoir() { System.out.println("Bye Bye"); }
+}
+Java - Dr A. Belangour
+
+205
+
+205
+
+Interfaces: Exemple
+public class Main {
+public static void main(String[] args) {
+ICalcul.afficherDate();
+Somme s=new Somme();
+s.direBonjour();
+System.out.println("Somme: "+s.effectuerCalcul(3,4));
+s.direAurevoir();
+Multiplication m=new Multiplication();
+m.direBonjour();
+System.out.println("Multiplication: "+m.effectuerCalcul(3,4));
+m.direAurevoir();
+}
+}
+
+Java - Dr A. Belangour
+
+206
+
+206
+
+53
+
+Interfaces
+ Remarque:
+ Une classe peut à la fois hériter d’une classe (une
+seule) et implémenter plusieurs interfaces (séparées
+par des virgules).
+ Dans le cas où plusieurs interfaces (Interface1 et
+Interface2 par exemple) ont des mêmes nom de
+méthodes par défaut (méthode1() par exemple)
+l’appel suivant permet de faire la différence :
+ Interface1.super.methode1()
+ Interface2.super.methode1()
+
+Java - Dr A. Belangour
+
+207
+
+207
+
+Interfaces
+ Une interface peut être d'accès :
+ public : toutes ses méthodes sont implicitement
+publiques même si elles ne sont pas déclarées avec le
+modificateur public.
+ Package (sans modificateur) : accessible seulement
+aux classes et interfaces du même package.
+
+Java - Dr A. Belangour
+
+208
+
+208
+
+54
+
+Interfaces
+ Remarque :
+
+
+À partir d'une interface il n'est possible d'accéder qu'aux
+méthodes redéfinies de la classe d'implémentation.
+
+
+
+Les méthodes propres de la classe ne sont pas accessibles
+à partir de l'interface.
+
+
+
+Exemple : Etudiant e= (Etudiant) f;
+
+Java - Dr A. Belangour
+
+209
+
+209
+
+Interfaces
+ Polymorphisme avec une interface
+public interface Humain{
+public void parler();
+}
+
+class Français impelments Humain{
+@Override
+
+class Arabe impelments Humain{
+@Override
+public void parler(){
+System.out.println(" ‫أنا أتحدث‬
+‫;)"بالعربية‬
+}
+}
+
+public void parler(){
+System.out.println("Je parle
+Français");
+}
+
+}
+class Anglais impelments Humain{
+@Override
+
+}
+
+public void parler(){
+System.out.println("Is peak
+english");
+}
+
+Java - Dr A. Belangour
+
+210
+
+210
+
+55
+
+Interfaces : Exercice d’application
+ Soit l’interface suivante :
+public interface Salutation {
+void saluer(String nom);
+}
+
+ Ecrire trois classes (SalutationArabe, SalutationAnglais,
+SalutationFrancais) qui implémentent cette interface et
+redéfinissent la méthode saluer.
+ Ecrire une classe Main pour le test, qui demande à l’utilisateur
+son nom et le code de la langue qu’il souhaite (ar, en ou fr) et
+qui le salue avec la langue qu’il souhaite.
+
+Java - Dr A. Belangour
+
+211
+
+211
+
+Interfaces : Solution
+public class SalutationArabe implements Salutation{
+@Override
+public void saluer(String nom) {
+System.out.println(" Salam alikom "+nom); }
+}
+public class SaluationAnglais implements Salutation{
+@Override
+public void saluer(String nom) {
+System.out.println(" Hi "+nom); }
+}
+public class SalutationFrancais implements Salutation{
+@Override
+public void saluer(String nom) {
+System.out.println(" Bonjour "+nom); }
+}
+Java - Dr A. Belangour
+
+212
+
+212
+
+56
+
+Interfaces : Solution (suite)
+public class Main {
+public static void main(String[] args) {
+Scanner sc=new Scanner(System.in);
+System.out.println("Saisir Nom :");
+String nom=sc.next();
+System.out.println("Saisir code langue Ar/Fr/En");
+String rep=sc.next().toLowerCase();
+Salutation sal;
+switch(rep){
+case "ar": sal=new SalutationArabe();break;
+case "en": sal=new SalutationAnglais();break;
+case "fr": sal=new SalutationFrancais();break;
+default: sal=new SalutationArabe();
+}
+sal.saluer(nom);
+}
+}
+Java - Dr A. Belangour
+
+213
+
+213
+
+Interface Cloneable
+ Pour cloner un objet il faut :
+
+
+Redéfinir la méthode clone() de la classe Object
+
+
+
+Implémenter l'interface Cloneable pour ne pas avoir
+l’exception CloneNotSupportedException.
+
+ Cloneable doit être implémentée pour indiquer à la
+méthode Object.clone () qu'il est légal d'effectuer une
+copie champ-à-champ des instances de cette classe.
+
+Java - Dr A. Belangour
+
+214
+
+214
+
+57
+
+Interface Cloneable
+ Exemple :
+public class Personne implements Cloneable{
+private String nom;
+private String prenom;
+public Personne(String nom, String prenom) {
+this.nom = nom; this.prenom = prenom;
+}
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+public String getPrenom() {return prenom; }
+public void setPrenom(String prenom) {this.prenom = prenom;}
+Java - Dr A. Belangour
+
+215
+
+215
+
+Interface Cloneable
+public void afficher(){
+System.out.println("Nom = "+nom+" , Prenom = "+prenom);
+
+}
+
+@Override
+protected Object clone() throws CloneNotSupportedException {
+return super.clone();
+}
+}
+
+ Remarque :
+
+
+Aucun code explicite n’est requis pour copier la valeur d’un
+objet dans un autre
+
+Java - Dr A. Belangour
+
+216
+
+216
+
+58
+
+Interface Cloneable
+public class Main {
+public static void main(String[] args) {
+
+}
+
+Personne p1=new Personne("Omar","Omari");
+try {
+Personne p2=(Personne)p1.clone();
+p2.setNom("Alaoui");p2.setPrenom("Ali");
+p1.afficher(); // affichera Omar omari
+p2.afficher(); // affichera Ali Alaoui
+catch(CloneNotSupportedException e){
+System.out.println(e.getMessage());
+}
+
+}
+}
+Java - Dr A. Belangour
+
+217
+
+217
+
+Méthode getclass()
+ Elle retourne un objet de type Class. Qui contient des
+méta-données sur la classe de l’objet sur lequel elle a
+été appelée.
+ Quelques méthodes :
+
+
+String getName() : retourne le nom complet de la classe
+de l’objet.
+
+
+
+Package getPackage() :retourne le package de la classe.
+
+
+
+….
+
+Java - Dr A. Belangour
+
+218
+
+218
+
+59
+
+Méthode getclass()
+ Exemples :
+
+
+
+
+Soit le code :
+
+
+Etudiant e1= new Etudiant ("A12357i","Ali","Alaoui");
+
+
+
+Ietudiant ie = new Etudiant ("A12357i","Omar","Omari");
+
+
+
+Personne p= new Etudiant ("A12357i","Omar","Omari");
+
+Résultat de getClass :
+
+
+e1.getClass()  Etudiant
+
+
+
+Ie.getClass()  Etudiant
+
+
+
+p.getclass()  Personne
+
+// Attention !!!!
+
+Java - Dr A. Belangour
+
+219
+
+219
+
+Opérateur instanceof
+ Permet de déterminer la classe de l'objet qui lui est
+passé en paramètre.
+ La syntaxe est : objet instanceof classe
+ Exemple:
+Object[] tab= {new Voiture(…),…, new Personne(…); new Maison(…)}
+for ( Object o : tab){
+if (o instanceof Voiture) {
+Voiture v= (Voiture) o;
+v. afficherMarque();
+}
+
+else if (o instanceof Personne) {
+Personne p= (Personne) o;
+p.afficherNom();
+}
+else if (o instanceof Maison) {
+Maison m= (Maison) o;
+m.afficherAdresse();
+}
+}
+Java - Dr A. Belangour
+
+220
+
+220
+
+60
+
+Packages
+ Un package permet regrouper des classes qui couvrent
+un même domaine dans un même dossier après
+compilation.
+ L’utilisation de packages permet de simplifier la
+maintenabilité et l’évolutivité d’une application.
+ Pour mettre une classe dans un package il faut
+commencer son codage par :
+
+
+package nompackage;
+
+ Après compilation un dossier avec le même nom du
+package est créé où le fichier .class est entreposé.
+Java - Dr A. Belangour
+
+221
+
+221
+
+Packages
+ Exemples :
+package org.erp.stock;
+public class Produit {}
+
+org
+erp
+
+package org.erp.stock;
+public class Inventaire {}
+
+Main
+
+stock
+
+package org.erp.facturation;
+public class Facture {}
+
+Produit
+Inventaire
+
+facturation
+Facture
+
+package org.erp;
+public class Main {}
+
+Java - Dr A. Belangour
+
+222
+
+222
+
+61
+
+Packages : Déclaration
+ Remarques:
+
+
+Dans les IDE tels que Netbeans ou Eclipse, les packages
+peuvent être créés graphiquement en se plaçant sur le
+dossier représentant le code source.
+
+
+
+Une classe doit être déclarée public pour être visible en
+dehors de son package de base.
+
+Java - Dr A. Belangour
+
+223
+
+223
+
+Packages
+ Il existe plusieurs types de packages :
+ Les packages standards : Les packages
+représentant la bibliothèque java. Comme le package
+java.lang qui est importé implicitement.
+ Les packages personnels : les packages créés par
+les utilisateurs.
+ Le package par défaut : Représente le dossier
+courant et permet de localiser les classes qui ne sont
+pas associées à un package particulier.
+
+Java - Dr A. Belangour
+
+224
+
+224
+
+62
+
+Packages : utilisation
+ Pour utiliser les classes d’un package, il y a 2 méthodes :
+
+
+On importe toutes les classes du package grâce à
+l’instruction, par exemple : import monpackage.*;
+
+
+
+On importe juste les classes qui nous intéressent, par
+exemple :
+ import monpackage.Classe1;
+ import monpackage.Classe2;
+
+ Remarque 1 : « * » n'importe pas les sous-packages.
+ Remarque 2 : Les classes du même package n’ont pas
+besoin de s’importer les unes les autres.
+
+Java - Dr A. Belangour
+
+225
+
+225
+
+Packages : nommage
+ Convention de nommage des packages:
+
+
+Tout en minuscule.
+
+
+
+Utiliser seulement [a-z], [0-9] et le point « . »
+
+
+
+Tout package doit avoir comme racine par :
+
+
+com, edu, gov, mil, net, org
+
+
+
+ou code pays comme ma (Maroc), tn (Tunisie), fr (France)…
+(Standard ISO 3166, 1981).
+
+Java - Dr A. Belangour
+
+226
+
+226
+
+63
+
+Packages : Collision de classes
+ Deux classes portant le même nom dans un
+programme, on dit qu’il y ‘a collision de classes.
+ Solution :
+
+
+Qualifier explicitement le nom de la classe avec le nom
+complet du package.
+
+
+
+L'import est inutile dans ce cas
+
+ Exemple :
+
+
+Nous souhaitons utiliser deux classes qui portent le même
+nom (Humain) mais qui se trouvent dans deux différents
+packages (collision.pkg1 et collision.pkg2 ).
+Java - Dr A. Belangour
+
+227
+
+227
+
+Packages : Collision de classes
+package collision.pkg1;
+
+package collision.pkg2;
+
+public class Humain{
+public void parler(){
+System.out.println("Je parle");
+}
+}
+
+public class Humain{
+public void discuter(){
+System.out.println("Je discute");
+}
+}
+
+package collision;
+public class Main {
+public static void main(String[] args) {
+collision.pkg1.Humain h1= new collision.pkg1.Humain();
+h1.parler();
+collision.pkg2.Humain h2= new collision.pkg2.Humain();
+h2.discuter();
+}
+}
+Java - Dr A. Belangour
+
+228
+
+228
+
+64
+
+Packages : Exemple
+
+
+Donner les déclarations des
+classes C1, C6 et C9 sachant que :
+
+
+La classe C1 utilise les classes
+C9 et C10
+
+
+
+La classe C6 hérite de la
+classe C13 et utilise la classe
+C3
+
+
+
+La classe C9 hérite de la classe
+C5 et utilise les classes C10 à
+C14.
+
+Java - Dr A. Belangour
+
+229
+
+229
+
+Packages : Exemple
+ La classe C1 se trouve dans pkg1 et utilise les classes
+C9 et C10 :
+
+
+
+
+
+package pkg1;
+import pkg1.pkg2.pkg4.C9;
+import pkg1.pkg3.C10;
+public class C1{}
+
+ La classe C6 se trouve dans pkg4, hérite de la classe
+C13 et utilise la classe C3 :
+
+
+
+
+
+package pkg1.pkg2.pkg4;
+import pkg1.pkg3.C13;
+import pkg1.C3;
+public class C6 extends C13{}
+Java - Dr A. Belangour
+
+230
+
+230
+
+65
+
+Packages : Exemple
+ La classe C9 se trouve dans pkg4, hérite de la classe
+C5 et utilise les classe C10 à C14.
+
+
+
+
+
+package pkg1.pkg2.pkg4;
+import pkg1.pkg2.C5;
+import pkg1.pkg3.*;
+public class C9 extends C5{}
+
+Java - Dr A. Belangour
+
+231
+
+231
+
+Packages : import statique
+ Utilisation d’un un membre statique d'une classe :
+ Exemple :
+import java.lang.Math;
+public class TestStaticImportOld {
+public static void main(String[] args) {
+System.out.println(Math.PI);
+System.out.println(Math.sin(0));
+}
+}
+Java - Dr A. Belangour
+
+232
+
+232
+
+66
+
+Packages : import statique
+ L’import statique permet d’accéder ditecretement aux
+membres statiques d’un classe.
+ Exemple :
+import static java.lang.Math.*;
+public class TestStaticImport {
+public static void main(String[] args) {
+System.out.println(PI);
+System.out.println(sin(0));
+}
+}
+Java - Dr A. Belangour
+
+233
+
+233
+
+Packages : java archive
+ Une application java (ou une bibliothèque) est composée
+d’un ensemble de classes rangées dans zéro ou plusieurs
+packages.
+ Livraison application à un client : un fichier .jar (java
+archive).
+ Le fichier jar est généré :
+
+
+Avec Eclipse : menu Fichier puis exporter le projet en fichier
+Jar et suivre les instructions.
+
+
+
+Avec Netbeans : La commande « clean & build project » du
+menu « Run » crée un dossier « dist » contenant le fichier jar.
+
+Java - Dr A. Belangour
+
+234
+
+234
+
+67
+
+Packages : java archive
+ Pour pouvoir utiliser une bibliothèque externe (fichier
+.jar) il faut y ajouter une référence:
+
+
+Eclipse : Java Build Path/Add JARs
+
+
+
+Netbeans : Libraries/Add Library ou Add JAR/Folder
+
+
+
+DOS : variable d’environnement Classpath
+Netbeans
+Eclipse
+
+Java - Dr A. Belangour
+
+235
+
+235
+
+68
+
+

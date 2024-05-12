@@ -1,0 +1,664 @@
+Gérer une instance Oracle
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Objectifs
+
+A la fin de ce chapitre, vous pourrez :
+• créer et gérer des fichiers de paramètres
+d'initialisation
+• démarrer et arrêter une instance
+• surveiller et utiliser des fichiers de diagnostic
+
+3-2
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Plan
+•
+•
+•
+•
+•
+•
+•
+•
+
+3-3
+
+Introduction
+Différents états de démarrage de la base de données
+Arrêt de l’instance
+Fichiers de paramètres d'initialisation
+Modification des paramètres d’initialisation
+Vues dynamiques de performance
+Vues du dictionnaire de données
+Fichier d’alertes et fichiers de trace
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Introduction
+➢ L’instance est l’ensemble des processus d’arrière plan et
+de zone mémoire qui sont alloués pour permettre
+l’exploitation de la base de données
+
+➢ L’instance est l’unique moyen pour travailler avec la base
+de données
+
+3-4
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Introduction
+➢ Les utilisateurs SYS et SYSTEM sont crées au moment de
+la création de la BD
+
+➢ SYS est le super administrateur de la BD, il possède le
+dictionnaire de données. Le schéma de SYS ne doit pas
+avoir de modification direct
+➢ SYSTEM est un administrateur de la BD, son schéma
+pourra être MAJ pour supporter les tâches
+d’administration(Ajout de nouvelle table de la BD…)
+
+3-5
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+BD
+➢ Le démarrage et l’arrêt de la base de données se fait
+en trois étapes :
+➢ Le démarrage de l’instance (Etat NOMOUNT)
+➢ Le montage de la base de données (Etat MOUNT)
+➢ L’ouverture de la base de données (Etat OPEN)
+
+3-6
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+BD
+
+3-7
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+BD
+Etat NOMOUNT :
+➢ Lecture du fichier de paramètres :
+➢ Le serveur va essayer de lire les fichiers dans l’ordre :
+➢ spfile<SID>.ora,
+➢ spfile.ora
+➢ ou init<SID>.ora
+
+➢ Allocation de la mémoire SGA
+➢ Démarrage des processus d’arrière plan
+➢ Ouverture des fichiers de trace et d’alerte
+➢ Le seul composant actif dans cette étape est l’instance
+➢ Commande : Startup NOMOUNT
+3-8
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+Etat MOUNT :
+BD
+➢ Associer la BD à l’instance
+➢ Rechercher et ouvrir les fichiers de contrôle spécifiés
+➢ Lecture des fichiers de contrôle pour obtenir le nom et le statut
+des fichiers de données et des fichiers de journalisation.
+➢ Aucune vérification de l’existence de ces fichiers n’est réalisée à
+cet état
+➢ La BD n’est pas encore ouverte et donc non accessible aux
+utilisateurs sauf pour les administrateurs avec le privilèges
+SYSDBA et SYSOPER
+➢ Commande :
+➢Startup MOUNT ou alter database MOUNT (depuis l’état
+NOMOUNT)
+3-9
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+BD
+Etat MOUNT : tâches pouvant être effectuées
+➢ Renommer les fichiers de données
+
+➢ Activer ou désactiver les options d’archivage
+des fichiers de journaux
+➢ Activer ou désactiver les options de flashback
+
+➢ Réaliser une restauration complète de la BD
+
+3-10
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la
+BD
+
+Etat OPEN:
+
+➢ Vérifier que les fichiers de données et les fichiers de
+journaux puissent être ouverts. Si l’ouverture de l’un d’entre
+eux échoue, la BD n’est pas ouverte et l’erreur sera affichée
+➢ Vérifier que l’intégrité des fichiers de données. Si une erreur
+est détectée le processus SMON lance la restauration
+d’instance et les fichiers de données sont reconstruits à
+partir des fichiers de journaux
+➢ A cet étape, les utilisateurs de la BD peuvent se connecter
+➢ Commande :
+➢Startup OPEN ou alter database OPEN (depuis les autres
+états)
+3-11
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la BD : Commande
+STARTUP
+➢ Startup [FORCE] [RESTRICT] [PFILE=fichier pfile]
+➢ { OPEN [ READ { ONLY | WRITE [RECOVER] } ] | MOUNT|
+NOMOUNT }
+➢ FORCE : Commence par fermer l’instance(Le mode SHITDOWN
+ABORT) puis l’ouverture de l’instance
+➢ RESTRICT : Accès limité aux utilisateurs ayant le privilège
+RESTRICTED SESSION
+➢ PFILE : Nom du fichier de paramètre d’initialisation à utiliser au
+démarrage
+➢ READ ONLY : mode lecture seule
+➢ READ WRITE : Ouverture de la BD en mode normal
+➢ RECOVER : Lancement de la récupération de la BD lorsque un des
+fichiers de données est perdu équivaut à la commande RECOVER
+database
+3-12
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Différents états de démarrage de la BD : Commande ALTER
+DATABASE
+ALTER DATABASE [OPEN [ READ { ONLY | WRITE}] | MOUNT]
+➢ OPEN : Ouverture de la BD
+➢ MOUNT : Montage de la BD
+➢ READ ONLY : Limite les utilisateurs à des opérations de lecture seule
+➢ READ WRITE : mode par défault (Lecture et Ecriture)
+
+3-13
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Arrêt de l’instance
+Le processus d’arrêt de l’instance s ’effectue en trois étapes :
+➢ Etape 1 : La BD est d’abord fermée :
+• Ecriture depuis le BUFFER REDO LOG dans les fichiers de journaux
+• Ecriture depuis le BUFFER CACHE vers les fichiers de données
+• Fermeture des fichiers de données et de journaux
+• La BD devient indisponible pour les utilisateurs mais les fichiers de
+contrôle restent ouverts
+➢ Etape 2 : La BD ensuite démontée de son instance et les fichiers de contrôle
+sont fermés
+➢
+•
+•
+•
+
+Etape 3 : L’instance est arrêtée :
+Fermeture des fichiers de trace et d’alerte
+Libération de la mémoire SGA
+Arrêt des processus d’arrière plan
+
+3-14
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Arrêt de l’instance : Commande
+SHUTDOWN
+
+3-15
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Arrêt de l’instance : Commande
+SHUTDOWN
+SHUTDOWN [ABORT | IMMEDIATE | NORMAL |
+TRANSACTIONAL ]
+➢ ABORT : Oracle arrête le serveur (Equivaut à couper le courant
+sur le serveur et nécessitera la récupération par le SMON au
+démarrage)
+➢ IMMEDIATE : Oracle arrête proprement la BD
+➢ NOMAL : Oracle attend que tous les utilisateurs se déconnectent
+pour arrêter proprement le serveur (Mode par défaut)
+➢ TRANSACTIONAL : Oracle attend la fin des transactions en
+cours pour arrêter proprement le serveur
+3-16
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichiers de paramètres d'initialisation
+➢ Au démarrage, l’instance lit un fichier de paramètres qui
+contient des paramètres d’initialisation.
+➢ C’est un fichier qui contient les paramètres d’initialisation de
+la BD (Taille de la SGA, Nombre de processus autorisés,
+chemin du fichier de contrôle…)
+➢ Deux types de fichiers de paramètre existent :
+➢Le fichier de paramètre client PFILE : fichier Texte
+➢Le fichier de paramètre Serveur SPFILE (Server PFILE) :
+fichier binaire
+
+3-17
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichiers de paramètres d'initialisation
+• Son emplacement :
+➢ Linux : $ORACLE_HOME/dbs/spfile<SID>.ora
+➢ Windows : $ORACLE_HOME\database\spfile<SID>.ora
+➢ Si le SPFILE existe, il est prioritaire par rapport à PFILE
+
+➢ L’ordre de lecture :
+1. spfile<SID>.ora
+2. spfile.ora
+3. init<SID>.ora (fichier pfile)
+4. Init.ora (fichier pfile)
+• Si on veut forcer la lecture de fichier PFILE, utiliser la
+
+3-18
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichiers de paramètres d'initialisation
+• Pour créer un PFILE depuis un SPFILE ou inversement
+SPFILE depuis un PFILE
+
+➢
+
+MEMORY : permet la création du fichier de paramètre
+depuis les valeurs de l’instance en cours d’utilisation
+
+3-19
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichiers de paramètres d'initialisation
+➢ Ce fichier est indispensable à la BD, la sauvegarde
+régulière étant obligatoire et aussi avant chaque
+opération de modification des paramètres.
+➢ En cas d’erreur dans le fichier de paramètre SPFILE :
+➢Editer le fichier avec un éditeur de texte et effacer les
+caractères binaires au début et à la fin du fichier
+➢Enregistrer le fichier sous un autre nom et recréer le
+SPFILE depuis ce fichier
+
+3-20
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+➢ Oracle 12c contient 367 paramètres documentés et plus de 1000
+paramètres non documentés
+➢ Les paramètres non documentés commence par le caractère _
+
+➢ Il est fortement déconseillé de modifier les paramètres non
+documentés Exemples :
+➢_ALLOW_READ_ONL Y_CORRUPTION : permet la lecture
+seule si la BD est corrompu
+➢_ARCH_COMPRESSION : Active la compression des archives
+
+3-21
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+➢ Il existe 2 types de paramètres, les paramètres dynamiques et les
+paramètres statiques.
+➢ Les paramètres dynamiques sont modifiables sans avoir besoin
+d’arrêter la base de données. Leurs modifications prend effet dans
+l’instance en cours
+
+➢ Les paramètres statiques nécessiteront le redémarrage de l’instance.
+Leurs modifications se passe dans le SPFILE ou le PFILE directement
+➢ Chaque session hérite les valeurs des paramètre d’initialisation de
+l’instance qu’on pourra voir dans Les vues
+V$SYSTEM_PARAMETER
+3-22
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+➢ La vue V$PARAMETER permet de voir les informations des
+paramètres d’initialisation chargé pour la session
+
+➢ La vue V$SPPARAMETER permet de voir les informations
+des paramètres d’initialisation du fichier SPFILE
+
+3-23
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+
+➢ SHOW Parameter nom_Parameter permet de voir la valeur du paramètres
+sous SQLPLUS
+➢ La vue V$PARAMETER contient les champs :
+➢ NAME : Nom du paramètre
+➢ TYPE : Son type
+➢ VALUE : La valeur
+➢ ISDEFAULT : TRUE ou FALSE selon que le paramètre a été initialisé depuis le
+fichier de paramètres ou par Oracle
+➢ ISXXX_MODIFIABLE : indique si le paramètre peut être modifié par la session
+ISSESS_MODIFIABLE ou par l’instance ISSYS_MODIFIABLE (SYS désigne
+l’instance)
+
+➢ ISSYS_MODIFIABLE indique si le paramètre pourra être modifié par alter
+system ou pas
+
+3-24
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres d’initialisation :
+Commande
+Commande :
+➢ ALTER SYSTEM SET PARAMETER=VALUE
+SCOPE=[MEMORY|SPFILE|BOTH]
+
+Pour un paramètre statique, la seule commande possible est
+(ou changement dans le pfile):
+➢ ALTER SYSTEM SET PARAMETER=VALUE
+SCOPE=SPFILE
+
+3-25
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+➢ Si le fichier de paramètre utilisé est SPFILE, l’option par défaut
+est SCOPE=BOTH.
+➢ Si le fichier de paramètre est PFILE, la seule possibilité est le
+SCOPE=MEMORY
+➢ Pour modifier un paramètre dynamique dont l’application
+portera sur les prochaines sessions au cours de l’instance
+➢ALTER SYSTEM SET PARAM=VALUE DEFERRED
+SCOPE=MEMORY;
+➢ ALTER SYSTEM RESET permet d'effectuer une suppression
+d'un paramètre ou de rétablir sa valeur ORACLE par défaut
+
+3-26
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+
+Parameter
+CONTROL_FILES
+
+Specifies
+
+DB_FILES
+
+Maximum number of database files
+
+PROCESSES
+
+Maximum number of OS user processes
+that can simultaneously connect
+
+DB_BLOCK_SIZE
+
+Standard database block size used by all
+tablespaces
+
+DB_CACHE_SIZE
+
+Size of the standard block buffer cache
+
+3-27
+
+One or more control file names
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+Parameter
+SGA_TARGET
+
+Specifies
+
+MEMORY_TARGET
+
+Oracle system wide usable
+memory
+
+Total size of all SGA
+components
+
+SGA
+Shared
+SQL area
+
+Library
+cache
+
+Database buffer
+cache
+
+3-28
+
+Other
+
+Shared pool
+
+Redo log
+buffer
+
+Java
+pool
+
+Data dictionary
+cache
+
+Streams
+pool
+
+I/O buffer
+
+Free
+memory
+
+Response
+queue
+
+Request
+queue
+
+Large pool
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Modification des paramètres
+d’initialisation
+Parameter
+PGA_AGGREGATE_TARGET
+
+Specifies
+
+SHARED_POOL_SIZE
+
+Size of shared pool (in bytes)
+
+UNDO_MANAGEMENT
+
+Undo space management
+mode to be used
+
+3-29
+
+Amount of PGA memory
+allocated to all server
+processes
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues dynamiques de performance
+• Fournissent les
+informations sur les états
+du serveur Oracle
+
+Session data
+
+Wait events
+Memory allocations
+Running SQL
+UNDO usage
+Open cursors
+Redo log usage
+
+…and so on
+
+Oracle instance
+
+3-30
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues dynamiques de performance
+➢ Ces vues utilisent des tables de performances dynamiques; maintenu
+automatiquement par Oracle et appartenant à l’utilisateur SYS; et des
+informations provenant du noyau Oracle
+
+➢ Ces vues permettent d’avoir des informations sur la performance de la BD
+(Structure mémoire, évolution des fichiers de données…) et commencent par
+le symbole V$
+➢ La liste complète est disponible depuis la vue V$FIXED_TABLE
+
+3-31
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues dynamiques de performance
+➢
+➢
+➢
+➢
+➢
+➢
+➢
+
+3-32
+
+En mode NOMOUNT : seules les vues lisant l’état de la mémoire sont accessibles :
+V$PARAMETER, V$SPPARAMETER
+V$SGAINFO :Infos sur les composants de la SGA
+V$OPTION : les options installés avec le serveur Oracle
+V$PROCESS : Infos sur les processus actifs
+V$SESSION : Infos sur les sessions en cours
+V$INSTANCE : Infos sur l’instance en cours
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Vues dynamiques de performance
+➢ En mode MOUNT : les informations du fichier de
+contrôle
+➢ V$DATABASE : Infos sur la BD
+➢ V$CONTROLFILE : Infos du fichier de contrôle
+➢ V$DATAFILE : Informations sur les fichiers de données
+➢ V$TABLESPACE : les noms des tablespaces
+➢ V$LOGFILE : Infos sur les fichiers de journaux
+
+3-33
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichier d’alertes et fichiers de trace
+➢ Le fichier des alertes est un fichier texte écrit en séquentiel par Oracle Ce fichier
+contient tous les principaux événements de la BD (paramètres d’initialisation de
+démarrage, Date de démarrage, les opérations de récupération de la BD, les
+erreurs de la BD et les commandes)
+• Le dictionnaire de données est un ensemble de tables et de vues qui
+donnent des informations sur le contenu d’une base de données :
+• les structures de stockage ;
+• les utilisateurs et les droits ;
+• les objets (tables, vues, index, procédures, fonctions, etc.).
+• etc.
+• Le dictionnaire de données appartient à SYS et est stocké dans le
+tablespace SYSTEM. Il est créé lors de la création de la base de données et
+mis à jour automatiquement par Oracle lorsque des ordres SQL DDL
+(Data Definition Language) sont exécutés (CREATE, ALTER, DROP).
+
+3-34
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichier d’alertes et fichiers de trace
+➢ Le fichier de trace est associé à chaque processus
+d’arrière plan, il contient les erreurs survenues du
+processus d’une manière détaillée
+
+➢ Si le paramètre SQL TRACE est activé les processus
+server seront tracés :
+➢EXEC DBMS_SESSION.SET_SQL_TRACE(sql_trace
+=> true);
+
+3-35
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Fichier d’alertes et fichiers de trace
+➢ La commande pour avoir le chemin des fichiers d’alerte et de trace
+est :
+
+➢ SELECT * FROM V$DIAG_INFO WHERE NAME=‘DIAG
+TRACE’
+
+3-36
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Cas du PDB
+➢ Une fois connecté à la PDB, toutes les règles liées aux
+paramètres d’initialisation s’appliquent de la même façon
+
+➢ Le champ ISPDB_MODIFIABLE dans la vue V$PARAMETER
+permet de déterminer si un paramètre d’initialisation est
+modifiable dans une PDB :
+➢ SQL> select NAME, ISPDB_MODIFIABLE from
+V$PARAMETER
+
+3-37
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Cas du PDB
+➢ Lorsqu’une base de données PDB est déconnectée de sa CDB, la
+valeur des paramètres d’initialisation relatifs à la PDB (initialisés
+avec l’option scope=both ou bien scope=spfile) sont insérés dans
+le fichier XML des métadonnées de la PDB
+➢ Ces valeurs seront restaurées lorsque la base de données PDB
+sera de nouveau associée à une CDB
+➢Un fichier texte pfile ne peut pas contenir de paramètres
+spécifiques à une base de données PDB
+
+3-38
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Cas du PDB
+
+➢ Sous SQLPLUS : Show PDBS pour voir les con_id et con_name
+des PDBs
+➢ Commande :
+➢ Select name from v$parameter where
+CON_ID=identifiant_PDB
+
+3-39
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+

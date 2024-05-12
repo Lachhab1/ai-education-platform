@@ -1,0 +1,385 @@
+Tp 3 Gestion Utilisateurs / Rôles
+I. Gestion Utilisateurs
+1. Créer un utilisateur User_test et son schéma schema_test
+2. Supprimer l’utilisateur User_test et son schéma
+3.
+a. Créer un autre utilisateur User_test2
+b. Et changer son mot de passe
+4.
+5.
+6.
+7.
+8.
+9.
+
+a. Quelle est la durée de validité du mot de passe
+b. Modifier la durée du mot de passe en UNLIMITED
+Déverrouiller le compte de l’utilisateur User_test2
+Affecter le privilège SELECT sur la vue VUE_TEST appartenant à l'objet FM_GFTEST pour un
+utilisateur SYSTEM
+Créer le rôle un rôle SELECT_VUE_TEST avec le droit SELECT sur l'objet VUE_TEST du
+schéma FM_GFTEST
+Révoquer un privilège :
+Supprimer le privilège SELECT du schéma FM_GFTEST de la vue VUE_TEST du rôle
+SELECT_VUE_TEST
+Modifier le tablespace par défaut d'un utilisateur :
+a. Créer le tablespace tab_user_test2 pour l’utilisateur User_test2
+b. Modifier le tablespace tab_user_test2 par défaut de l’utilisateur User_test2
+
+II. Rôles
+1. Afficher les privilèges système assignés au rôle CONNECT
+GRANTEE
+-----------------CONNECT
+CONNECT
+CONNECT
+CONNECT
+CONNECT
+CONNECT
+CONNECT
+CONNECT
+
+PRIVILEGE
+------------------------CREATE VIEW
+CREATE TABLE
+ALTER SESSION
+CREATE
+CREATE SESSION
+CREATE SYNONYM
+CREATE SEQUENCE
+CREATE DATABASE LINK
+
+ADM
+--NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+
+8 ligne(s) sélectionnée(s).
+
+2. Afficher les privilèges système assignés au rôle RESOURCE
+GRANTEE
+----------------RESOURCE
+RESOURCE
+RESOURCE
+RESOURCE
+
+PRIVILEGE
+ADM
+---------------------------------------- --CREATE TYPE
+NO
+CREATE TABLE
+NO
+CREATE CLUSTER
+NO
+CREATE TRIGGER
+NO
+1
+
+RESOURCE
+RESOURCE
+RESOURCE
+RESOURCE
+
+CREATE
+CREATE
+CREATE
+CREATE
+
+OPERATOR
+SEQUENCE
+INDEXTYPE
+PROCEDURE
+
+NO
+NO
+NO
+NO
+
+8 ligne(s) sélectionnée(s).
+
+3. Afficher les privilèges système assignés au rôle DBA
+GRANTEE
+--------------DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+...
+...
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+DBA
+
+PRIVILEGE
+--------------------------------ADMINISTER DATABASE TRIGGER
+ADMINISTER RESOURCE MANAGER
+ALTER ANY CLUSTER
+ALTER ANY DIMENSION
+ALTER ANY EVALUATION CONTEXT
+ALTER ANY INDEX
+ALTER ANY INDEXTYPE
+ALTER ANY LIBRARY
+ALTER ANY OUTLINE
+ALTER ANY PROCEDURE
+ALTER ANY ROLE
+ALTER ANY RULE
+ALTER ANY RULE SET
+ALTER ANY SEQUENCE
+ALTER ANY SNAPSHOT
+ALTER ANY TABLE
+ALTER ANY TRIGGER
+ALTER ANY TYPE
+
+ADM
+---YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+
+SELECT ANY DICTIONARY
+SELECT ANY SEQUENCE
+SELECT ANY TABLE
+UNDER ANY TABLE
+UNDER ANY TYPE
+UNDER ANY VIEW
+UPDATE ANY TABLE
+
+YES
+YES
+YES
+YES
+YES
+YES
+YES
+
+139 ligne(s) sélectionnée(s).
+
+4. Afficher la liste des rôles définis : est visible depuis la vue DBA_ROLES
+ROLE
+-----------------------------CONNECT
+RESOURCE
+DBA
+SELECT_CATALOG_ROLE
+EXECUTE_CATALOG_ROLE
+DELETE_CATALOG_ROLE
+EXP_FULL_DATABASE
+IMP_FULL_DATABASE
+RECOVERY_CATALOG_OWNER
+GATHER_SYSTEM_STATISTICS
+LOGSTDBY_ADMINISTRATOR
+AQ_ADMINISTRATOR_ROLE
+AQ_USER_ROLE
+GLOBAL_AQ_USER_ROLE
+OEM_MONITOR
+
+PASSWORD
+-------NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+GLOBAL
+NO
+2
+
+HS_ADMIN_ROLE
+WKUSER
+WM_ADMIN_ROLE
+JAVAUSERPRIV
+JAVAIDPRIV
+JAVASYSPRIV
+JAVADEBUGPRIV
+EJBCLIENT
+JAVA_ADMIN
+JAVA_DEPLOY
+CTXAPP
+XDBADMIN
+AUTHENTICATEDUSER
+OLAP_DBA
+SALES_HISTORY_ROLE
+
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+NO
+
+30 ligne(s) sélectionnée(s).
+
+5. Afficher la liste des privilèges système assignés à un rôle : s'obtient en interrogeant les vues
+DBA_SYS_PRIVS et USER_SYS_PRIVS
+
+Nom
+------------------------GRANTEE
+PRIVILEGE
+ADMIN_OPTION
+
+NULL ?
+----------NOT NULL
+NOT NULL
+
+Type
+-----------VARCHAR2(30)
+VARCHAR2(40)
+VARCHAR2(3)
+
+6. Afficher la liste des rôles assignés à un utilisateur : s'obtient via les vues DBA_ROLE_PRIVS et
+USER_ROLE_PRIVS
+
+GRANTEE
+---------------FD
+FD
+FD
+FD
+
+GRANTED_ROLE
+-------------DBA
+CONNECT
+RESOURCE
+GATHER_SYSTEM_STATISTICS
+
+ADM
+--NO
+NO
+NO
+NO
+
+DEF
+--YES
+YES
+YES
+YES
+
+7. Afficher la liste des privilèges objet assignés à un utilisateur : s'obtient en interrogeant les vues
+DBA_TAB_PRIVS, ALL_TAB_PRIVS et USER_TAB_PRIVS
+
+GRANTEE
+OWNER
+TABLE_NAME
+HIERARCHY
+FD
+SYS
+ALL_DIRECTORIES
+FD
+SYS
+DBA_DIRECTORIES
+
+GRANTOR
+SYS
+SYS
+
+SELECT
+SELECT
+
+PRIVILEGE
+NO
+NO
+
+GRANTABLE
+NO
+NO
+
+8. Afficher la liste des privilèges objet sur les colonnes de tables assignés à un utilisateur : s'obtient
+en interrogeant les vues DBA_COL_PRIVS, ALL_COL_PRIVS et USER_COL_PRIVS
+9. Afficher la liste des rôles assignés à l'utilisateur au cours de sa session : est visible via la vue
+SESSION_ROLES
+ROLE
+-----------------------------CONNECT
+RESOURCE
+
+3
+
+10. Afficher la liste des privilèges assignés à l'utilisateur au cours de sa session : est visible via la vue
+SESSION_PRIVS
+
+PRIVILEGE
+----------------------------------CREATE SESSION
+ALTER SESSION
+UNLIMITED TABLESPACE
+CREATE TABLE
+CREATE CLUSTER
+CREATE SYNONYM
+CREATE VIEW
+CREATE SEQUENCE
+CREATE DATABASE LINK
+CREATE PROCEDURE
+CREATE TRIGGER
+CREATE TYPE
+CREATE OPERATOR
+CREATE INDEXTYPE
+
+Les privilèges assignés à un utilisateur via un rôle ne permettent pas la création de vues, de procédures,
+de fonctions de packages ni de clés étrangères par l'intermédiaire de code PL/SQL dynamique
+(DBMS_SQL, execute immediate).
+Pour créer ces objets via PL/SQL, l'utilisateur doit avoir reçu directement les privilèges requis via
+l'instruction GRANT.
+Les vues SESSION_PRIVS et SESSION_ROLES sont utiles pour vérifier les droits acquis au cours de la
+session.
+Les rôles par défaut à la connexion pouvant être enrichis avec l'instruction SET ROLE (ou son équivalent
+PL/SQL : DBMS_SESSION.SET_ROLE)
+Un mot de passe peut être ajouté à un rôle pour pouvoir l'activer avec l'instruction ALTER ROLE :
+
+
+
+IDENTIFIED permet de définir le système d'identification
+NOT IDENTIFIED supprime le système d'identification
+
+Cela permet de se prémunir de l'attribution du rôle par un utilisateur non autorisé qui tenterait de se
+l'attribuer via l'instruction SET ROLE
+
+4
+
+

@@ -1,0 +1,742 @@
+Les Servlets
+Pr. Ben lahmar el habib
+
+INTRODUCTION
+Une servlet est un programme qui s'exécute côté serveur en tant qu'extension du serveur.
+La technique des CGI en Java, MAIS
+Sans créer de processus + toute la puissance de Java (accès aux divers domaines de l'informatique: BD, multimédia, réseau, objets distribués, composants, etc.)
++ indépendance de la plate-forme et du serveur
+
+INTRODUCTION
+Servlets
+Scripts serveur écrit en Java
+Servlets de Base : FileServlet, CGIServlet, …
+HttpServlet
+Exécution dans un espace isolé (Web Application)
+ Spécification : Sun (sous partie de J2EE)
+ Implémentation de référence : Apache Group (Jakarta Tomcat)
+ Différence avec les CGI et les LD (NSAPI, ISAPI)
+performance sur les passages des paramêtres (vs CGI)
+sûreté de fonctionnement (NSAPI, ISAPI)
+
+Moteurs de servlets
+Pour exécuter des servlets, il faut un moteur de servlets dans le serveur Web.
+Ces moteurs sont des plug-in pour des serveurs Web existants
+ou bien des serveurs Web aux mêmes
+Plug-in : deux candidats : Jrun (www.allaire.com), tomcat (jakarta.apache.org)
+
+Programmation des servlets
+Utilise deux paquetages :
+javax.servlet : paquetage générique
+javax.servlet.http : paquetage pour serveurs Web
+Ces paquetages ne sont pas dans J2SE 1.3
+Sont des paquetages supplémentaires.
+Il sont aussi intégrés dans J2EE voir à http://java.sun.com/j2ee/
+
+Exemple de ServletHello World !
+import  java. io.*;  
+import  javax. servlet.*;  
+import  javax. servlet. http.*;
+public  class  HelloServlet extends HttpServlet {
+public  void doGet( HttpServletRequest req,  HttpServletResponse res)
+throws ServletException,  IOException {
+res. setContentType(" text html");   //Set  the  Content- Type  header
+PrintWriter out =  res. getWriter();  // Get the  output
+String  pname =  req. getParameter(" name");   //Get a  parameter
+if( pname== null)  pname=" World !";
+out. println("< HTM >");
+out. println("< HEAD>< TIT E> Hello, " +  pname + "< TIT E>< HEAD>");
+out. println("< BODY>");
+out. println(" Hello, " +  pname);
+out. println("< BODY>< HTM >");
+out. flush();
+}
+public  void doPost( HttpServletRequest req,  HttpServletResponse res)
+throws ServletException,  IOException {  doGet( req,  res); }
+}
+
+L'API servlet
+L'API servlet regroupe un ensemble de classes dans deux packages :
+javax.servlet : contient les classes pour développer des serlvets génériques indépendantes d'un protocole.
+javax.servlet.http : contient les classes pour développer des servlets qui reposent sur le protocole http utilisé par les serveurs web.
+
+L'API servlet
+
+L'API servlet
+javax.servlet
+Nom 
+Role
+Les interfaces
+RequestDispatcher
+Définition d'un objet qui permet le renvoi d'une requête vers une autre ressource du serveur (une autre servlet, une JSP ...)
+Servlet
+Définition de base d'une servlet
+ServletContext 
+Définition d'un objet pour obtenir des informations sur le contexte d'execution de la servlet
+
+ServletConfig 
+Définition d'un objet pour configurer la servlet
+ServletRequest 
+Définition d'un objet contenant la requête du client
+ServletResponse 
+Définition d'un objet qui contient la reponse renvoyée par la servlet
+SingleThreadModel 
+Permet de définir une servlet qui ne répondra qu'à une seule requête à la fois
+
+L'API servlet
+javax.servlet
+Nom 
+Role
+Les classes
+GenericServlet
+Classe définissant une servlet indépendante de tout protocole
+ServletInputStream 
+Flux permet la lecture des donnes de la requête cliente
+ServletOutPutStream 
+Flux permettant l'envoie de la reponse de la servlet
+
+Les exceptions 
+SevletException
+Exception générale en cas de problème durant l'exécution de la servlet
+UnavailableException 
+Exception levée si la servlet n'est pas disponible
+
+L'API servlet
+javax.servlet.http
+Nom 
+Role
+Les interfaces
+HttpServletRequest 
+Hérite de ServletRequest : définit un objet contenant une requête selon le protocole http
+HttpServletResponse 
+Hérite de ServletResponse : définit un objet contenant la reponse de la servlet selon le protocole http
+HttpSession 
+Définit un objet qui représente une session
+
+Les classes
+
+Cookie
+Classe représentant un cookie (ensemble de données sauvegardées par le brower sur le poste client)
+HttpServlet 
+Hérite de GenericServlet : classe définissant une servlet utilisant le protocole http
+HttpUtils 
+Classe proposant des méthodes statiques utiles pour le développement de servlet http
+
+L'interface Servlet
+Cette interface définit 5 méthodes qui permettent au conteneur web de dialoguer avec la servlet:
+void service (ServletRequest req,ServletResponse res)
+void init(ServletConfig conf)
+ServletConfig getServletConfig()
+void destroy()
+String getServletInfo()
+
+Les méthodes init(), service() et destroy() assurent le cycle de vie de la servlet en étant respectivement appelées lors de la création de la servlet, lors de son appel pour le traitement d'une requête et lors de sa destruction.
+
+La requête et la réponse
+L'interface ServletRequest définit plusieurs méthodes qui permettent d'obtenir des données sur la requête du client :
+ServletInputStream getInputStream()  
+//Permet d'obtenir un flux pour les données de la requête
+BufferedReader getReader() 
+//Idem
+L'interface ServletResponse définit plusieurs méthodes qui permettent de fournir la réponse faite par la servlet suite à ces traitements :
+SetContentType  	
+//Permet de préciser le type MIME de la réponse
+ServletOutputStream getOutputStream()
+ // Permet d'obtenir un flux pour envoyer la réponse
+PrintWriter getWriter()  	
+//Permet d'obtenir un flux pour  envoyer la réponse
+
+Gestion des servlets
+
+Les états d'une servlet
+Le passage d'un état à un autre est automatique fait par le conteneur de servlets.
+
+Une servlet doit implémenter l'interface javax.servlet.http
+
+Elle doit comporter l’une des deux méthodes :
+doGet() pour les requêtes http de type GET
+doPost() pour les requêtes http de type POST
+
+
+Récupération de paramètres 
+public void doGet(HttpServletRequest req, HttpServletResponse rep)
+      throws ServletException, IOException{
+
+  Enumeration liste =req.getParameterNames();
+  String [] valeurs = req.getParameterValues();
+  String val1 = req.getParameter(''param1'');
+
+
+Exemple : annuaire Mastere
+<HTML>
+<HEAD><TITLE> ANNUAIRE Mastere </TITLE></HEAD>
+<BODY BGCOLOR="#FFFFFF"<CENTER>
+<CENTER><H1>ANNUAIRE DU DESS TIIR </H1></CENTER>
+<HR><CENTER>
+<H2>Recherche de coordonnées </H2></CENTER>
+<P> Tapez le début du nom de la personne recherchée:
+<P><FORM METHOD=POST ACTION=http://localhost:8080/examples/servlets/annuaire 
+    method=post>
+<INPUT TYPE=TEXT NAME="nom" SIZE=20  MAXLENGTH=30 VALUE="">
+<P><INPUT TYPE=SUBMIT NAME="go" VALUE="RECHERCHER">
+<INPUT TYPE=RESET NAME="reset" VALUE="ANNULER">
+</FORM>
+</BODY></HTML>
+
+
+Annuaire Mastere(Servlet) 
+import java.io.*;
+import java.sql.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+ public class Annuaire extends HttpServlet{
+ public void doPost( HttpServletRequest req, HttpServletResponse res)
+   throws ServletException, IOException{
+    res.setContType("text/html");
+    PrintWriter out=res.getWriter();
+    out.println("<HEAD><TITLE>Réponse annuaire </TITLE></HEAD><BODY>");
+    out.println("<HR>");
+    try{
+      Class.forName("sun.jdbc.odbc.JdbcOdbcDriver").newInstance();
+      String url ="jdbc:odbc:mabase";
+      java.sql.Connection c=DriverManager.getConnection(url,"","");
+
+
+ Annuaire Mastere(Servlet)-Suite-
+java.sql.Statement st = c.createStatement();
+     java.sql.ResultSet rs = 
+       st.executeQuery("Select * from matable where nom like '"
+          +req.getParameter("nom"+"*'"));
+     rs.next();
+     out.println(rs.getString("prenom")+" "+rs.getString("nom") );
+   }
+   catch (SQLException e){
+      out.println("Cette personne n'existe pas");
+   }
+   out.println("<P><A href = annuaire.html> Retour</A>"</P>);
+   out.println("</BODY>");
+   out.close();
+ }
+  public String getServletInfo(){
+   return "Servlet Annuaire";
+  }
+
+
+Les cookies
+Ajout de cookies à l ’entête de la réponse
+void HttpServletResponse. addCookie( Cookie  cookie)
+Le cookie peut être un cookie récupéré dans la requête
+Et modifié avant d’être ajouté à la réponse
+
+Sessions : javax. servlet. http. HttpSession
+Garder la mémoire des informations d'une page à l'autre :
+Utiliser les cookies (sécurité!)
+Syntaxe CGI : paramètres dans l'URL
+Champs ``HIDDEN'' de formulaires
+<INPUT TYPE=''HIDDEN'' NAME=''PARAM1''VALUE=''VAL1''>
+Objet HttpSession
+ HttpSession session=request.getSession(true);
+ Classe objet = (Classe) session.getValue(''param1'');
+Méthodes : getValue(), putValue(), removeValue()
+HttpSession session = req.getSession(true);
+If (session.isNew()){
+    session.putValue('‘toto'', new int[] {0});
+ }
+Int[] toto = (int[]) session.getValue('‘toto'');
+
+
+
+Le suivi de session
+Le serveur maintient une session de 2 manières :
+Cookie (Name: SESSIONID Value: To1010mC8601021835741167At)  
+les cookies peuvent être désactivés sur le navigateur
+Réécriture des URLs
+ Ouverture/récupération d ’une session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+	// la  session  est  récupérée  ou  null si  elle  n ’existait  pas  déjà
+javax. servlet. http. HttpSession session =  req. getSession( true);
+ 	//la  session  est  récupérée  ou  ouverte  si  elle  n ’existait  pas  déjà
+ Invalidation d ’une session
+	javax. servlet. http. HttpSession session =  req. getSession( false);
+	session. invalidate();   la  session  est  invalidée ( i. e.  fermée)
+
+Information sur la session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+ L ’identifiant
+String  sessionid=  session. getId(); // par  exemple: To1010mC8601021835741167At
+ La date de création
+long  datecreation=  session. getCreationTime(); // nb  de  ms  depu s  1/ 1/ 1970: 00: 00
+ La date du dernier accès
+long  datelastaccess=  session. get astAccessedTime(); 
+ Exemple
+HttpSession session =  req. getSession( true);
+if( session. get astAccessedTime() - session. getCreationTime() >  5* 60* 1000 ) {
+session. invalidate();
+}
+
+Information sur la session
+javax. servlet. http. HttpSession session =  req. getSession( false);
+ Méthode de suivi de session
+boolean HttpServletRequest. isRequestedSessionIdFromCookie()
+	// test  si  le  suivi  de  session  utilise  un  cookie
+boolean HttpServletRequest. isRequestedSessionIdFromUR ()
+	// test  si  le  suivi  de  session  utilise  la  réécriture  d ’UR
+ Réécriture des URL (cas isRequestedSessionIdFromURL )
+les URL générées doivent être encodées pour intégrer le suivi de session
+String  HttpServletResponse. encodeRedirectUR (String  url) 
+String  HttpServletResponse. encodeUR (String  url)
+Exemple
+res. sendRedirect( res. encodeRedirectUR (" servlet login");
+
+Liaison d ’objets à une session
+javax. servlet. http. HttpSession session =  req. getSession( true);
+ Ajout/remplacement d ’une valeur
+void HttpSession. setAttribute( String  name,  Object  value)
+ Suppression d ’une valeur
+void HttpSession. removeAttribute( String  name)
+ Récupération des valeurs/d ’une valeur
+String[]  HttpSession. getAttributeNames()
+Object  HttpSession. getAttribute( String  name)
+
+Exemple de liaison d ’objets
+import  mycybermarket. Cart; …
+public  void doGet( HttpServletRequest req,  HttpServletResponse res) … {
+Cart cart;
+HttpSession session =  req. getSession( true);
+if(( cart=( Cart) session. getAttribute(" CART"))!= null) {
+cart= CartFactory. create(); //  new  rt( ... );  ou = c rtHome. cre te(); 
+session. setAttribute("CART", cart);
+} ...
+...
+if( action. equals(" exit") {
+cart. releaseProducts();
+session. removeAttribute(" CART");
+}
+...
+
+Observateurs sur la session
+Motivations
+réagir face à des événements intervenants dans la/les sessions
+ 4 interfaces Listeners
+	HttpSessionActivationListener
+		la  session  peut  être  passivée  puis  réactivée
+	HttpSessionListener
+		changement  sur  la  liste  des  sessions  actives  de  l'application  Web.
+	HttpSessionAttributeListener
+		changement  sur  les  attributs  d’une  des  sessions  de  l’application  Web.
+	HttpSessionBindingListener
+		un  objet  peut  être  notifié de  sa  liaison rupture  à un  session
+
+Observateurs sur la session
+HttpSessionActivationListener
+la  session  peut  être  passivée  puis  réactivée
+		void sessionDidActivate( HttpSessionEvent se)
+		void sessionWillPassivate( HttpSessionEvent se)
+HttpSessionListener
+changement  sur  la  liste  des  sessions  actives  de  l'application  Web.
+		void sessionCreated( HttpSessionEvent se) 
+		Void sessionDestroyed( HttpSessionEvent se)   invalidation
+HttpSessionAttributeListener
+attribute lists of  sessions  within this web  application.
+		void attributeAdded( HttpSessionBindingEvent se) 
+		void attributeRemoved( HttpSessionBindingEvent se) 
+		void attributeReplaced( HttpSessionBindingEvent se) 
+HttpSessionBindingListener
+un  objet  peut  être  notifié de  sa  liaison rupture  à un  session
+		void valueBound( HttpSessionBindingEvent event)
+		void valueUnbound( HttpSessionBindingEvent event)
+
+Observateur de liaison
+Motivations
+faire réagir les objets liés aux liaisons et « déliaisons »
+fermer des fichiers, des connexions, valider des transactions, ...
+ API
+		interface  HttpSessionBinding istener
+		public  void valueBound( HttpSessionBindingEvent event)
+		public  void valueUnbound( HttpSessionBindingEvent event)
+		class  HttpSessionBindingEvent extends EventObject
+		public  Session  getSession()   la  session  concernée
+		public  String  getName()   le  nom  de  la  liaison
+ Principe
+l ’objet lié doit implanté HttpSessionBinding istener
+valueBound () est invoqué quand l ’objet est lié ( putValue ())
+valueUnbound () est invoqué quand la session est invalidé ou expire ou quand l ’objet est délié ( setAttribute ()/ removeAttribute ()).
+
+Exemple de Observateur de Liaison
+class  CartBinding istener implements HttpSessionBindingListener {
+rt c rt= null;
+public  CartBinding istener( ... ) {  this. cart =  new  Cart( ... ); }
+public  void valueBound( HttpSessionBindingEvent event) {}
+public  void valueUnbound( HttpSessionBindingEvent event) { 
+cart. releaseProducts();}
+public  void doGet( HttpServletRequest req,  HttpServletResponse res) {
+CartBinding istener cart;
+HttpSession session =  req. getSession( true);
+CartBinding istener cart=( Cart) session. getValue(" CART");
+if( cart== null) { cart= new  CartBinding istener( ... );
+session. setAttribute(" CART", cart); //  v lueBound est  invoqué sur  l ’objet  lié
+} …
+session. removeAttribute (" CART"); // v lueUnbound est  invoqué sur  l ’objet  lié
+
+Partage d ’objets entre servlets
+Motivation
+partager une information commune entre servlets, ...
+ Plusieurs
+ S1 : utilisez les Properties de java. lang. System
+ S2 : classe commune avec des membres statiques
+ S3 : utilisez le contexte de l’application
+
+Partage d ’objets entre servlets
+Solution 1 : utilise les Properties de java. lang. System
+		String  java. lang. System. getProperty( String  key)
+		String  java. lang. System. setProperty( String  key, String value)
+Remarque : les Properties sont partagées par toutes les WebApps du serveur J2EE
+ Solution 2 : classe commune avec des membres statiques
+l ’initialisation des membres statiques XXX peut se faire au moment du premier accès par une des servlets
+Remarque pour une meilleure programmation
+les membres statiques sont privés et sont accédés par des méthodes statiques setXXX() et getXXX()
+la classe n ’est accessible que par les servlets du même package et chargée par le même ClassLoader (un par WebApp)
+
+Partage d ’objets entre servlets
+Solution 3 : utiliser les <env- entry>  du contexte JNDI de l’application
+Paires typées (name, value, classname) appartenant au contexte de l’application Web
+<env- entry>
+<env- entry- name> defaultCurrency< env- entry- name>
+<env- entry- value> EUR< env- entry- value>
+<env- entry- type> java. lang. String< env- entry- type>
+< env- entry>
+<env- entry>
+<env- entry- name> default anguage< env- entry- name>
+<env- entry- value> 33< env- entry- value>
+<env- entry- type> java. lang. Integer< env- entry- type>
+< env- entry>
+
+Partage d ’objets entre servlets
+Récupération des <env- entry>  via JNDI
+Context ctx =  new  InitialContext();
+Object  value =  ctx. lookup(" java: comp env defaultCurrency");
+out. println(" Default  currency value : " +  value);
+Context envCtx = ( Context)  ctx. lookup(" java: comp env ");
+NamingEnumeration enum =  ctx. list(" java: comp env ");
+while (enum. hasMoreElements()) {
+out. print(" Binding : "+ ( enum. nextElement(). toString());
+}
+NamingEnumeration enumbinding =  envCtx. listBindings(" java: comp env ");
+while (enumbinding. hasMoreElements()) {
+out. print(" Binding : "+(  enumbinding. nextElement(). toString());
+
+Authentification
+Authentification
+• Système :
+HttpServletRequest. getAuthType(),  HttpServletRequest. getRemoteUser()
+HTTP - BASIC ou DIGEST challenge
+			WWW-Authenticate
+SSL 3.0 authentifie le client
+Custom
+utilise des servlets vérifiant l’identité de l ’utilisateur avec des moyens externes au serveur (annuaire LDAP, BD, GSM, …)
+ Autres
+	java. security. Principal HttpServletRequest. getUserPrincipal()
+ 		//identité de  l ’utilisateur  dans  le  schéma  général  sécurité de  java
+	boolean HttpServletRequest. isUserInRole( String  role)
+ 		//test  si  l ’utilisateur  appartient  à un  role (i. e.  classe  d ’utilisateur)
+
+Request Dispatch
+Redirige la traitement de la requête vers une autre servlet ou JSP
+Utilisé pour le MVC
+ Exemple
+public  class  ForwardServlet extends HttpServlet {
+public  void doGet (HttpServletRequest request,
+HttpServletResponse response) {
+ //Set  the  attribute and  forward to  hello. jsp
+request. setAttribute (" action", " hello");
+ServletContext context= getServletConfig(). getServletContext().
+context. getRequestDispatcher(" hello. jsp"). forward( request,  response);
+}
+}
+
+Java Server Pages (JSP)
+
+Principe
+Server Side Script
+Insertion de SSS (syntaxe Java) dans les pages HTML
+ Avantage par rapport aux servlets
+ Ecriture moins verbeuse Orientée Web Designer
+ Insérable par des outils auteurs dans le code de pages HTML
+ Extensible grâce aux JSTL
+ Spécification
+ JSR-52
+ JSR-152 JavaServer Pages 2.0 Specification
+ Implémentations
+ J2EESDK et Jakarta JASPER/TomCat
+
+JSP vs Active Server Pages (ASP)
+ASP est une technologie comparable à JSP développé par Microsoft. Cependant, deux avantages sont dégagés par JSP.  Premièrement, les parties dynamiques sont développées en JAVA et non en VisualBasic ou d’autres langages spécifiques à Microsoft donc plus performantes et faciles à utiliser. Deuxièmement, JSP est compatible avec d’autres systèmes d’exploitation et serveurs web développés par d’autres compagnies que Microsoft.
+
+
+
+JSP vs JavaScript
+JavaScript peut générer dynamiquement du HTML sur le côté client. Cette une fonctionnalité très utile mais elle gère les situations où les informations se trouvent sur le côté client seulement. De plus, le fait que les programmes JavaScript s’exécutent sur le côté client, ils ne peuvent accéder aux ressources situées sur le côté serveur comme une base de données, un catalogue d’information, etc.
+
+
+
+
+
+Insertion des scripts
+Directives
+		<%@page import="java.util.*" %>
+		<%@taglib prefix="c" uri="WEB-INF/tld/core.tld" %>
+ Éléments de script
+ Scriplets <% code java %>
+ Déclarations <%! Déclarations %>
+ Expressions <%= expression %>
+ TagLib
+<jsp:forward page="forward.jsp" />
+<jsp:include page="result.jsp" />
+<c:if test="${applicationScope:booklist == null}" >
+<c:import url="/books.xml" var="xml" />
+<x:parse xml="${xml}" var="booklist" scope="application" />
+</c:if>
+
+Exemple 
+<HTML >
+<HEAD>< TITLE> Hello< TITLE>< HEAD>
+<BODY>
+<H1>  Salut
+<%
+String  pname;   //déclaration  de  variable
+pname =  request. getParameter(" name");  // request :  objet  implicite 
+if ( pname==  null) {  out. println(" World"); }  else {
+%>
+Mr <%= pname%>
+<% }  // fin  du  else %>
+< H1>
+< BODY>< HTML >
+
+Exemple de traitement d ’un formulaire
+<%@  method = " doPost" %>
+<HTM >
+<HEAD>< TITLE> Hello< TITLE>< HEAD>
+<BODY>
+<H1>  Hello
+<%
+String  pname;   //déclaration  de  variable
+pname =  request. getParameter(" name");   //request :  objet  implicite 
+if ( pname==  null) {  out. println(" World"); }  else {
+%>
+Mr <%= pname%>
+<% }  // fin  du  else %>
+< H1>
+< BODY>< HTML >
+
+
+JSP : Exemple avec une sessionJSP listant un « caddie » virtuel
+<html>
+<jsp: useBean id=" cart"  scope=" session"  class=" mycybermarket. MyCart"  >
+<jsp: setProperty name=" cart"  property="*"  >
+<%
+cart. processRequest( request);
+%>
+<br>  You  have  the  following items  in  your cart:
+<ol>
+<%  String[]  items =  cart. getItems();
+for ( int i= 0;  i< items. length;  i++) { %>
+<li> <%=  items[ i] %> 
+<% } %>
+< ol>< hr>
+<%@  include file =" catalog. html" %>
+< html>
+
+JSP : Exemple avec une sessionClasse de « caddie » utilisé par la JSP
+
+Génération des JSP
+Compilation des JSP en classes Java
+ génération et compilation d ’une classe étendant HttpJspBase à la première invocation.
+ Au runtime
+la servlet JspServlet invoque le compilateur Jasper puis charge et exécute la méthode _jspService de la classe HttpJspBase générée
+ Avant déploiement
+Les JSP peuvent être aussi générées avant le déploiement (tâche <jspc>)
+
+Architecture 
+
+Action jsp:forward
+Cette action vous permet de rediriger une requête vers une autre page. 
+Syntaxe: 
+<jsp:forward page="{relativeURL | <%= expression %>}" />
+ou
+<jsp:forward page="{relativeURL | <%= expression %>}" >
+<jsp:param name="parameterName" value="{ parameterValue | <%= expression %>}" /> +
+</jsp:forward>
+
+
+
+Action jsp:include
+Comme vu précédemment, l’action include vous permet d’insérer un fichier pendant que le servlet est généré à partir du fichier JSP.
+
+	<jsp:include page="relative URL" flush="true" />
+
+Contrairement à la directive include qui insère les fichiers au moment où le fichier JSP est compilé sur le serveur et transformé en servlet, l’action include insère les fichiers seulement lorsqu’une requête est placée sur la page demandée. Ceci en coûte une légère perte en performance mais gagne en flexibilité.
+
+
+Session JSP
+GetName.html
+<HTML>
+ <BODY>
+<FORM METHOD=POST ACTION="SaveName.jsp">
+ What's your name? <INPUT TYPE=TEXT NAME=username SIZE=20> <P>
+<INPUT TYPE=SUBMIT> 
+</FORM>
+ </BODY>
+ </HTML>
+
+
+SaveName.jsp
+<%    String name = request.getParameter( "username" ); 
+session.setAttribute( "theName", name ); %> 
+
+
+NextPage.jsp
+<HTML>
+ <BODY> Hello, <%= session.getAttribute( "theName" ) %>
+ </BODY>
+ </HTML> 
+
+<jsp:useBean>
+Le tag <jsp:useBean>
+Le tag <jsp:useBean> permet de localiser une instance ou d'instancier un bean pour l'utiliser dans la JSP.  Ce tag ne permet pas de traiter directement des EJB.
+
+<jsp:useBean>
+La syntaxe est la suivante :
+<jsp:useBean
+id="beanInstanceName"
+scope="page|request|session|application"
+{ class="package.class" |
+type="package.class" |
+class="package.class" type="package.class" |
+beanName="{package.class | <%= expression %>}" type="package.class"
+}
+{ /> |
+> ...
+</jsp:useBean>
+}
+L'attribut class permet d'indiquer la classe du bean.
+L'attribut type permet de préciser le type de la variable qui va contenir la référence du bean. La valeur indiquée doit obligatoirement être une super classe du bean ou une interface implémentée par le bean (directement ou par héritage)
+L'attribut beanName permet d'instancier le bean grâce à la méthode instanciate() de la classe Beans.
+L'attribut id permet de donner un nom à la variable qui va contenir la référence sur le bean.
+
+<jsp:useBean>
+L'attribut scope permet de définir la portée durant laquelle le bean est défini et utilisable. La valeur de cette attribut détermine la manière dont le tag localise ou instancie le bean. Les valeurs possibles sont :
+Valeur
+Rôle
+page 
+Le bean est utilisable dans toute la page JSP ainsi que dans les fichiers statiques inclus. C'est la valeur par défaut.
+request 
+le bean est accessible durant la durée de vie de la requête. La méthode getAttribute() de l'objet request permet d'obtenir une référence sur le bean.
+session
+le bean est utilisable par toutes les JSP qui appartiennent à la même session que la JSP qui a instanciée le bean. Le bean est utilisable tout au long de la session par toutes les pages qui y participent. La JSP qui créé le bean doit avoir l'attribut session = « true » dans sa directive page.
+application 
+le bean est utilisable par toutes les JSP qui appartiennent à la même application que la JSP qui a instanciée le bean. Le bean n'est instancié que lors du rechargement de l'application.
+
+Exemple 
+Personne.java
+package test;
+public class Personne {
+private String nom;
+private String prenom;
+public Personne() {
+this.nom = "nom par defaut";
+this.prenom = "prenom par defaut";
+}
+public void setNom (String nom) {
+this.nom = nom;
+}
+public String getNom() {
+return (this.nom);
+}
+public void setPrenom (String prenom) {
+this.prenom = prenom;
+}
+public String getPrenom () {
+return (this.prenom);
+}
+}
+TestBean.jsp
+<html>
+<HEAD>
+<TITLE>Essai d'instanciation d'un bean dans une JSP</TITLE>
+</HEAD>
+<body>
+<p>Test d'utilisation d'un Bean dans une JSP </p>
+<jsp:useBean id="personne" scope="request" class="test.Personne" />
+<p>nom initial = <%=personne.getNom() %></p>
+<%
+personne.setNom("mon nom");
+%>
+<p>nom mise à jour = <%= personne.getNom() %></p>
+</body>
+</html>
+
+Formulaire d'échange avec une BD 
+<HTML><HEAD><Title> Essai de connexion </title></HEAD>
+<BODY bgcolor="#FFFFFF">
+<%@ page import="java.sql.*"   errorPage="erreur.jsp"  %>
+ 
+<%! 
+  Connection con=null;
+  public void JspInit(){
+    String url="jdbc:odbc:musiciens";
+    try{
+     Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+     con=DriverManager.getConnection(url,"","");
+    }
+    catch (Exception e){
+      System.err.println(e.getMessage());
+    }
+  }
+public void jspDestroy(){
+  try{con.close();}
+  catch (SQLException e)
+    {System.err.println(e.getMessage());}
+  }
+%>
+
+Formulaire d'échange avec une BD 
+<% String pnom = request.getParameter("nom");
+  String nom = "";     String prenom = "";
+  String adresse ="";    String ville = "";
+  String requete = "";
+  try{
+  Statement stmt = con.createStatement();
+  requete="select * from personnes where nom ="+pnom;
+  ResultSet rs =stmt.executeQuery(requete);
+  if (rs.next()) {
+    nom     = rs.getString("NOM");
+    prenom  = rs.getString("PRENOM");
+    adresse = rs.getString("ADRESSE");
+    ville   = rs.getString("VILLE");
+  }%>
+<br>
+<%="nom "+nom + " " %> <%="Ville "+ville %>
+<br>
+<%
+  stmt.close();
+}
+  catch(SQLException ex){
+       System.err.println("SQLException : "+
+ex.getMessage());
+  }
+%>
+
+Formulaire d'échange avec une BD 
+
+
+
+
+
+Remarque : les méthodes jspInit et jspDestroy  doivent être redéfinies en surcharge de façon à éviter l'ouverture et la fermeture systématique de la base lors du traitement de chaque requête.
+
+<form action= saisie.jsp method="post">
+<input type="text" name="pnom"> Entrez un nom
+<input type="submit" value="valider">
+</form>
+</body>  
+</HTML>

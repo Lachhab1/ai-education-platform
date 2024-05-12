@@ -1,0 +1,1688 @@
+Chapitre 5
+
+Collections & Génériques
+
+Java - Dr A. Belangour
+
+268
+
+268
+
+Introduction
+ Une collection est un objet qui gère un groupe
+d’objets qu’on appelle ses éléments.
+ Une collection ressemble à un tableau dans le fait
+qu’elle contienne un ensemble d’éléments
+ Cependant, les collections offrent plus de
+fonctionnalités et de flexibilité que les tableaux.
+ Tout objet d'une classe ajouté à une collection est
+transformé en type Object.
+ Lorsqu'il est récupéré, il faudrait le caster à sa classe
+d'origine.
+Java - Dr A. Belangour
+
+269
+
+269
+
+1
+
+Types de collections
+ Il existe plusieurs types de collections qui diffèrent
+selon plusieurs critères :
+
+
+L’acceptation de doublons
+
+
+
+L’ordre
+
+
+
+L’acceptation de la valeur null
+
+
+
+La méthode de stockage et récupération des valeurs
+
+
+
+etc…
+
+Java - Dr A. Belangour
+
+270
+
+270
+
+Hiérarchie de l’API collections
+ Dans l’API collections il existe deux grandes familles
+de collections :
+
+
+La famille d’interfaces et de classes héritant de l’interface
+Collection
+
+
+
+La famille d’interfaces et de classes héritant de l’interface
+Map
+Map
+
+Collection
+
+Java - Dr A. Belangour
+
+271
+
+271
+
+2
+
+Famille de l’interface Collection
+ Se compose de trois sous-famille :
+
+
+Sous-famille des ensembles : implémente l’interface Set
+
+
+
+Sous-famille des listes : implémente l’interface List
+
+
+
+Sous-famille des files : implémente l’interface Queue
+
+Collection
+
+Set
+
+List
+
+Queue
+
+Java - Dr A. Belangour
+
+272
+
+272
+
+Famille de l’interface Collection
+ Quelques méthodes de l'interface collection :
+
+
+int size() : retourne la taille de la collection.
+
+
+
+boolean add(E e) : ajoute un nouvel élément à la
+collection.
+
+
+
+boolean addAll(Collection c) : ajoute une collection
+d'éléments à la fois à la collection.
+
+
+
+Object[] toArray() : retourne les objets de la collection
+dans un tableau.
+
+
+
+void clear() : vide la collection.
+
+
+
+boolean contains(Object o) : cherche un objet dans la
+collection.
+Java - Dr A. Belangour
+
+273
+
+273
+
+3
+
+Famille de l’interface Collection
+
+
+boolean isEmpty() : teste si la collection est vide.
+
+
+
+boolean remove(Object o) : supprime un objet de la
+collection.
+
+
+
+boolean removeAll(Collection c) : supprime une collection
+d'elements de la collection.
+
+ Remarque :
+
+
+Nous retrouvons ces méthodes dans les interfaces Set, List
+et Queue qui héritent de l'interface collection et par
+conséquent, dans toutes les classes qui les implémentent.
+
+Java - Dr A. Belangour
+
+274
+
+274
+
+Sous-famille des Set
+ Est représentée par l'interface Set
+ Set (un nom) veut dire Ensemble en français
+ Un set est caractérisé par :
+
+
+Il n'accepte pas de doublons
+
+
+
+Même null il n'accepte qu'un seul
+
+
+
+Ne respecte pas l’ordre dans le stockage et récupération
+des éléments
+
+Java - Dr A. Belangour
+
+275
+
+275
+
+4
+
+La famille des Set
+ Classes implémentant l'interface Set:
+
+
+AbstractSet, ConcurrentHashMap.KeySetView,
+ConcurrentSkipListSet, CopyOnWriteArraySet, EnumSet,
+JobStateReasons, LinkedHashSet, ReadOnlySetProperty,
+ReadOnlySetPropertyBase, ReadOnlySetWrapper,
+SetBinding, SetExpression, SetProperty, SetPropertyBase,
+SimpleSetProperty,
+
+ Classes les plus connues:
+
+
+HashSet : utilise un algorithme de hachage pour l'accès à
+ses éléments
+
+
+
+TreeSet : trie ses éléments pendant l'ajout
+Java - Dr A. Belangour
+
+276
+
+276
+
+Exemple de Set
+ Exemple avec HashSet :
+import java.util.*;
+public class SetExample {
+public static void main(String[] args) {
+Set set = new HashSet();
+set.add("un"); set.add("deux"); set.add("trois");
+set.add(4); set.add(5.0F);
+set.add("deux"); // dupliqué, non ajouté
+set.add(4); // dupliqué, non ajouté
+System.out.println(set);
+}
+}
+
+ Résultat du programme : [un, deux, 5.0, trois, 4]
+Java - Dr A. Belangour
+
+277
+
+277
+
+5
+
+Exemple de Set
+ Exemple avec TreeSet :
+import java.util.*;
+public class SetExample {
+public static void main(String[] args) {
+Set set = new TreeSet();
+set.add("Bachir"); set.add("Omar"); set.add("Ali");
+set.add("Ali"); // dupliqué, non ajouté
+System.out.println(set);
+}
+}
+
+ Résultat du programme : [Ali, Bachir, Omar]
+ Remarque : TreeSet ne permet pas des types
+hétérogènes pour pouvoir effectuer le tri automatique
+Java - Dr A. Belangour
+
+278
+
+278
+
+La famille des List
+ Est représentée par l'interface List
+ C'est une collection ordonnée d'éléments ou chaque
+élément est indexé par un indice.
+ Elle accepte les doublons et les nulls
+
+Java - Dr A. Belangour
+
+279
+
+279
+
+6
+
+La famille des List
+ Classes implémentant l'interface List :
+
+
+AbstractList, AbstractSequentialList, ArrayList,
+AttributeList, CopyOnWriteArrayList, FilteredList,
+LinkedList, ListBinding, ListExpression, ListProperty,
+ListPropertyBase, ModifiableObservableListBase,
+ObservableListBase, ReadOnlyListProperty,
+ReadOnlyListPropertyBase, ReadOnlyListWrapper, RoleList,
+RoleUnresolvedList, SimpleListProperty, SortedList, Stack,
+TransformationList, Vector
+
+Java - Dr A. Belangour
+
+280
+
+280
+
+La famille des List
+ Classes les plus connues:
+
+
+ArrayList : tableau redimensionnable non synchronisé
+
+
+
+Vector : tableau redimensionnable synchronisé
+
+
+
+Stack : Pile
+
+
+
+SortedList : Liste Triée
+
+Java - Dr A. Belangour
+
+281
+
+281
+
+7
+
+La famille des List
+ Quelques méthodes supplémentaires:
+
+
+boolean add(int index, E e) : ajoute un nouvel élément au
+à la position index de la liste.
+
+
+
+boolean addAll(int index, Collection c) : ajoute les éléments
+de la collection c au à la position index liste.
+
+
+
+boolean remove(int index) : supprime l'objet à la position
+index de la liste.
+
+
+
+E get(int index) : retourne l'objet à la position index.
+
+
+
+E set(int index, E element) : remplace l'objet à la position
+index par l'objet E.
+
+Java - Dr A. Belangour
+
+282
+
+282
+
+Un exemple de List
+import java.util.*;
+public class ListExample {
+public static void main(String[] args) {
+List list = new ArrayList();
+list.add("un"); list.add("deux"); list.add("trois");
+list.add(new Integer(4)); list.add(5.0F);
+list.add("deux"); // dupliqué, ajouté
+list.add(4); // dupliqué, ajouté
+System.out.println(list);
+}
+}
+
+
+Résultat du programme : [un, deux, tois, 4, 5.0, deux, 4]
+
+Java - Dr A. Belangour
+
+283
+
+283
+
+8
+
+La famille des Queue
+ Représentent les files (FIFO)
+ Elles implémentent l'interface Queue
+ Quelques classes implémentant l'interface Queue :
+
+
+AbstractQueue, ArrayBlockingQueue, ArrayDeque,
+ConcurrentLinkedDeque, ConcurrentLinkedQueue,
+DelayQueue, LinkedBlockingDeque, LinkedBlockingQueue,
+LinkedList, LinkedTransferQueue, PriorityBlockingQueue,
+PriorityQueue, SynchronousQueue
+
+Java - Dr A. Belangour
+
+284
+
+284
+
+L'interface Queue
+ Quelques méthodes :
+
+
+Boolean add(E e) : ajoute un élément à la fin de la file.
+Retourne true ou une exception.
+
+
+
+boolean offer(E e) : ajoute un élément à la fin de la file.
+Retourne true ou false.
+
+
+
+E element() : retourne la tête de la file sans l'enlever.
+génère une exception si vide.
+
+
+
+E peek() : retourne la tête de la file sans l'enlever.
+Retourne null si vide.
+
+
+
+E poll() : retourne et enlève la tête de la file (null si vide).
+
+
+
+E remove() : retourne et enlève la tête de la file
+(exception si vide)
+
+Java - Dr A. Belangour
+
+285
+
+285
+
+9
+
+L'interface Queue : Exemple
+import java.util.*;
+public class Main {
+public static void main(String[] args) {
+Queue FileDattente = new LinkedList();//implémente aussi List
+FileDattente.add("Ali"); FileDattente.add("Omar"); FileDattente.add("Adil");
+FileDattente.add("Hassan"); FileDattente.add("Taha");
+System.out.println("Contenu File D'attente : " + FileDattente);
+System.out.println(" Retrait tête de la file : " + FileDattente.remove());
+System.out.println(" Contenu File D'attente : " + FileDattente);
+System.out.println(" Retrait tête de la file : " + FileDattente.poll());
+System.out.println(" Contenu File D'attente :" + FileDattente);
+}
+}
+Java - Dr A. Belangour
+
+286
+
+286
+
+L'interface Queue : Exemple
+ Résultat de l'exécution :
+
+
+File D'attente : [Ali, Omar, Adil, Hassan, Taha]
+
+
+
+Enlevé de la file d'attente: Ali
+
+
+
+nouvelle file d'attente : [Omar, Adil, Hassan, Taha]
+
+
+
+Enlevé de la file d'attente: Omar
+
+
+
+nouvelle file d'attente :[Adil, Hassan, Taha]
+
+Java - Dr A. Belangour
+
+287
+
+287
+
+10
+
+La famille des Map
+ Sont représentés par l'interface Map
+ Les Maps sont parfois appelés tableaux associatifs
+ Un objet Map décrit des mapping des clés (keys) aux
+valeurs (values)
+ les clés dupliqués ne sont pas permises
+ Les mappings un-à-plusieurs ne sont pas permis
+aussi.
+
+Java - Dr A. Belangour
+
+288
+
+288
+
+La famille des Map
+ Classes implémentant l'interface Map :
+
+
+AbstractMap, Attributes, AuthProvider, ClipboardContent,
+ConcurrentHashMap, ConcurrentSkipListMap, EnumMap,
+HashMap, Hashtable, Headers, IdentityHashMap,
+LinkedHashMap, MapBinding, MapExpression, MapProperty,
+MapPropertyBase, MultiMapResult, PrinterStateReasons,
+Properties, Provider, ReadOnlyMapProperty,
+ReadOnlyMapPropertyBase, ReadOnlyMapWrapper,
+RenderingHints, ScriptObjectMirror, SimpleBindings,
+SimpleMapProperty, TabularDataSupport, TreeMap,
+UIDefaults, WeakHashMap
+Java - Dr A. Belangour
+
+289
+
+289
+
+11
+
+La famille des Map
+ Classes les plus connues:
+
+
+Hashtable : utilise une table de hachage pour lier les clés
+aux valeurs
+
+
+
+HashMap : équivalente à Hashtable sauf qu'elle n'est pas
+synchronisée
+
+
+
+Properties : les clés et les valeurs sont de type String
+
+Java - Dr A. Belangour
+
+290
+
+290
+
+L’interface Map
+ Quelques méthodes :
+
+
+V put(K key, V value) : associe la clé K à la valeur V
+
+
+
+V get(Object key) : récupère l'objet dont la clé est key
+
+
+
+keySet() : Retourne un Set de toutes les clés du Map.
+
+
+
+values() : Retourne une Collection de toutes les valeurs du
+Map.
+
+
+
+entrySet() : Retourne un Set de paires clé-valeur.
+
+Java - Dr A. Belangour
+
+291
+
+291
+
+12
+
+L’interface Map : exemple
+import java.util.*;
+public class MapExample {
+public static void main(String args[]) {
+Map map = new HashMap();
+map.put("premier","1er");
+map.put("second", new Integer(2));
+map.put("troisième","3eme");
+map.put("troisième","III"); // écrase l’affectation précédente
+Set set1 = map.keySet(); // retourne un Set de clés
+Collection collection = map.values(); //retourne une Collection de valeurs
+Set set2 = map.entrySet(); // retourne un set de clé-valeurs
+System.out.println(set1 + "\n" + collection + "\n" + set2);
+}
+}
+
+Java - Dr A. Belangour
+
+292
+
+292
+
+L’interface Map : exemple
+ Résultat du programme :
+
+
+[second, premier, troisième]
+
+
+
+[2, 1er, III]
+
+
+
+[second=2, premier=1er, troisième=III]
+
+Java - Dr A. Belangour
+
+293
+
+293
+
+13
+
+Les collections patrimoniales
+ Les anciennes classes collection sont :
+
+
+La classe Vector, qui implémente l’interface List.
+
+
+
+La classe Stack, qui est une sous-classe de la classe Vector et
+qui supporte les méthodes push, pop, et peek.
+
+
+
+La classe Hashtable, qui implémente l’interface Map.
+
+
+
+La classe Properties est une extension de Hashtable qui
+utilise seulement des Strings pour clés et valeurs.
+
+Java - Dr A. Belangour
+
+294
+
+294
+
+Vector
+ Permet de stocker des objets dans un tableau dont la
+taille évolue avec les besoins.
+
+
+Quelques méthodes :
+
+
+addElement(Object):ajoute un élémént à la fin
+
+
+
+elementAt(int): renvoie l’élément à la position en paramètre
+
+
+
+contains(Object) : indique si l'objet est contenu dans le Vector.
+
+
+
+isEmpty() : indique si le Vector est vide
+
+
+
+lastElement() : renvoie le dernier élément
+
+
+
+removeElementAt(int) : retire l'objet dont l'indice est donné
+
+
+
+size() : renvoie le nombre d'éléments
+
+Java - Dr A. Belangour
+
+295
+
+295
+
+14
+
+Vector
+ Exemple :
+Vector v = new Vector();
+v.addElement(new Integer(10));
+v.addElement(new Float(3.14));
+v.insertElementAt("chaine",1);
+System.out.println(" le vecteur contient "+v.size()+ " elements ");
+String retrouve = (String) v.elementAt(1);
+System.out.println(" le 1er élément = "+retrouve);
+
+ Remarque :
+
+
+La classe Vector est sysnchronisée et donc moins rapide
+que ArrayList.
+Java - Dr A. Belangour
+
+296
+
+296
+
+Stack
+ Reprèsente une PILE (LIFO)
+ Méthodes :
+
+
+boolean empty() : teste si la pile est vide.
+
+
+
+Object push(Object item) : empile un objet en haut de la
+pile.
+
+
+
+Object pop() : dépile un objet du haut de la pile
+
+
+
+Object peek() : retourne une copie du sommet de la pile
+sans la dépiler.
+
+
+
+int search(Object o) : recherche un objet sur la pile et
+renvoie sa position.
+Java - Dr A. Belangour
+
+297
+
+297
+
+15
+
+Stack
+ Exemple :
+
+
+Stack pile= new Stack()
+
+
+
+Pile.push("Ali");
+
+
+
+Pile.push(new Integer(3));
+
+
+
+Pile.push(new Float(5.2));
+
+Java - Dr A. Belangour
+
+298
+
+298
+
+Parcours des collections
+ Plusieurs moyens pour parcourir une collection :
+
+
+L’interface enumeration
+
+
+
+L’interface Iterator
+
+
+
+Interface ListIterator
+
+
+
+Boucle for amélioré
+
+Java - Dr A. Belangour
+
+299
+
+299
+
+16
+
+Parcours des collections
+ L’interface Enumeration
+
+
+Appartient au package java.util
+
+
+
+Permet le parcours séquentiel de collections.
+
+
+
+Définit 2 méthodes :
+ boolean hasMoreElements() : retourne true si
+l'énumeration contient encore un ou plusieurs elements
+ Object nextElement() : retourne l'objet suivant de
+l'énumération (lève une Exception NoSuchElementException si la
+fin de la collection est atteinte )
+
+Java - Dr A. Belangour
+
+300
+
+300
+
+Parcours des collections
+ Exemple :
+import java.util.*;
+class Main{
+public static void main (String args[]) {
+// Création et parcour d’un objet Vector
+Vector v = new Vector();
+v.add("chaine 1"); v.add("chaine 2"); v.add("chaine 3");
+for(Enumeration e = v.elements(); e.hasMoreElements(); ) {
+System.out.println(e.nextElement());
+}
+// Création et parcour d’un objet Hashtable
+Hashtable h = new Hashtable(); h.put("jour", new Date());
+h.put(1, "Bonjour"); h.put("deux",2);
+for (Enumeration e = h.keys() ; e.hasMoreElements() ; ){
+System.out.println(h.get(e.nextElement())); }
+} }
+
+Java - Dr A. Belangour
+
+301
+
+301
+
+17
+
+Parcours des collections
+ L’interface Iterator
+
+
+Appartient au package java.util
+
+
+
+Similaire à Enumeration mais plus récente.
+
+
+
+Offre en plus la possibilité de supprimer des éléments en
+cours d’énumération
+
+
+
+Les noms de méthodes ont été raccourcis :
+ boolean hasNext() : retourne true si l'itérateur a encore
+des éléments
+ Object next() : retourne le prochain élément de l'itérateur
+ void remove() : supprime de la collection sous-jacente le
+dernier élément retourné par l'itérateur
+Java - Dr A. Belangour
+
+302
+
+302
+
+Parcours des collections
+ Exemple :
+import java.util.ArrayList ;
+public class TestIterator {
+public static void main(String[] args){
+ArrayList saisons= new ArrayList();
+saisons.add("Automne"); saisons.add("Hiver");
+saisons.add("Printemps"); saisons.add("Été");
+Iterator it = saisons.iterator();
+System.out.println("les saisons sont :");
+while (it.hasNext()) {
+String saison= (String)it.next();
+System.out.println(saison);
+}
+}
+}
+Java - Dr A. Belangour
+
+303
+
+303
+
+18
+
+Parcours des collections
+ L’interface ListIterator
+
+
+Appartient au package java.util
+
+
+
+Similaire à Iterator mais offre un parcours dans les 2 sens
+et permet modifier les éléments lors de ce parcours
+
+
+
+Méthodes :
+
+
+void add(Object o) : ajoute un élément à la liste.
+
+
+
+Object next() : retourne le prochain élément de l'itérateur en
+avant
+
+
+
+Object previous() : retourne le prochain élément de
+l'itérateur en arrière
+
+
+
+void set(Object o) : remplace le dernier element retourné par
+next() ou previous() par l’objet en paramètre.
+Java - Dr A. Belangour
+
+304
+
+304
+
+Parcours des collections
+
+
+int
+
+nextIndex() : retourne l’index de l’élémént à retouner
+
+par le prochain appel à next()
+
+
+int
+
+previousIndex() : retourne l’index de l’élémént à
+
+retouner par le prochain appel à previous()
+
+
+boolean hasNext() : retourne true si l'itérateur a encore des
+éléments en avant
+
+
+
+boolean hasPrevious() : retourne true si l'itérateur a encore
+des éléments en arrière.
+
+Java - Dr A. Belangour
+
+305
+
+305
+
+19
+
+Parcours des collections
+ Exemple :
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+public class ListIteratorExemple {
+public static void main(String a[]){
+List noms= new ArrayList();
+noms.add("Ali"); noms.add("Omar"); noms.add("Hassan");
+//Obtention de l’itérateur
+ListIterator litr=noms.listIterator();
+System.out.println("Parcours en avant:");
+while(litr.hasNext()){ System.out.println((String)litr.next()); }
+System.out.println("Parcours en arrière:");
+while(litr.hasPrevious()){
+System.out.println((String)litr.previous());
+}
+}
+}
+Java - Dr A. Belangour
+
+306
+
+306
+
+Parcours des collections
+ La boucle For des collections
+
+
+
+
+Les itérateurs sont sujets aux erreurs :
+
+
+Les variables Iterator se répètent trois fois par boucle
+
+
+
+Ceci donne l’occasion au code d’être faux
+
+La boucle for amélioré a les caractéristiques suivantes:
+
+
+Une itération Simplifiée à travers les collections
+
+
+
+Plus courte, claire et sûre
+
+
+
+Efficace pour les tableaux
+
+
+
+Plus simple à l’utilisation que les boucles imbriquées
+
+
+
+Supprime les inconvénients de l’itérateur
+
+Java - Dr A. Belangour
+
+307
+
+307
+
+20
+
+Parcours des collections
+ Exemple :
+import java.util.ArrayList;
+import java.util.List;
+public class ForExemple {
+public static void main(String a[]){
+List noms= new ArrayList();
+noms.add("Ali"); noms.add("Omar"); noms.add("Hassan");
+//Parcours avec For
+System.out.println("Parcours avec For:");
+for(Object o : noms){
+System.out.println((String)o);
+}
+}
+}
+
+Java - Dr A. Belangour
+
+308
+
+308
+
+Tri des collections
+ Les interfaces Comparable et Comparator sont
+utiles pour le tri des collections.
+ L’interface Comparable impose le tri naturel aux
+classes qui l’implémente.
+ L’interface Comparator spécifie une relation d’ordre.
+Elle peut aussi être utilisé pour écraser l’ordre naturel.
+ Les deux interfaces sont utiles pour trier les
+collections.
+
+Java - Dr A. Belangour
+
+309
+
+309
+
+21
+
+L’interface Comparable
+ Impose l’ordre naturel aux classes qui l’implémente :
+
+
+Utilisé pour le tri
+
+
+
+La méthode compareTo doit être implémenté pour rendre
+comparable n’importe quelle classe :
+int compareTo(Object o)
+
+
+
+Les classes String, Date, et Integer implémentent
+l’interface Comparable
+
+
+
+Vous pouvez trier la liste des éléments contenant des
+objets qui implémente l’interface Comparable
+
+Java - Dr A. Belangour
+
+310
+
+310
+
+L’interface Comparable
+ Dans le tri, les éléments d’une liste suivent un ordre
+naturel selon le type des éléments :
+
+
+Les éléments String : ordre alphabétique
+
+
+
+Les éléments Date : ordre chronologique
+
+
+
+Les éléments Integer : ordre numérique
+
+Java - Dr A. Belangour
+
+311
+
+311
+
+22
+
+Comparable : un exemple
+public class Etudiant implements Comparable{
+private String CNE;
+private String nom;
+private double moyenne;
+// constructeur
+public Etudiant (String CNE, String nom, double moyenne) {
+this.CNE = CNE; this.nom = nom; this.moyenne = moyenne;
+}
+//getters setters
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+
+Java - Dr A. Belangour
+
+312
+
+312
+
+Comparable : un exemple
+public String getCNE() { return CNE; }
+public void setCNE( String CNE) { this.CNE = CNE; }
+public double getMoyenne () { return moyenne; }
+public void setMoyenne (double moyenne) { this.moyenne = moyenne; }
+@Override
+public String toString() {
+return "CNE="+CNE+"Nom="+nom+"Moyenne="+moyenne;
+}
+
+Java - Dr A. Belangour
+
+313
+
+313
+
+23
+
+Comparable : un exemple
+@Override
+public int compareTo(Object o) {
+Etudiant e2= (Etudiant) o;
+if (this.moyenne==e2.moyenne) return 0; // 0 égaux
+else if (this.moyenne<e2.moyenne) return -1; // inferieure
+else
+return 1; // superieure
+}
+}
+
+Java - Dr A. Belangour
+
+314
+
+314
+
+Comparable : un exemple
+import java.util.*;
+public class ComparableTest {
+public static void main(String[] args) {
+TreeSet etudiants = new TreeSet();
+etudiants.add(new Etudiant("2014/354", "Ali",15.5));
+etudiants.add(new Etudiant("2014/358", "Omar",12.5 ));
+etudiants.add(new Etudiant("2014/398", "Taha",13.6));
+etudiants.add(new Etudiant("2014/253", "Anass",14.3));
+Object[] tabEtudiants = etudiants.toArray();
+for(Object o: tabEtudiants ){
+System.out.println((Etudiant) o);
+}
+}
+}
+Attention : Lorsque des moyennes se répètent, le TreeSet ignore les
+doublons aussi.
+Java - Dr A. Belangour
+
+315
+
+315
+
+24
+
+Comparable : un exemple
+ Résultat du programme :
+
+
+CNE= 2014/358
+
+Nom=
+
+Omar
+
+Moyenne= 12.5
+
+
+
+CNE= 2014/398
+
+Nom= Taha
+
+Moyenne= 13.6
+
+
+
+CNE= 2014/253
+
+Nom= Anass
+
+Moyenne= 14.3
+
+
+
+CNE= 2014/354
+
+Nom= Ali
+
+Moyenne= 15.5
+
+Java - Dr A. Belangour
+
+316
+
+316
+
+L’interface Comparator
+ Représente une relation d’ordre
+ Est utilisé pour le tri
+ Permet le tri dans un ordre différent de l’ordre naturel
+ Est utilisée pour les objets qui n’implémente pas
+l’interface Comparable
+ Peut être passé une méthode de tri
+ Vous devez redéfinir la méthode compare() pour
+implémenter l’interface Comparator:
+int compare(Object o1, Object o2)
+Java - Dr A. Belangour
+
+317
+
+317
+
+25
+
+Comparator : exemple
+public class Etudiant {
+private String CNE;
+private String nom;
+private double moyenne;
+// constructeur
+public Etudiant (String CNE, String nom, double moyenne) {
+this.CNE = CNE; this.nom = nom; this.moyenne = moyenne;
+}
+//getters setters
+public String getNom() { return nom; }
+public void setNom(String nom) { this.nom = nom; }
+
+Java - Dr A. Belangour
+
+318
+
+318
+
+Comparator : exemple
+public String getCNE() { return CNE; }
+public void setCNE( String CNE) { this.CNE = CNE; }
+public double getMoyenne () { return moyenne; }
+public void setMoyenne (double moyenne) { this.moyenne = moyenne; }
+@Override
+public String toString() {
+return "CNE="+CNE+"Nom="+nom+"Moyenne="+moyenne;
+}
+}
+
+Java - Dr A. Belangour
+
+319
+
+319
+
+26
+
+Comparator : exemple
+import java.util.*;
+public class CompNom implements Comparator {
+@Override
+public int compare(Object o1, Object o2) {
+String nom1=((Etudiant )o1).getNom();
+String nom2=((Etudiant )o2).getNom();
+return (nom1.compareTo(nom2));
+}
+}
+
+Java - Dr A. Belangour
+
+320
+
+320
+
+Comparator : exemple
+import java.util.*;
+public class CompMoyenne implements Comparator {
+@Override
+public int compare(Object o1, Object o2) {
+double m1=((Etudiant )o1).getMoyenne();
+double m2=((Etudiant )o2).getMoyenne();
+if (m1==m2) return 0;
+else if (m1<m2)
+
+return -1;
+
+else return 1;
+}
+}
+
+Java - Dr A. Belangour
+
+321
+
+321
+
+27
+
+Comparator : exemple
+import java.util.*;
+public class ComparableTest {
+public static void main(String[] args) {
+Comparator c = new CompNom();
+TreeSet etudiants = new TreeSet(c);
+etudiants.add(new Etudiant("2014/354", "Ali",15.5));
+etudiants.add(new Etudiant("2014/358", "Omar",12.5 ));
+etudiants.add(new Etudiant("2014/398", "Taha",13.6));
+etudiants.add(new Etudiant("2014/253", "Anass",14.3));
+Object[] tabEtudiants = etudiants.toArray();
+for(Object o: tabEtudiants ){
+System.out.println((Etudiant) o);
+}
+}
+}
+
+Java - Dr A. Belangour
+
+322
+
+322
+
+Comparator : exemple
+ Résultat du programme :
+
+
+CNE= 2014/354
+
+Nom= Ali
+
+Moyenne= 15.5
+
+
+
+CNE= 2014/253
+
+Nom= Anass
+
+Moyenne= 14.3
+
+
+
+CNE= 2014/358
+
+Nom= Omar
+
+Moyenne= 12.5
+
+
+
+CNE= 2014/398
+
+Nom= Taha
+
+Moyenne= 13.6
+
+Java - Dr A. Belangour
+
+323
+
+323
+
+28
+
+Tri Avec ArrayList
+ La classe ArrayList dispose d’une méthode sort :
+
+
+Elle prend en paramètre un objet comparator
+
+
+
+Si on lui passe null elle utilise plutôt l’interface comparable
+
+ Exemple :
+List list = new ArrayList();
+list.add(new Etudiant("2014/354", "Ali", 15.5));
+list.add(new Etudiant("2014/358", "Omar", 12.5));
+list.add(new Etudiant("2014/398", "Taha", 13.6));
+list.add(new Etudiant("2014/253", "Anass", 14.3));
+
+Java - Dr A. Belangour
+
+324
+
+324
+
+Tri Avec ArrayList
+list.sort(new CompNom());
+// ou list.sort(new CompMoyenne ());
+// ou list.sort(null);
+// dans ce cas elle prend comparable s’il existe
+for (Object o : list) {
+Etudiant e =(Etudiant)o;
+System.out.println(e.toString());
+}
+
+Java - Dr A. Belangour
+
+325
+
+325
+
+29
+
+Les génériques
+ Les génériques sont des collections paramétrables
+pour lesquels on précise un type particulier à stocker.
+ Ils permettent de créer des collections homogènes
+ Ils éliminent le besoin pour les casts
+ Ils fournissent de la sécurité des types au moment de
+la compilation
+ Les génériques n'acceptent pas les types primitifs
+
+Java - Dr A. Belangour
+
+326
+
+326
+
+Les génériques
+ Exemple de collection non générique:
+ArrayList list = new ArrayList();
+list.add(0,new Etudiant("2014/354", "Ali", 15.5));
+Etudiant e=(Etudiant)list.get(0);
+System.out.println(e.getNom());
+
+ Exemple de collection générique
+ArrayList< Etudiant > list = new ArrayList<>();
+list.add(0, new Etudiant("2014/354", "Ali", 15.5));
+Etudiant e=list.get(0);//pas besoin de cast
+System.out.println(e.getNom());
+Java - Dr A. Belangour
+
+327
+
+327
+
+30
+
+Un Set générique : exemple
+import java.util.*;
+public class GenSetExample {
+public static void main(String[] args) {
+Set<String> set = new HashSet<>();
+set.add("one");
+set.add("second");
+set.add("3rd");
+// Cette ligne génère une erreur de compilation
+set.add(4);
+set.add("second");
+// Doublon, non ajouté
+System.out.println(set);
+}
+}
+Java - Dr A. Belangour
+
+328
+
+328
+
+Un Map générique : exemple
+import java.util.HashMap;
+import java.util.Map;
+public class MapGnerique {
+public static void main(String[] args) {
+Map<Integer, String> joueurs = new HashMap<>();
+String[] positions={"Gardien", "Défenseur droit", "Defenseur gauche", "Arrière
+droit", "Arrière gauche", "Milieu droit", "Milieu central", "Milieu gauche",
+"Avant-centre","Aillier droit","Aillier gauche"};
+for (int i = 1; i <= 11; i++) { joueurs.put(i,positions[i]); }
+for ( int clef : joueurs.keySet()) {
+System.out.println("Numero : " + clef + " , Position : " + joueurs.get(clef));
+}
+}}
+
+Java - Dr A. Belangour
+
+329
+
+329
+
+31
+
+Génériques dans le cas de l'héritage
+ Soit les classes suivantes :
+
+Java - Dr A. Belangour
+
+330
+
+330
+
+La sûreté dans les types
+ Une fois le type d'objet d'un générique est précisé,
+le compilateur signale une erreur si un autre type
+est ajouté.
+ Exemple :
+public class SuretéDesTypes{
+public static void main(String[] args) {
+List<Enseignant> enseignants = new ArrayList<>();
+enseignants.add(new Enseignant()); // OK
+enseignants.add(new Etudiant()); // Erreur de Compilation!
+}}
+Java - Dr A. Belangour
+
+331
+
+331
+
+32
+
+L’invariance
+ Dans la POO, un objet de la classe fille peut
+être affecté à un objet de la classe mère.
+ Cependant, une collection générique d'objets
+filles ne peut pas être affectée à une collection
+d'objets mères.
+ Exemple :
+
+
+Personne p=new Etudiant() est légal
+
+
+
+personnes = etudiants est illégal
+
+Java - Dr A. Belangour
+
+332
+
+332
+
+Paramètre d'un générique
+ Un générique tolère des paramètres pour des
+traitements qui ne mixent pas les types.
+ Exemple :
+
+
+Générique d'objets héritant de la classe Personne
+
+
+
+List <? extends Personne> liste
+
+
+
+Les classes héritant de Personne sont représentés par "?"
+
+Java - Dr A. Belangour
+
+333
+
+333
+
+33
+
+Paramètre d'un générique
+ Exemple d'utilisation :
+
+
+une fonction qui affiche le contenu des génériques de
+types héritant de la classe Personne
+
+public static void afficherNoms(List <? extends Personne> liste) {
+for (int i=0; i < liste.size(); i++) {
+System.out.println(liste.get(i).getNom());
+}
+}
+
+Java - Dr A. Belangour
+
+334
+
+334
+
+Paramètre d'un générique
+public static void main(String[] args) {
+List<Enseignant> enseignants= new ArrayList<>();
+// ajout d’objets Enseignant
+List<Etudiant> etudiants = new ArrayList<>();
+// ajout d’objets Etudiant
+afficherNoms (enseignants);
+afficherNoms (etudiants );
+}
+
+Java - Dr A. Belangour
+
+335
+
+335
+
+34
+
+Paramètre d'un générique
+ Remarque :
+ lors de l'appel de la fonction, le compilateur a accepté
+l'affectation du générique fils au générique parent
+mais il n'accepte pas l'ajout d'objets
+ Exemple :
+List<? extends Personne> liste2 = enseignants; //OK
+liste2.add(new Enseignant ());//Erreur de Compilation!
+
+Java - Dr A. Belangour
+
+336
+
+336
+
+Génériques et comparaison
+ Profit : Elimination du Cast
+
+
+Exemple pour Comparable:
+public class Etudiant implements Comparable<Etudiant>{
+….
+@Override
+public int compareTo(Etudiant o) { …. }
+}
+
+
+
+Exemple Pour Comparator :
+public class CompNom implements Comparator<Etudiant>{
+@Override
+public int compare(Etudiant o1, Etudiant o2) {….}
+}
+Java - Dr A. Belangour
+
+337
+
+337
+
+35
+
+

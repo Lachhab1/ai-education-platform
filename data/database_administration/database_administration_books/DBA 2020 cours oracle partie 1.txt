@@ -1,0 +1,1399 @@
+2019/2020
+
+Cours
+Administration
+des bases de
+données Oracle
+DBA 1
+SMI / S6
+
+Pr. EL FILALI SANAA
+UNIVERSITE HASSAN II FSBM
+
+Table des matières
+Introduction............................................................................................................................................. 3
+ARCHITECTURE DU SERVEUR ORACLE ..................................................................................................... 4
+1.
+
+Notions d’instance et de base de données ..................................................................................... 4
+
+2.
+
+La base de données ......................................................................................................................... 5
+
+3.
+
+Association instance et base de données Oracle ............................................................................ 6
+
+4.
+
+Connexion et Sessions ..................................................................................................................... 6
+a)
+
+Connexion : .................................................................................................................................. 7
+
+b)
+
+Session : ....................................................................................................................................... 7
+
+5.
+
+Les Structures de mémoire Oracle .................................................................................................. 7
+5.1
+
+Contrôlent des informations pour un serveur ou un processus d’arrière-plan...................... 8
+
+5.2
+
+Zone de mémoire partagée (Shared pool) ............................................................................. 9
+
+5.3
+
+Cache de tampons de la base de données (D.B Buffer Cache) ............................................ 10
+
+5.4
+
+Le tampon de journalisation Redo Log Buffer, .................................................................... 12
+
+5.5
+
+Large pool,............................................................................................................................. 12
+
+5.6
+
+Java pool, .............................................................................................................................. 13
+
+5.7
+
+Streams pool, ........................................................................................................................ 13
+
+5.8
+
+Program Global Area (PGA) .................................................................................................. 14
+
+6.
+
+In-Memory Column Store .............................................................................................................. 15
+
+7.
+
+Architecture de processus ............................................................................................................. 18
+
+7.1.
+
+Le processus utilisateur : ........................................................................................................... 18
+
+7.2.
+
+Le processus serveur : ............................................................................................................... 18
+
+7.3.
+
+Les processus d’arrière-plan :.................................................................................................... 18
+1.
+
+Structure des processus ........................................................................................................ 19
+
+1.1.
+
+Processus database writer (DBWn) ................................................................................... 19
+
+1.2.
+
+Processus LGWR (Log Writer) ............................................................................................ 20
+
+1.3.
+
+Processus CKPT (Checkpoint) ............................................................................................ 21
+
+1.4.
+
+System Monitor Process (SMON) ...................................................................................... 22
+
+1.5.
+
+Process Monitor Process (PMON) ..................................................................................... 22
+
+1.6.
+
+Processus de récupération (RECO) .................................................................................... 23
+
+1.7.
+
+Listener Registration Process (LREG) ................................................................................. 23
+
+1.8.
+
+Archiver Processes (ARCn)................................................................................................. 24
+
+2.
+
+Database Storage Architecture ............................................................................................. 25
+
+3.
+
+Logical and Physical Database Structures ............................................................................. 26
+
+3.1.
+
+Segments, Extents, and Blocks .......................................................................................... 28
+
+3.2.
+
+Tablespaces and Data Files ................................................................................................ 28
+1
+
+3.3.
+4.
+4.1.
+5.
+
+Les Tablespaces SYSTEM et SYSAUX .................................................................................. 29
+Oracle Container Database: Introduction ............................................................................. 29
+Architecture Multitenant .................................................................................................. 30
+Gestion Automatique du Stockage ........................................................................................ 31
+
+5.1.
+
+ASM Storage Components................................................................................................. 32
+
+5.2.
+
+Interagir avec une base de données Oracle : Processus de mémoire et stockage ........... 33
+
+Figure 1 : Architecture serveur oracle ..................................................................................................... 4
+Figure 2 : base de données...................................................................................................................... 5
+Figure 3 : Cluster...................................................................................................................................... 6
+Figure 4: Session & Connexion ................................................................................................................ 6
+Figure 5: structures mémoire oracle ....................................................................................................... 7
+Figure 6 ; Shared pool.............................................................................................................................. 9
+Figure 7 : DB buffer cache ..................................................................................................................... 10
+Figure 8 : Redo log buffer ...................................................................................................................... 12
+Figure 9 : large pool ............................................................................................................................... 12
+Figure 10 : JAVA POOL ........................................................................................................................... 13
+Figure 11 : Streams pool........................................................................................................................ 13
+Figure 12 : Program Global Area ........................................................................................................... 14
+Figure 13 : 6. In-Memory Column Store ................................................................................................ 15
+Figure 14 : In-Memory Column Store(SGA) ........................................................................................... 16
+Figure 15 : comparaison avec in-memory ............................................................................................. 17
+Figure 16 : Structure des processus.................................................................................................... 19
+Figure 17 : Processus database writer (DBWn) ..................................................................................... 19
+Figure 18 : Processus LGWR (log writer) ............................................................................................... 20
+Figure 19 : Processus CKPT (Checkpoint) .............................................................................................. 21
+Figure 20 : System Monitor Process (SMON) ........................................................................................ 22
+Figure 21 : Process Monitor Process (PMON) ....................................................................................... 22
+Figure 22 : Processus de récupération (RECO) ...................................................................................... 23
+Figure 23 : Listener Registration Process (LREG) ................................................................................... 23
+Figure 24 : Archiver Processes (ARCn)................................................................................................... 24
+Figure 25 : Database Storage Architecture ........................................................................................... 25
+Figure 26: Logical and Physical Database Structures ............................................................................ 26
+Figure 27 : Segments, Extents, and Blocks ............................................................................................ 28
+Figure 28: Tablespaces and Data Files ................................................................................................... 28
+Figure 29 : Architecture Multitenant .................................................................................................... 30
+Figure 30: Gestion Automatique du Stockage....................................................................................... 31
+Figure 31: ASM Storage Components ................................................................................................... 32
+Figure 32 : Processus de mémoire et stockage ..................................................................................... 33
+
+2
+
+Introduction
+L'administration des bases de données Oracle devient de plus en plus transparente mais la
+maitrise de ses tâches reste primordiale pour son administrateur.
+Il s’agit de maîtriser les tâches d'administration des bases de données Oracle :
+Après une présentation générale de l'architecture interne d'un serveur Oracle (mémoire,
+processus, fichiers), ce cours traite les principales tâches d'administration d'une base de données
+à savoir la gestion de la mémoire la, gestion du stockage, gestion des utilisateurs et des droits,
+sauvegardes et restaurations avec RMAN (Recovery Manager).
+Aussi, ce cours présente quelques nouvelles fonctionnalités d'Oracle 12c qui facilitent le travail
+de l'administrateur : déplacement à chaud de fichiers de données, limitation de la taille de la
+PGA, gestion de l'annulation pour les tables temporaires, nouveau gestion de privilège pour les
+opérations de sauvegarde et de restauration, sécurité basée sur le code, etc.
+Les principales tâches de l’administrateur de base de données (DBA) sont les suivantes :
+•
+
+Installation des produits ;
+
+•
+
+Création/démarrage/arrêt des bases de données ;
+
+•
+
+Gestion des structures de stockage ;
+
+•
+
+Gestion des utilisateurs (et de leurs droits) ;
+
+•
+
+Sauvegarde/restauration.
+
+Conventions d’écriture
+MOT EN MAJUSCULES : Mots clés de la commande (CREATE TABLE). Dans la pratique,
+ils peuvent être saisis indifféremment en majuscules ou en minuscules.
+mot en minucules :Valeurs à saisir, relatives à la base de données ou à l’application (nom de
+table, nom de colonne, etc). Dans la pratique, elles peuvent être saisies indifféremment en
+majuscules ou en minuscules, sauf si elles figurent entre apostrophes (dans ce cas, elles sont
+sensibles à la casse).
+[] : Clause optionnelle.
+[,...] : La clause précédente peut être répétée plusieurs fois.
+| : Indique un choix entre plusieurs options.
+{} : Délimite une liste d’options.
+mot souligné : Valeur par défaut.
+
+3
+
+ARCHITECTURE DU SERVEUR ORACLE
+Le serveur de bases de données est primordial pour la gestion des informations. En général, il
+doit gérer de façon fiable, dans un environnement multi utilisateur, une quantité importante de
+données pour que de nombreux utilisateurs puissent y accéder simultanément, et ce sans affecter
+les performances.
+
+1. Notions d’instance et de base de données
+L'architecture Oracle comporte plusieurs composants principaux, présentés dans le schéma
+suivant :
+
+Figure 1 : Architecture serveur oracle
+Un serveur Oracle comporte deux éléments distincts, l’instance et la base de données.
+La base de données se compose d’un ensemble de fichiers physiques qui contiennent
+notamment les données. L’instance se compose d’une structure de mémoire partagée et d’un
+ensemble de processus. Ces deux éléments sont intimement liés mais doivent être bien
+distingués.
+Une instance ne peut ouvrir qu’une base de données à la fois et, dans la grande majorité des
+cas, une base de données est ouverte par une seule instance. Néanmoins, moyennant la mise en
+œuvre de l’option Real Application Clusters (RAC), une base de données peut être ouverte par
+
+4
+
+plusieurs instances situées sur des nœuds distincts d’un cluster de serveurs ; cette option RAC
+est intéressante pour la haute disponibilité.
+Un fichier de paramètres est utilisé par l’instance lors de son démarrage pour se configurer et
+faire le lien avec la base de données.
+En dehors des processus de l’instance, il existe des processus utilisateur correspondant à
+l’application utilisée par l’utilisateur pour se connecter à la base de données (SQL*Plus, un
+progiciel, un logiciel spécifique, etc.). Dans une architecture client/serveur, ces processus
+utilisateur sont situés sur le poste de l’utilisateur et communiquent avec le serveur à travers le
+réseau grâce à la couche Oracle Net
+
+2. La base de données
+
+Figure 2 : base de données
+
+Une base de données est constituée de :
+Un ou plusieurs fichiers de données contenant les données proprement dites.
+Au minimum un fichier de contrôle contenant des informations de contrôle sur la base de
+données.
+Au minimum deux groupes de fichiers de journalisation enregistrant toutes les modifications
+apportées à la base.
+Les fichiers de journalisation peuvent être archivés ; ces fichiers de journalisation archivés
+ne font, à proprement parler, pas partie de la base de données.
+Chaque base de données porte un nom défini lors de sa création ; ce nom est défini par le
+paramètre d’initialisation DB_NAME du fichier de paramètres (SMI par exemple). En
+complément, l’emplacement de la base de données sur le réseau peut être défini grâce au
+paramètre DB_DOMAIN (ELFILALI.ma par exemple). La base de données peut alors être
+
+5
+
+aussi
+
+identifiée
+
+par
+
+son
+
+nom
+
+global
+
+défini
+
+par
+
+DB_NAME.DB_DOMAIN
+
+(SMI.ELFILALI.ma par exemple).
+
+3. Association instance et base de données Oracle
+
+Figure 3 : Cluster
+
+Dans le medèle Noclustered : Chaque instance de base de données est associée à une et unique
+base de données.
+S’il existe plusieurs bases de données sur le même serveur, il existe une base de données
+distincte et distincte pour chaque instance. Et dans ce cas : Une instance de base de données ne
+peut pas être partagée.
+Dans le modèle Clustred : c’’est une option d’oracle database , la base de données Real
+Applications Cluster (RAC) comporte généralement plusieurs instances sur des serveurs
+distincts pour la même base de données partagée.
+Ce modèle est appliqué dans le cas de la demande d’une haute disponibilité ou bien pour la
+distribution des charges
+
+4. Connexion et Sessions
+Les connexions et les sessions sont étroitement liées aux processus utilisateur, mais sont très
+différentes dans le sens.
+
+Figure 4: Session & Connexion
+
+6
+
+a) Connexion :
+Une connexion est une voie de communication entre un processus utilisateur et une base de
+données Oracle
+Autrement dit lorsque le client est lié au serveur (@ IP, @ mac, N°Port) on parle d’une connexion
+
+b) Session :
+Une session représente l’état d’une connexion actuelle d’un utilisateur à l’instance de base de
+données.
+Chaque client après la première connexion ouvre une session dans la base de données (il
+ouvre une session après identification (login et Mdp)
+La session s’identifie par un SID
+
+5. Les Structures de mémoire Oracle
+
+Figure 5: structures mémoire oracle
+
+La structure mémoire d'Oracle est constituée des deux zones de mémoire SGA et PGA:
+•
+
+La zone SGA (System Global Area) assurant le partage des données des différents
+utilisateurs, c'est-à-dire qu'il s'agit de la zone contenant les structures de données
+accessibles par tous les processus
+
+•
+
+La zone PGA (Program Global Area) permettant le fonctionnement des divers
+processus (afin de stocker toutes les données ne nécessitant pas d'être partagées).
+
+System Global Area (SGA) :
+Groupe de structures de mémoire partagées, connues sous le nom de composants
+SGA, qui :
+•
+
+Contiennent des données (les blocs de données mis en cache et les zones
+SQL partagées)
+7
+
+•
+
+Contrôlent des informations pour une instance de base de données
+Oracle.
+
+Le SGA est partagé par tous les processus serveur et les processus d’arrière-plan
+Le SGA comprend les structures de données suivantes :
+•
+
+Shared pool : Cache différentes instructions qui peuvent être partagées entre les
+utilisateurs
+
+•
+
+Cash buffer database : les blocs de données de cache extraits de la base de données
+
+•
+
+Redo log buffer : Cache tout ce qui a été fait sous forme des informations (utilisées par
+exemple récupération) jusqu’à ce qu’elles puissent être écrites aux fichiers journaux de
+redo physique stockés sur le disque
+
+•
+
+Large pool : Zone facultative qui fournit de grandes allocations de mémoire pour
+certains grands processus, tels que les opérations de sauvegarde et de récupération
+d’Oracle, et les processus de serveur I/O
+
+•
+
+Java pool : Utilisé pour tous les codes Java spécifiques à la session et les données dans
+la machine virtuelle Java (JVM)
+
+•
+
+Streams pool (flux) : utilisé par Oracle Streams Il fournit les Outils pour capturer,
+traiter et gérer les évènements de la BD pour synchroniser les donnees entres les BD
+distantes
+
+•
+
+SGA fixe : Zone interne d’entretien pour la gestion de la base contenant des
+informations générales sur l’état de la base de données et de l’instance, et des
+informations communiquées entre les processus
+
+Lorsque vous démarrez l’instance, la quantité de mémoire allouée à la SGA s’affiche.
+
+Program Global Area (PGA) :
+Régions de mémoire qui :
+•
+
+Contiennent des données sur la session utilisateur
+
+5.1 Contrôlent des informations pour un serveur ou un processus d’arrièreplan.
+Une PGA est une mémoire non partagée créée par Oracle Database lorsqu’un
+processus serveur ou un processus d’arrière-plan est lancé.
+Chaque processus serveur et processus d’arrière-plan a sa propre PGA.
+La PGA est divisée en deux grands domaines : l’espace de pile et la zone globale
+d’utilisateur (UGA).
+
+8
+
+Avec l’infrastructure SGA dynamique, les tailles du cache tampon de base de données, la shared
+pool, large pool, Java pool et Streams pool peuvent changer sans fermer l’instance.
+Le serveur Oracle Database utilise des paramètres d’initialisation pour créer et gérer des
+structures de mémoire.
+La façon la plus simple de gérer la mémoire est de permettre à la base de données de la gérer et
+de la régler automatiquement. :
+Pour ce faire (sur la plupart des plates-formes), il faut définir :
+•
+
+Un paramètre d’initialisation de la taille de la mémoire cible (MEMORY_TARGET)
+
+•
+
+Un
+
+paramètre
+
+d’initialisation
+
+de
+
+la
+
+taille
+
+de
+
+la
+
+mémoire
+
+maximale
+
+(MEMORY_MAX_TARGET).
+
+5.2 Zone de mémoire partagée (Shared pool)
+
+Figure 6 ; Shared pool
+
+La partie Shared pool de la SGA contient :
+•
+
+Data Dictionnary Cache : une zone qui contient :
+o
+
+Les dernières définitions utilisées dans la base,
+
+o
+
+Les informations sur les fichiers, les tables, les index, les colonnes, les
+utilisateurs, les privilèges et d’autres objets de la base de données.
+
+•
+
+Au cours de l’analyse, le processus serveur recherche des informations dans le
+cache du dictionnaire, pour résoudre les noms d’objet et valider l’accès.
+
+•
+
+La mise en mémoire cache des informations du dictionnaire de données réduit
+le temps de réponse aux interrogations et aux instructions LMD,
+
+•
+
+Sa taille dépend du dimensionnement de la zone mémoire partagée.
+
+9
+
+•
+
+Library cache : conserve des informations sur les dernières instructions SQL et
+PL/SQL utilisées, permet le partage des instructions communes, elle est
+composée de 2 structures :
+
+Zone SQL partagée et Zone PL/SQL partagée
+
+sa taille dépend du dimensionnement de la zone de mémoire partagée
+
+•
+
+Shared sql Area : Une zone SQL partagée contient l’arbre d’analyse et le plan
+d’exécution d’une déclaration donnée de SQL.
+Oracle Database reconnaît quand deux utilisateurs exécutent la même requête SQL et réutilise
+la zone SQL partagée pour ces utilisateurs.
+
+•
+
+Server result Cache : une zone qui contient
+o Le cache de résultat de requête SQL
+o Le cache de résultat de fonction PL/SQL,
+o Les tampons pour les messages d’exécution parallèles et les structures de
+contrôle.
+
+•
+
+Reserved Pool : une zone utilisée pour allouer de gros morceaux de mémoire
+adjacents
+
+La taille de cette zone mémoire est définie par le paramètre : SHARED_POOL_SIZE.
+.
+
+5.3 Cache de tampons de la base de données (D.B Buffer Cache)
+
+Figure 7 : DB buffer cache
+
+Database Buffer Cache (Le cache tampon de base de données) est la partie de la SGA qui
+contient des images de bloc lues à partir des fichiers de données.
+Tous les utilisateurs qui sont connectés simultanément à l’instance partagent l’accès à Database
+Buffer Cache
+La première fois qu’un processus d’utilisateur Oracle Database nécessite une pièce particulière
+de données, il recherche les données dans le cache tampon de base de données. Si le processus
+10
+
+trouve déjà les données dans le cache (un cache frappé), il peut lire les données directement à
+partir de la mémoire. Si le processus ne peut pas trouver les données dans le cache (un cache
+manquer), il doit copier le bloc de données à partir d’un fichier de données sur disque dans un
+tampon dans le cache avant d’accéder aux données.
+Les tampons dans le cache sont gérés par un algorithme complexe qui utilise une combinaison
+de moins récemment utilisés (LRU : least recently used)
+Le LRU permet de s’assurer que les blocs les plus récemment utilisés ont tendance à rester en
+mémoire pour minimiser l’accès au disque.
+Le Keep pool est conçu pour conserver les tampons dans la mémoire plus longtemps que le
+LRU les conserverait normalement.
+Le Recycle pool est conçu pour rincer les tampons de la mémoire plus rapidement que le LRU
+normalement le ferait.
+Les Buffer cache supplémentaires peuvent être configurées pour contenir des blocs d’une taille
+différente de la taille du bloc par défaut.
+•
+
+Un bloc de données : est la plus petite unité d’entrée/sortie
+
+•
+
+Un bloc OS = 512 octets en général
+
+•
+
+Un bloc Oracle vaut un ou plusieurs blocs OS, la taille du bloc Oracle est définie par le
+paramètre DB_BLOC_SIZE=2 puissance n :2n
+
+•
+
+Une table est constituée d’un ou plusieurs blocs Oracle
+
+•
+
+Chaque bloc est affecté à une seule table (Contient une ou plusieurs lignes de la même
+table)
+
+Le paramètre DB_BLOCK_SIZE détermine la taille du bloc principal est composé de souscaches indépendants :
+DB_CACHE_SIZE
+DB_KEEP_CACHE_SIZE
+DB_RECYCLE_CACHE_SIZE
+peut être redimensionné dynamiquement :
+alter system set DB_CACHE_SIZE = 96M;
+le paramètre DB_CACHE_ADVICE peut être défini pour collecter des statistiques permettant
+de prévoir le comportement du serveur en fonction de différentes tailles du cache.
+La vue V$DB_CACHE_ADVICE affiche les statistiques collectées.
+
+11
+
+5.4
+
+Le tampon de journalisation Redo Log Buffer,
+
+Figure 8 : Redo log buffer
+
+Le Redo log buffer est un tampon (buffer) circulaire dans le SGA qui contient des informations
+sur les transactions exécutées, sur les modifications apportées à la base de données, Ces
+informations sont stockées dans des entrées de redo.
+Les entrées de Redo contiennent les informations nécessaires pour la récupération de la base de
+données si nécessaire et pour reconstruire (ou refaire) les modifications apportées à la base de
+données par DML(langage de Manipulation des données :Select Insert, Delete, Update ), DDL
+(langage de définition des données : Create, Drop, Alter) ou opérations internes.
+La taille du tampon (buffer) est définie par le paramètre LOG_BUFFER.
+
+5.5 Large pool,
+
+Figure 9 : large pool
+
+Le Large pool est une zone mémoire facultative de la SGA qui permet de réduire la charge de
+la zone de mémoire partagée et qui peut être redimensionné dynamiquement.
+
+Il est très souhaitable de la configurer dans les cas suivants :
+- la mémoire allouée par session (UGA) au serveur partagé utilisée lorsque les transactions
+interagissent avec plusieurs bases de données
+- les processus serveur d'E/S (configuration des processus esclave du processus DBWn)
+12
+
+- les opérations de sauvegarde et de restauration ou RMAN (Recovery Manager)
+-
+
+les
+
+mémoires
+
+tampon
+
+des
+
+messages
+
+d'exécution
+
+en
+
+parallèle :
+
+PARALLEL_AUTOMATIC_TUNING = TRUE
+
+Elle n'utilise pas de liste LRU : Least Recently Used.
+Sa taille est définie par le paramètre LARGE_POOL_SIZE.
+La zone mémoire Large pool est utilisée pour :
+
+5.6 Java pool,
+
+Figure 10 : JAVA POOL
+
+La zone mémoire Java pool est utilisée pour stocker tous les codes Java spécifiques à la session
+et les données dans la machine virtuelle Java (JVM). Cette zone mémoire est facultative, mais
+nécessaire si vous installez et utilisez l’option Java dans oracle. La taille de la zone est définie
+en octets par le paramètre JAVA_POOL_SIZE.
+
+5.7 Streams pool,
+
+Figure 11 : Streams pool
+
+Le Pool Streams offre les avantages suivants au sein de la SGA :
+Stocke des messages de file d’attente tamponnés pour Oracle Streams (via le paquet
+dbms_aqadm).
+Fournit de la mémoire pour oracle Streams capturer et appliquer des processus
+
+13
+
+Pour configurer explicitement le pool Streams, spécifiez la taille de la pool dans les octets à
+l’aide du paramètre streams_pool_size de l’initialisation.
+Si la taille du pool Streams est supérieure à zéro, alors toute mémoire SGA utilisée par
+Streams est allouée à partir de la pool Streams.
+Si la taille du Pool Streams est nulle ou non spécifiée, la mémoire utilisée par Streams est
+allouée à partir de la shared pool et peut utiliser jusqu’à 10% de shared pool.
+Espace pour la synchronisation et non pas pour la restauration
+
+5.8 Program Global Area (PGA)
+
+Cursor
+
+PGA
+
+State
+User
+
+Stack
+
+Global
+Space
+
+Area
+
+Sort
+Area
+
+Hash
+Area
+
+Create Bitmap Area
+User Session
+Data
+
+Server
+process 1
+
+Bitmap Merge Area
+
+SQL
+Work Areas
+
+Shared pool
+
+Database
+buffer
+
+Redo log
+buffer
+
+cache
+Java pool
+Large pool
+
+Fixed SGA
+Streams
+pool
+
+System Global Area (SGA)
+Figure 12 : Program Global Area
+
+Le Program Global Area (PGA) est une zone de mémoire privée contenant des données et des
+informations de contrôle pour un processus serveur. Chaque processus serveur a une PGA
+distincte.
+Chaque PGA contient de l’espace de pile. Dans un environnement serveur dédié, chaque
+utilisateur se connectant à l’instance de base de données dispose d’un processus serveur distinct.
+14
+
+Pour ce type de connexion, la PGA contient une subdivision de mémoire connue sous le nom
+de zone globale de l’utilisateur (UGA). L’UGA est composé des éléments suivants :
+Zone de curseur pour stocker des informations sur les curseurs
+Zone de stockage de données de session utilisateur pour contrôler les informations sur une
+session
+Zones de travail SQL pour le traitement des déclarations SQL composé de:
+Un espace tri pour les fonctions qui commandent des données telles que ORDER BY et GROUP
+BY
+Une zone de hachage pour effectuer des joints de hachage des tables
+Une zone de bitmap de création utilisée dans la création d’index de bitmap commune aux
+entrepôts de données
+Une zone de fusion de bitmap utilisée pour résoudre l’exécution du plan d’index bitmap
+Dans un environnement serveur partagé, plusieurs utilisateurs clients partagent le processus
+serveur. Dans ce modèle, l’UGA est déplacé dans la SGA (shared pool ou large pool si
+configurée) laissant la PGA avec seulement de l’espace pile.
+
+6. In-Memory Column Store
+
+Figure 13 : 6. In-Memory Column Store
+
+La fonction In-Memory Column Store permet de stocker des objets (tables, cloisons et autres
+types) en mémoire dans un nouveau format connu sous le nom de format columnar. Ce format
+permet aux scans, aux jointures et aux agrégats d’effectuer beaucoup plus rapidement que le
+format traditionnel sur disque, fournissant ainsi des rapports rapides et des performances DML
+pour les environnements OLTP (Online Transaction Processing) et DW(data warehouse).
+Il y a trois avantages principaux :
+Les requêtes s’exécutent beaucoup plus rapidement : toutes les données peuvent être peuplées
+dans la mémoire dans un format de colonne comprimé. Aucun index n’est requis et utilisé. Les
+
+15
+
+requêtes fonctionnent au moins 100 fois plus vite que lorsque vous collectez des données à
+partir du cache tampon, grâce au format compressé columnar.
+Les DML sont plus rapides : les index analytiques peuvent être éliminés en étant remplacés par
+des analyses de la représentation du magasin de colonnes IM instantanées de la table.
+Les requêtes ponctuelles arbitraires fonctionnent avec de bonnes performances, parce que la
+table se comporte comme si toutes les colonnes étaient indexées.
+Remarque : La fonction In-Memory Column Store est incluse dans l’option Mémoire inMémoire de base de données Oracle.
+
+Buffer cache
+
+EMP table
+
+ORDERS table
+ORDER
+
+In SGA
+Segments in row format
+In-memory column store
+
+ORDERS table
+
+DMLs
+Tables in
+dual format
+SELECT
+
+Figure 14 : In-Memory Column Store(SGA)
+
+Le format colonnenaire en mémoire (in-memory columnar) ne remplace pas le format de cache
+sur disque ou buffer.
+lorsqu’un segment tel qu’une table ou une cloison est peuplé dans le magasin de colonnes de
+IM, le segment sur disque est automatiquement converti en format columnaire avec une option
+compressé.
+Il n’y a pas de stockage de format columnar sur le disque.
+Il ne provoque jamais des écrits supplémentaires au disque.
+Toutes les données sont stockées sur disque dans le format de la rangée traditionnelle.
+le format columnar d’un segment est une copie cohérente de transaction du segment soit sur
+disque ou dans le cache tampon.
+La cohérence des transactions entre les deux pools est maintenue.
+L’amélioration des performances permet d’exécuter plus de requêtes analytiques ad hoc
+directement sur les données de transaction en temps réel sans avoir d’incidence sur la charge
+de travail existante.
+
+16
+
+Figure 15 : comparaison avec in-memory
+
+L’algorithme actuel pour les balayages de table charge une table dans le cache tampon
+seulement lorsque la taille de la table est inférieure à un petit pour cent de la taille du cache
+tampon.
+Pour les très grandes tables, la base de données utilise un chemin direct lu, qui charge les blocs
+directement dans la PGA et contourne la SGA, pour éviter d’inonder le cache tampon.
+Le DBA doit déclarer explicitement les petites tables de recherche, qui sont fréquemment
+consultées, comme CACHE pour charger les données dans la mémoire et éviter de contourner
+la SGA.
+Cette clause indique que les blocs récupérés pour ces tables sont placés à l’extrémité la plus
+récemment utilisée de la liste la moins récemment utilisée (LRU) dans le cache tampon
+lorsqu’une analyse complète de la table est effectuée.
+La fonction In-memory Caching complète de base de données permet de mettre en cache une
+base de données entière lorsque la taille de la base de données (somme de tous les fichiers de
+données, espace de table SYSTEM, fichiers CACHE LOB moins SYSAUX, TEMP) est plus
+petite que la taille du cache tampon. La mise en cache et l’exécution d’une base de données à
+partir de la mémoire entraîne d’énormes avantages de performance.
+
+17
+
+7. Architecture de processus
+Oracle utilise différents types de processus :
+• Processus utilisateur : est démarré au moment où un utilisateur de la
+base de données effectue une demande de connexion au serveur Oracle
+• Processus serveur : se connecte à l’instance Oracle et démarre
+lorsqu’un utilisateur établit une session.
+• Processus d’arrière-plan : sont lancé au démarrage d’une instance
+Oracle.
+
+7.1. Le processus utilisateur :
+Est un programme qui demande une interaction avec le serveur Oracle,
+Doit d’abord établir une connexion,
+N’entre pas directement en interaction avec le serveur Oracle.
+
+7.2. Le processus serveur :
+Est un programme qui entre directement en interaction avec le serveur Oracle.
+Répond aux appels générés et renvoie les résultats.
+Peut être un serveur dédié ou un serveur partagé.
+
+7.3. Les processus d’arrière-plan :
+Gèrent et appliquent les relations entre les structures physiques et les structures mémoire :
+=> processus d’arrière-plan obligatoires : DBWn, pmon, smon, lgwr, ckpt
+=> processus d’arrière-plan facultatifs : ARCn (archivage), CJQ0 (coordinateur job queue),
+Dnnn (répartiteur), LCKn (verrous d’instance), LMDn (verrous à distance), lmon (verrous
+globaux), LMS (RAC Global cache service), Pnnn (Processus esclave « parallel Query »),
+QMNn (Adevenced Queuing), reco (récupérateur), Snnn (serveur partagé).
+
+18
+
+1. Structure des processus
+
+Figure 16 : Structure des processus
+
+L'architecture Oracle possède cinq processus d'arrière-plan obligatoires :
+•
+
+DBWn
+
+•
+
+PMON
+
+•
+
+CKPT
+
+•
+
+LGWR
+
+•
+
+SMON
+1.1.
+
+Processus database writer (DBWn)
+
+Figure 17 : Processus database writer (DBWn)
+
+Le processus serveur enregistre les modifications des blocs d'annulation et des blocs de données
+dans le cache de tampons de la base de données. Le processus DBWn écrit les tampons "dirty"
+du cache de tampons de la base de données dans les fichiers de données. Il garantit qu'un nombre
+19
+
+suffisant de mémoires tampon libres (tampons qui peuvent être écrasés lorsque les processus
+serveur doivent lire des blocs dans les fichiers de données) est disponible dans le cache de
+tampons de la base de données. Les performances de la base sont améliorées puisque les
+processus serveur n'effectuent les modifications que dans le cache de tampons de la base de
+données.
+Le processus DBWn écrit dans les fichiers de données jusqu'à ce que l'un des événements
+suivants se produise :
+•
+
+Point de reprise (checkpoint) normal ou incrémentiel.
+
+•
+
+Le nombre de tampons "dirty" a atteint une valeur seuil.
+
+•
+
+Un processus balaie un certain nombre de blocs à la recherche de mémoires tampon
+libres et n'en trouve pas.
+
+•
+
+Le temps imparti est dépassé.
+
+•
+
+Une demande de ping est émise dans l'environnement Real Application Clusters (RAC).
+
+•
+
+Un tablespace normal ou temporaire est mis hors ligne.
+
+•
+
+Un tablespace est mis en lecture seule.
+
+•
+
+Une table est supprimée ou vidée.
+
+•
+
+ALTER TABLESPACE nom du tablespace
+
+•
+
+BEGIN BACKUP sur une tablespace.
+1.2.
+
+Processus LGWR (Log Writer)
+
+Figure 18 : Processus LGWR (log writer)
+
+Le processus LGWR effectue des opérations d'écriture séquentielles à partir du tampon de
+journalisation vers le fichier de journalisation dans les cas suivants :
+•
+
+Lorsqu'une transaction est validée (commit).
+
+•
+
+Lorsqu'un tiers du tampon de journalisation est occupé.
+
+•
+
+Lorsque le tampon de journalisation contient plus d'un mégaoctet de modifications
+enregistrées.
+
+20
+
+•
+
+Avant que le processus DBWn n'écrive les blocs modifiés du cache de tampons de la
+base de données vers les fichiers de données.
+
+•
+
+Toutes les trois secondes.
+1.3.
+
+Processus CKPT (Checkpoint)
+
+Figure 19 : Processus CKPT (Checkpoint)
+
+Ce processus exécute les opérations du point de reprise qui consistent à :
+1. Faire appel au processus DBWn pour ecrire le contenu, modifié, du tampon de la base
+de données sur disque afin d'éviter une perte des données en cas de panne du système
+ou de la base de données
+2. Mettre à jour les en-têtes des fichiers de données du fait qu’un point de reprise a été
+effectué.
+3. Mettre à jour les fichiers CONTROL FILE afin de spécifier que l'action de
+CHECKPOINT s'est bien déroulée
+
+Un point de reprise est une structure de données qui définit un numéro de changement de
+système (SCN) dans le fil de refonte d’une base de données. Les points de reprise sont
+enregistrés dans le fichier de contrôle et dans chaque en-tête de fichier de données. Ils sont un
+élément crucial de la récupération.
+Lorsqu’un point de reprise se produit, Oracle Database doit mettre à jour les en-têtes de tous
+les fichiers de données pour enregistrer les détails du point de reprise . Ceci est fait par le
+processus CKPT.
+Le processus CKPT n’écrit pas de blocs sur disque;
+DBWn effectue toujours ce travail
+Les SCN enregistrés dans les en-têtes de fichier garantissent que toutes les modifications
+apportées aux blocs de base de données .
+21
+
+1.4.
+
+System Monitor Process (SMON)
+
+Figure 20 : System Monitor Process (SMON)
+
+Le processus de moniteur système (SMON) effectue
+La récupération d’instance :
+Réimplantation des modifications dans les fichiers de journalisation en ligne.
+L’Ouverture de la base de données pour permettre l’accès aux utilisateurs,
+L’annulation des transactions non validées,
+La fusion de l’espace libre,
+La libération des segments temporaires.
+
+1.5.
+
+Process Monitor Process (PMON)
+
+Figure 21 : Process Monitor Process (PMON)
+
+Le processus de monitoring des processus (PMON) effectue la récupération du processus
+lorsqu’un processus utilisateur échoue.
+Suite à l'échec de processus, le processus d'arrière-plan PMON exécute des opérations de
+nettoyage :
+Il annule la transaction en cours de l'utilisateur
+Il libère tous les verrous posés sur des tables ou des lignes
+Il libère d'autres ressources réservées par l'utilisateur
+Il redémarre les répartiteurs interrompus (En cas du mode Shared Server)
+
+22
+
+1.6.
+
+Processus de récupération (RECO)
+
+Figure 22 : Processus de récupération (RECO)
+
+Le processus de récupération (RECO) est un processus d’arrière-plan qui est utilisé avec la
+configuration de base de données distribuée qui résout automatiquement les défaillances
+impliquant des transactions distribuées.
+Le processus RECO d’une instance se connecte automatiquement à d’autres bases de données
+impliquées dans une transaction distribuée dans le doute.
+Lorsque le processus RECO rétablit une connexion entre les serveurs de base de données
+concernés, il résout automatiquement toutes les transactions en doute, supprimant de la table de
+transaction en attente de chaque base de données toutes les lignes qui correspondent aux
+transactions résolues dans le doute.
+Si le processus RECO ne parvient pas à se connecter à un serveur distant, RECO tente
+automatiquement de se connecter à nouveau après un intervalle chronométré qui est de plus en
+plus exponentiellement.
+
+1.7.
+
+Listener Registration Process (LREG)
+
+Figure 23 : Listener Registration Process (LREG)
+
+23
+
+Le processus LREG, enregistre des informations sur l’instance de base de données et les
+processus de répartiteur auprès de l’auditeur Oracle Net. LREG fournit à l’auditeur les
+informations suivantes :
+•
+
+Noms des services de base de données
+
+•
+
+Nom de l’instance de base de données associée aux services et à sa charge actuelle et
+maximale
+
+•
+
+Les gestionnaires de services (répartiteurs et serveurs dédiés) sont disponibles par
+exemple, y compris leur type, leurs adresses de protocole et leur charge actuelle et
+maximale
+
+1.8.
+
+Archiver Processes (ARCn)
+
+Figure 24 : Archiver Processes (ARCn)
+
+Les processus Archiver (ARCn) copient les fichiers journaux à un périphérique de stockage
+désigné après l’activation de ARCHIVELOG
+Si vous prévoyez une lourde charge de travail pour l’archivage (par exemple lors du chargement
+massif des données), vous pouvez augmenter le nombre maximum de processus Archiver. Il
+peut également y avoir plusieurs destinations de journaux d’archives. Il est recommandé qu’il
+y ait au moins un processus Archiver pour chaque destination. La valeur par défaut est d’avoir
+quatre processus Archiver.
+
+24
+
+2. Database Storage Architecture
+
+Figure 25 : Database Storage Architecture
+
+Les fichiers qui composent une base de données Oracle sont les suivants :
+1. Fichiers de contrôle : Chaque base de données dispose d’un fichier de contrôle unique
+qui contient des données sur la base de données elle-même (c’est-à-dire des
+informations sur la structure de la base de données physique). Plusieurs copies peuvent
+être maintenues pour se protéger contre la perte totale. Il peut également contenir des
+métadonnées liées aux sauvegardes. Le fichier de contrôle est essentiel à la base de
+données. Sans le fichier de contrôle, la base de données ne peut pas être ouverte.
+2. Fichiers de données : Contient les données utilisateur ou d’application de la base de
+données, ainsi que les métadonnées et le dictionnaire de données
+3. Fichiers journaux en ligne : Aqui permet d’autoriser par exemple la récupération de
+la base de données. Si le serveur de base de données se bloque et ne perd aucun fichier
+de données, l’instance peut récupérer la base de données avec les informations
+contenues dans ces fichiers.
+Les fichiers supplémentaires suivants sont utilisés pendant l’exploitation de la base de
+données :
+
+25
+
+4. Fichier paramètre : est utilisé pour définir comment l’instance est configurée
+lorsqu’elle démarre
+5. Fichier de mot de passe : permet aux utilisateurs utilisant les rôles SYSDBA,
+SYSOPER, SYSBACKUP, SYSDG, SYSKM et SYSASM de se connecter à distance
+à l’instance et d’effectuer des tâches administratives
+6. Fichiers de sauvegarde : sont utilisés pour la récupération de la base de données. Vous
+restaurez généralement un fichier de sauvegarde lorsqu’une défaillance du support ou
+une erreur de l’utilisateur a endommagé ou supprimé le fichier d’origine.
+7. Fichiers journaux archivés : Contient un historique continu des modifications de
+données (redo) générées par l’instance. À l’aide de ces fichiers et d’une sauvegarde de
+la base de données, vous pouvez récupérer un fichier de données perdu. C’est-à-dire que
+les journaux d’archives permettent la récupération des fichiers de données restaurés.
+8. Fichiers de trace : Chaque serveur et processus d’arrière-plan peuvent écrire à un
+fichier de trace associé. Lorsqu’une erreur interne est détectée par un processus, le
+processus décharge les informations sur l’erreur à son fichier de traces. Certaines des
+informations écrites à un fichier de traçabilité sont destinées à l’administrateur de base
+de données, tandis que d’autres informations sont pour Oracle Support Services.
+9. Fichier journal d’alerte : Il s’agit d’entrées de traces spéciales. Le journal d’alerte
+d’une base de données est un journal chronologique de messages et d’erreurs. Oracle
+vous recommande d’examiner périodiquement le journal d’alerte.
+3. Logical and Physical Database Structures
+
+Figure 26: Logical and Physical Database Structures
+
+26
+
+La base de données a des structures logiques et physiques : Bases de données, tablespace et
+fichiers de données, La relation entre ces différents éléments est illustré dans le schéma cidessus.
+Chaque base de données est logiquement divisée en deux tablespaces ou plus.
+Un ou plusieurs fichiers de données sont explicitement créés pour chaque tablespace afin de
+stocker physiquement les données de tous les segments dans un tablespace.
+S’il s’agit d’un tablespace TEMPORARY, il dispose d’un fichier temporaire au lieu d’un fichier
+de données. Le fichier de données d’un tablespace peut être stocké physiquement sur n’importe
+quelle technologie de stockage prise en charge.
+Tablespaces
+Une base de données est divisée en unités de stockage logiques appelées tablespace, qui
+regroupent des structures logiques ou des fichiers de données liés. Par exemple, les
+tablespaces regroupent généralement tous les segments d’une application pour
+simplifier certaines opérations administratives.
+
+Blocs de données
+Au plus haut niveau de granularité, les données d’une base de données Oracle sont
+stockées dans des blocs de données.
+Un bloc de données correspond à un nombre spécifique d’octets d’espace physique sur
+le disque. Une taille de bloc de données est spécifiée pour chaque espace de table
+lorsqu’il est créé.
+Une base de données utilise et alloue de l’espace de base de données gratuit dans les
+blocs de données Oracle.
+Extents
+Le niveau suivant de l’espace logique de base de données est une Extent.
+Une Extent est un nombre spécifique de blocs de données Oracle contigus (obtenus en
+une seule allocation) qui sont utilisés pour stocker un type spécifique d’informations.
+Segments
+Le niveau de stockage logique de base de données au-dessus d’une Extent est appelé un
+segment. Un segment est un ensemble d’ Extents allouées à une certaine structure logique.
+
+27
+
+3.1.
+
+Segments, Extents, and Blocks
+
+Figure 27 : Segments, Extents, and Blocks
+
+Un sous-ensemble d’objets de base de données tels que des tables et des index sont stockés sous
+forme de segments dans les tablespaces. Chaque segment contient une ou plusieurs extents. Une
+extent se compose de blocs de données contigus, ce qui signifie que chaque extent ne peut
+exister que dans un fichier de données. Les blocs de données sont la plus petite unité d’I/O dans
+la base de données.
+La taille du bloc de données peut être définie au moment de la création de la base de données.
+La taille par défaut de 8 KB est adéquate pour la plupart des bases de données.
+Si votre base de données prend en charge une application d’entrepôt de données qui comporte
+de grandes tables et index, une plus grande taille de bloc peut être bénéfique.
+Si votre base de données prend en charge une application transactionnelle dans laquelle les
+lectures et les écrits sont aléatoires, il peut être avantageux de spécifier une taille de bloc plus
+petite. La taille maximale du bloc dépend de votre système d’exploitation.
+La taille minimale du bloc Oracle est de 2 KB;(il devrait rarement (voire jamais) être utilisé.
+3.2.
+
+Tablespaces and Data Files
+
+Figure 28: Tablespaces and Data Files
+
+28
+
+Une base de données est divisée en tablespace, qui sont des unités de stockage logiques qui
+peuvent être utilisées pour regrouper les structures logiques liées au groupe. Un ou plusieurs
+fichiers de données sont explicitement créés pour chaque tablespace
+
+afin de stocker
+
+physiquement les données de toutes les structures logiques dans un tablespace.
+Le schéma ci-dessus illustre tablespace 1, composé de deux fichiers de données. Un segment
+de 128 KB, composé de deux extents, couvre les deux fichiers de données. La première extent
+de taille 64 KB est dans le premier fichier de données et la deuxième extent, également de taille
+64 KB est dans le deuxième fichier de données. Les deux extents sont formées à partir de blocs
+Oracle contigus de 8 KB.
+
+3.3. Les Tablespaces SYSTEM et SYSAUX
+Chaque base de données Oracle doit contenir un tablespace SYSTEM et un tablespace
+SYSAUX. Ils sont automatiquement créés lorsque la base de données est créée. La valeur par
+défaut du système est de créer un tablespace de petite taille. Vous pouvez également créer des
+tablespace bigfile, qui permettent à la base de données Oracle de gérer les fichiers ultralarges.
+Un tablespace peut être en ligne (accessible) ou hors ligne (non accessible). Le tablespace
+SYSTEM est toujours en ligne lorsque la base de données est ouverte. Il stocke des tables qui
+prennent en charge la fonctionnalité de base de la base de données, telles que les tables de
+dictionnaire de données.
+Le tablespace SYSAUX est un tablespace auxiliaire à l’espace de table SYSTEM. le tablespace
+SYSAUX stocke de nombreux composants de base de données, et il doit être en ligne pour le
+bon fonctionnement de tous les composants de base de données. Les tablespaces SYSTEM et
+SYSAUX ne sont pas recommandés pour stocker les données d’une application. Des
+tablespaces supplémentaires peuvent être créés à cette fin.
+Remarque : le tablespace SYSAUX peut être mis hors ligne pour effectuer la récupération de
+tablespace, alors que ce n’est pas possible pour tablespace SYSTEM. Aucun d’entre eux ne
+peut être fait lu seulement.
+4. Oracle Container Database: Introduction
+Une base de données pluggable (PDB) est un ensemble de schémas de base de données qui
+apparaît logiquement aux utilisateurs et aux applications comme base de données séparée. Mais
+au niveau physique, la base de données multitenants (CDB) dispose d’une instance de base de
+données et de fichiers de base de données, tout comme une base de données non conteneurs.
+Il est facile de brancher les non-CDB dans un CDB. Un CDB évite la redondance de :
+29
+
+•
+
+Processus d’arrière-plan
+
+•
+
+Allocation mémoire
+
+•
+
+Métadonnées Oracle dans plusieurs dictionnaires de données
+
+Un groupement CDB de plusieurs applications a une instance, par conséquent un ensemble de
+processus d’arrière-plan, une allocation SGA et un dictionnaire de données dans le conteneur
+racine, commun pour tous les PDB, chaque PDB maintenant son propre dictionnaire de données
+d’application.
+Lorsque les applications doivent être corrigées ou mises à niveau, l’opération de maintenance
+n’est effectuée qu’une seule fois sur la CDB et, par conséquent, toutes les applications sont
+mises à jour en même temps.
+4.1.
+
+Architecture Multitenant
+
+Figure 29 : Architecture Multitenant
+
+Le schéma montre un CDB avec quatre parties : la racine (root), la graine (seed) et deux PDB.
+Les deux applications (HR et SALES) utilisent une seule instance et sont maintenues
+séparément.
+Sur le plan physique, le CDB dispose d’une instance de base de données et de fichiers de base
+de données, tout comme un non-CDB.
+
+30
+
+Les fichiers journaux de redo sont communs pour l’ensemble du CDB. Les informations qu’il
+contient sont annotées avec l’identité du PDB lorsqu’un changement se produit. Oracle est
+amélioré pour comprendre le format du journal de redo pour un CDB. Tous les PDB d’une CDB
+partagent le mode ARCHIVELOG de la CDB.
+Les fichiers de contrôle sont courants pour l’ensemble du CDB. Les fichiers de contrôle sont
+mis à jour pour refléter tout tablespace et fichiers de données supplémentaires des BDP
+branchés.
+Le tablespace UNDO est commun pour tous les conteneurs.
+Un tablespace temporaire commun à tous les conteneurs est nécessaire. Mais chaque PDB peut
+tenir son propre tablespace temporaire pour ses propres utilisateurs locaux.
+Chaque conteneur dispose de son propre dictionnaire de données stocké dans son tablespace
+SYSTEM approprié, contenant ses propres métadonnées, et un tablespace SYSAUX.
+Les PDB peuvent créer des tablespace au sein du PDB en fonction des besoins d’application.
+Chaque fichier de données est associé à un conteneur spécifique, nommé CON_ID.
+5. Gestion Automatique du Stockage
+
+Figure 30: Gestion Automatique du Stockage
+
+Automatic Storage Management (ASM) assure l’intégration verticale du système de fichiers et
+du gestionnaire de volume des fichiers de base de données Oracle.
+ASM peut assurer la gestion de machines multiprocessus symétriques (SMP) ou à travers
+plusieurs nœuds d’un cluster pour le support Oracle Real Application Clusters (RAC).
+31
+
+Oracle ASM Cluster File System (ACFS) est une technologie multiplateforme, système de
+fichiers évolutive et de gestion de stockage qui étend la fonctionnalité ASM pour prendre en
+charge les fichiers d’applications en dehors de la base de données Oracle tels que les
+exécutoires, les rapports, les BFILEs, la vidéo, l’audio, le texte, les images et d’autres données
+de fichiers d’applications à usage général.
+ASM distribue la charge d’entrée/sortie (I/O) sur toutes les ressources disponibles afin
+d’optimiser les performances tout en supprimant le besoin d’accordage manuel I/O.
+ASM aide les administrateurs de bases de données (DBA) à gérer un environnement de base de
+données dynamique en leur permettant d’augmenter la taille de la base de données sans avoir à
+fermer la base de données pour ajuster l’allocation de stockage.
+ASM peut maintenir des copies redondantes de données pour fournir la tolérance des défauts,
+ou il peut être construit sur le dessus des mécanismes de stockage fournis par le fournisseur. La
+gestion des données se fait en sélectionnant la fiabilité et les caractéristiques de performance
+souhaitées pour les classes de données plutôt qu’avec l’interaction humaine sur une base par
+fichier.
+Les capacités ASM permettent d’économiser le temps de la DBA en automatisant le stockage
+manuel et en augmentant ainsi la capacité de l’administrateur à gérer des bases de données de
+plus en plus grandes avec une efficacité accrue.
+5.1.
+
+ASM Storage Components
+
+Figure 31: ASM Storage Components
+
+ASM n’élimine aucune fonctionnalité de base de données existante. Les bases de données
+existantes sont en mesure de fonctionner comme elles l’ont toujours fait. De nouveaux fichiers
+32
+
+peuvent être créés sous forme de fichiers ASM, tandis que les fichiers existants sont administrés
+à l’ancienne ou peuvent être migrés vers ASM.
+Le diagramme illustre les relations entre un fichier de données de base de données Oracle et les
+composants de stockage ASM. La notation du pied du corbeau représente une relation à
+plusieurs. Un fichier de données Oracle Database a une relation en tête-à-tête avec un fichier
+stocké sur le système d’exploitation dans un système de fichiers ou un fichier ASM.
+Un groupe de disques Oracle ASM est une collection d’un ou plusieurs disques Oracle ASM
+gérés comme une unité logique.
+Les structures de données d’un groupe de disques sont autonomes en utilisant une partie de
+l’espace pour les besoins en métadonnées. Les disques Oracle ASM sont les périphériques de
+stockage fourni à un groupe de disques Oracle ASM et peuvent être des disques physiques ou
+des cloisons, un numéro d’unité logique (LUN) à partir d’un tableau de stockage, un volume
+logique (LV), ou un fichier connecté au réseau. Chaque disque ASM est divisé en de
+nombreuses unités d’allocation ASM, la plus petite quantité contigue d’espace disque que
+l’ASM alloue. Lorsque vous créez un groupe de disques ASM, vous pouvez définir la taille de
+l’unité d’allocation ASM à 1, 2, 4, 8, 16, 32 ou 64 Mo selon le niveau de compatibilité du
+groupe de disque. Une ou plusieurs unités d’allocation ASM constituent une mesure ASM. Une
+mesure Oracle ASM est le stockage brut utilisé pour contenir le contenu d’un fichier Oracle
+ASM. Un fichier Oracle ASM se compose d’une ou plusieurs étendues de fichiers. Des tailles
+d’étendue variable de taille de 1-AU, de taille de 4-AU et de taille de 16-AU sont utilisées pour
+soutenir de très grands fichiers ASM.
+5.2.
+
+Interagir avec une base de données Oracle : Processus de
+mémoire et stockage
+
+Figure 32 : Processus de mémoire et stockage
+
+33
+
+L’exemple suivant décrit les opérations de base de données Oracle au niveau le plus basique.
+Il illustre une configuration de base de données Oracle dans laquelle l’utilisateur et le processus
+serveur associé sont sur des ordinateurs séparés, connectés via un réseau.
+Une instance a commencé sur un nœud où Oracle Database est installé, souvent appelé le
+serveur d’hébergement ou de base de données.
+Un utilisateur démarre une application donnant naissance à un processus utilisateur.
+L’application tente d’établir une connexion au serveur. (La connexion peut être locale,
+client/serveur, ou une connexion à trois niveaux à partir d’un niveau intermédiaire.)
+Le serveur gère un listener qui a le gestionnaire Oracle Net Services approprié. Le listener
+détecte la demande de connexion de l’application et crée un processus serveur dédié pour le
+compte du processus utilisateur.
+L’utilisateur exécute une déclaration SQL de type DML et engage la transaction. Par exemple,
+l’utilisateur modifie l’adresse d’un client dans une table et engage la modification.
+Le processus serveur reçoit l’instruction et vérifie le shared pool (un composant SGA) pour
+toute shared SQL area qui contient une déclaration SQL identique. Si la zone shared SQL
+area est trouvée, le processus serveur vérifie les privilèges d’accès de l’utilisateur aux données
+demandées, et la zone shared SQL area existante est utilisée pour traiter l’instruction. Si une
+shared SQL Area n’est pas trouvée, une nouvelle zone shared SQL Area est allouée à l’énoncé
+afin qu’elle puisse être analysée et traitée.
+Le processus serveur récupère toutes les valeurs de données nécessaires, soit à partir du fichier
+de données (tableau) ou des valeurs stockées dans le cache tampon de base de données.
+Le processus serveur modifie les données de la SGA. Étant donné que la transaction est validée,
+le processus Log Writer (LGWR) enregistre immédiatement la transaction dans le fichier
+journal de redo. Le processus d’auteur de base de données (DBWn) écrit des blocs modifiés de
+façon permanente au disque lorsqu’il est efficace de le faire.
+Si la transaction est réussie, le processus serveur envoie un message à travers le réseau à
+l’application. S’il n’est pas réussi, un message d’erreur est transmis.
+Tout au long de cette procédure, les autres processus d’arrière-plan s’exécutent, en surveillant
+les conditions qui nécessitent une intervention. En outre, le serveur de base de données gère les
+transactions d’autres utilisateurs et empêche les litiges entre les transactions qui demandent les
+mêmes données
+
+34
+
+A suivre ….
+
+35
+
+

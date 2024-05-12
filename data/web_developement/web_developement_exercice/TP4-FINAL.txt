@@ -1,0 +1,240 @@
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+                                       TP 04
+Objectifs
+
+
+        Comprendre le rôle d’une servlet
+        Créer, configurer et déployer une servlet
+        Ajouter des données à la base de données en utilisant les servlets
+        Supprimer des données de la BD en utilisant les servlets
+        Chercher des données dans la BD en utilisant les servlets
+
+Programme
+
+
+        Partie 1 : Création de la base de données employés
+        Partie 2 : Création d’une classe « DBInteraction »pour gère la connexion
+        avec la base de données
+        Partie 3 : Création de la classe « Employe » et des accesseurs et des
+        mutateurs
+        Partie 4 : Création de la classe EmployeDAO et ses méthodes
+        Partie 5 : Création d’une servlet « Liste_employes »
+
+Partie 1 : Création de la base de données employés
+
+        En utilisant PHPMyAdmin vous allez créer une base de données
+        « employes ».
+        Créer une table « employes » avec les attributs suivants :
+        Id,age,nom,prenom.
+
+Partie 2 : Création d’une classe « DBInteraction »pour gère la
+connexion avec la base de données
+
+        Créez avec Eclipse un projet Web dynamique nommé TP4 ensuite vous
+        allez créer la classe « DBInteraction » et vous trouverez ci-dessous son
+        code :
+
+        package smi;
+        import java.sql.Connection;
+        import java.sql.DriverManager;
+        import java.sql.ResultSet;
+        import java.sql.SQLException;
+        import java.sql.Statement;
+
+        public class   DBInteraction {
+              static   Connection conn;
+              static   Statement stmt;
+              public   static void connect()
+              {
+                       final String DB_URL="jdbc:mysql://localhost/employes";
+                       try {
+
+                                                                                   1
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+                             Class.forName("com.mysql.jdbc.Driver");
+                              conn = DriverManager.getConnection(DB_URL,"root","");
+                             // Execute SQL query
+                              stmt = conn.createStatement();
+                       } catch (ClassNotFoundException | SQLException e) {
+                             // TODO Auto-generated catch block
+                             e.printStackTrace();
+                       }
+                 }
+                 public static void disconnect()
+                 {
+                       try {
+                              conn.close();
+                       } catch (SQLException e) {
+                              // TODO Auto-generated catch block
+                              e.printStackTrace();
+                       }
+
+                 }
+                 public static int Maj(String sql)
+                 {
+                       int nb = 0;
+                       try {
+                              nb = stmt.executeUpdate(sql);
+                       } catch (SQLException e) {
+                              // TODO Auto-generated catch block
+                              e.printStackTrace();
+                       }
+                 return nb;
+                 }
+                 public static ResultSet select(String sql)
+                 {
+                       ResultSet rs = null;
+                       try {
+                              rs = stmt.executeQuery(sql);
+                       } catch (SQLException e) {
+                              // TODO Auto-generated catch block
+                              e.printStackTrace();
+                       }
+                       return rs;
+                 }
+
+        }
+
+
+
+
+Partie 3 : Création d’une classe « Employe »et générer les
+constructeurs et les mutateurs et les accesseurs
+
+
+
+
+                                                                                      2
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+
+
+
+Et pour les constructeurs :
+
+
+
+
+Partie 4 : Création de la classe « EmployeDAO » et ses méthodes
+
+
+
+
+                                                                  3
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+
+
+
+                                                4
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+
+
+
+Partie 0 5 : Création de la Sevlet « Liste_Employes »
+
+Vous allez créer une Servlet « Liste_Employes » avec le code suivant :
+
+
+
+
+Remarque : Quand vous allez terminer les taches précédentes vous devez copier
+MysqlConnector .jar et le coller dans le répertoire WEB-INF/lib de votre projet.
+
+
+
+                                                                                   5
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+Résultats : Enfin Vous allez exécuter votre projet et vous pouvez d’ajouter des nouveaux
+employés dans votre base de données
+
+
+
+
+     Suppression des données et mise à jour des données de la
+      base de données
+Dans le classe EmployeDAO vous allez définir la méthode « updateEmploye » avec le code
+suivant :
+
+
+
+
+Ensuite nous allons modifier le code de la classe de la Servlet « Liste_Employes » selon les
+étapes suivantes :
+
+    -   On ajoute d’abord une variable globale : private int idedit;
+    -   Au sein de la méthode doGet on déclare une variable booléen : boolean edit=false;
+    -   On ajoute dans la méthode doGet les instructions suivantes :
+
+
+
+
+                                                                                               6
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+
+
+
+    Enfin on exécute notre projet et on obtient les résultats suivants :
+
+    On peut modifier les donnes ou bien on peut les supprimer
+
+
+                                                                           7
+Pr : O. Zahour
+Université Hassan II de Casablanca
+Faculté des sciences Ben M’Sick
+Département des mathématiques et informatique
+Module : Développement Web (JEE)
+Filière : SMI6
+A.U :2021-2022
+
+
+
+
+                                                8
+Pr : O. Zahour
+

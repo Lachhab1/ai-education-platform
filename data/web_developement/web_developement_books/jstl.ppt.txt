@@ -1,0 +1,474 @@
+JSTLJSP Standard Tag Library
+
+J S T L
+Sommaire
+Introduction
+Servlets et JSP
+Tag Library avec JSP
+JSTL
+Expression Language: EL
+Exemples
+
+
+J S T L
+Introduction
+Profusion des langages de programmation de pages dynamiques
+CGI, PHP, ASP (.NET)
+Servlets et JSP (JavaServer Pages)
+Conteneur web: Jakarta Tomcat
+Caractéristiques des grands projets d’applications Web.
+Plusieurs équipes spécialisées.
+Séparation des tâches.
+Architecture en modèle MVC (Model View Controller)
+Model = Logique métier (EJB,DBMS)
+View = Présentation (JSP, JSTL,..)
+Controller = Servlets
+
+J S T L
+Servlets
+Classes Java
+Générer des Pages HTML dynamiques depuis des requêtes
+out.println() pour générer du HTML.
+Inconvénients:
+Code illisible si la page à générer est volumineuse (Maintenance)
+Difficulté à faire la mise en page.
+Développeur ou web designer?
+Public class MyServlet extends HttpServlet{
+   public void doGet(HttpServletRequest req,HttpServletReponse res){
+	PrintWriter out = res.getWriter();
+	out.println("<html><head><title>Hello</title></head>");
+	out.println("<body>Hello Servlet Test</body></html>");
+   }
+   
+
+
+J S T L
+JSP
+Création de contenu web dynamique simplifiée avec JSP
+Quelques notions sur JSP
+Éléments de script:
+Scriplets  <% code java %>
+Déclarations  <%! Déclarations %>
+Expressions  <%= expression %>
+Syntaxe XML
+<jsp:forward page="forward.jsp" />
+<jsp:include page="result.jsp" />
+Directives
+<%@page import="java.util.*"  %>
+<%@taglib prefix="c" uri="WEB-INF/tld/core.tld" %>
+
+J S T L
+Il est Possible de faire coopérer des Servlets avec les JSP
+JSP pour l’affichage = allégée en code java (présentation)
+Servlets pour le traitement des requêtes et travail en arrière plan = plus de code HTML
+
+
+
+
+
+Modèle MVC en Struts et JSF
+Servlets et JSP
+  JSP
+(view)
+Servlets
+
+ (Control)
+Model (BL)
+
+J S T L
+Tag Library TLD
+Introduites avec la version JSP 1.1
+Avantages
+Étendre les balises JSP standards
+Balises spécifiques à un cas d’usage
+Réduire l’utilisation des scriplets
+Améliorer la lisibilité de la page JSP
+Libérer les concepteurs de pages du code Java
+Mise en oeuvre 
+Classe Java Handle avec la librairie javax.servlets.jsp.tagext
+Fichier file.tld descripteur du tag
+Page JSP utilisant la nouvelle balise
+
+J S T L
+Tag Library ExempleHello World
+La classe Java (Class handler)
+Import javax.servlet.jsp.tagext.*;
+Public class Hello extends TagSupport{
+  public int doStartTag() throws JspException {
+    try { 
+      pageContext.getOut().print("Hello World");
+    } catch (Exception ex) {
+       throw new JspException("IO problems");
+    } 
+    return SKIP_BODY; 
+  }
+}
+
+J S T L
+Tag Library ExempleHello World
+Le descripteur hello.tld
+<?xml version="1.0" ?>
+<!DOCTYPE taglib PUBLIC "-//Sun Microsystems, Inc.//DTD JSP Tag Library 1.1//EN" "http://java.sun.com/j2ee/dtds/web-jsptaglib_1_1.dtd"> 
+<taglib> 
+  <tlibversion>1.0</tlibversion>
+  <jspversion>1.2</jspversion> 
+  <!-- Hello tag --> 
+  <tag> 
+    <name>hello</name> 
+    <tagclass>basic.Hello</tagclass> 
+    <bodycontent>empty</bodycontent> 
+    <info> Tag that Print Hello World </info>
+  </tag> 
+</taglib>
+
+J S T L
+Tag Library ExempleHello World
+Utilisation
+Dans le web.xml
+
+
+
+
+Dans la page JSP
+
+<web-app>
+ <taglib>
+  <taglib-uri> http://www.ecom.com/taglibs/utilitytags </taglib-uri>
+  <taglib-location> /WEB-INF/tld/utilitytags.tld </taglib-location>
+ </taglib>
+</web-app>
+<%@ taglib uri="http://www.ecom.com/taglibs/utilitytags" prefix="h" %> 
+. . .
+<h:hello/>
+. . .
+
+J S T L
+JSTL
+Depuis la version JSP 1.2
+Spécification développé par le groupe d’experts JSR 52
+Collection de Tag Librairies personnalisées qui implémentent la plus part des fonctions communes aux pages web:
+Itérations et conditions (core)
+Formatage des données (format)
+Manipulation de XML (xml)
+Accès au bases de données (sql)
+Utilisation du langage EL (Expression Language)
+Avantages
+Code simple, lisible et facile à maintenir
+Le concepteur de page est libéré de code Java
+Évite au développeur d’écrire à chaque fois les fonctions de bases.
+	
+
+J S T L
+Spécification de EL sous l’autorité du groupe d’expert JSR-152 pour JSP 1.3
+
+Le JSR-52 et JSR-152 travail ensemble sur la spécification de l’Expression Language
+
+Deux version: une pour JSTL et l’autre pour JSP 1.3
+
+En JSTL il est utilisé uniquement dans la valeur d’un attribut:
+		<prefix:tag attr1="${ expr }" />
+
+Il est invoqué exclusivement via la syntaxe ${ expr }
+
+EL: Expression Language
+
+J S T L
+Un identificateur dans EL fait référence à une variable retourné par l’appel de pageContext.findAttribute(identificateur) et qui est dans la portée (scope): page, request, session ou application.
+	${ var } = pageContext.getAttribute("var")
+
+Objets implicites:
+pageScope, requestScope, sessionScope, applicationScope
+
+Accès au paramètres d’une requête HTTP via param (objet de type Map) et paramValue
+
+Un objet implicite pageContext qui donne accès aux propriétés associés au contexte de la page JSP
+
+EL: Expression Languageobjets prédéfinies
+
+J S T L
+Opérateurs relationnels (== != < > <= >=), arithmétiques (+ - * / %)    et logiques (&& || !)
+
+L’opérateur [ ] pour accéder au objets de type Map, Array et List
+	
+	Ex: param["p1"]     	 param.get("p1")		 
+		  
+		
+EL: Expression LanguageOpérateurs
+
+J S T L
+
+
+Fonction de base
+Fonction de teste
+Fonction itérative
+SQL
+XML
+
+		
+JSTLcore tag library
+
+J S T L
+Fonctions de base
+Affichage
+<c: out  value=" expression " />    <%=  expression %>
+Affectation
+<c:set  value="value" var=" varName " scope=" application " />
+<% pageContext.setAttribute("varName",value,SCOPE) %>
+Exception java.lang.Throwable
+<c:catch [var="varName"] >
+	actions a surveiller
+</c:catch>
+
+<% try{
+	actions à surveiller
+	}catch(Throwable varName){}
+%>
+JSTLcore tag library
+
+J S T L
+Les conditions
+1- simple   if(cond)
+ 
+
+
+2-choix multiple   if/else
+
+JSTLcore tag library
+<% if(user.visitCount == 1){ %>
+<%= "Prmière visite.Bienvenue" %>
+<% } %>
+<c:if test="${user.visitCount = = 1}">
+  <c:out value="Première visite.Bienvenue!" />
+</c:if>
+<c:choose>
+<c:when test="${count == 0}”>
+   Pas de visite!
+</c:when>
+<c:otherwise>
+<c:out value="${count}"/> visiteurs.
+</c:otherwise>
+</c:choose>
+<% If(count == 0){ %>
+<%= Votre compte est vide %>
+<% }else{ %>
+<%= count+"visiteurs" %>
+<% } %>
+
+J S T L
+Les itérations avec la boucle for/while
+en JSP
+
+
+JSTLcore tag library
+<%@page import="java.util.*" %>
+. . . .
+<% Member user = null;
+   Collection users = session.getAttribute("members");
+   Iterator it =  users.iterator();
+   while(it.hasNext()){
+	user = (Member) it.next();
+%>
+<%= "nom:  "+user.getName() %>
+<% } %>
+
+J S T L
+
+Les itérations avec la boucle for/while
+forEach
+
+
+
+
+
+
+
+
+
+
+
+JSTLcore tag library
+<c:forEach var=”user” items=”sessionScope.members” [begin] [end] [step]>
+ <c:out value="nom:  ${user.name}" />
+</c:forEach>
+
+
+J S T L
+SQL
+
+Faire des requêtes
+Accès au résultat simplifié
+Faire des mises à jour
+Faire des transactions
+JSTLcore tag library
+
+J S T L
+Data source est de type Javax.sql.DataSource
+
+<sql:query var="customers" dataSource="${dataSource}">
+SELECT * FROM customers
+WHERE country = ’Algeria’
+ORDER BY lastname
+</sql:query>
+
+<table>
+<c:forEach var="row" items="${customers.rows}">
+<tr>
+<td><c:out value="${row.lastName}"/></td>
+<td><c:out value="${row.firstName}"/></td>
+<td><c:out value="${row.address}"/></td>
+</tr>
+</c:forEach>
+</table>
+
+JSTLSQL
+
+J S T L
+Data source est de type Javax.sql.DataSource
+
+<%@page import="java.sql.*,javax.sql.*" %>
+<% Connection con = dataSource.getConnection;
+   Statement stm = con.createStatement();
+   ResultSet customers = stm.executeQuery("SELECT * FROM customers
+					WHERE country = ’Algeria’
+						ORDER BY lastname");
+%>
+<table>
+<% while(customers.next()){ %>
+<tr>
+	<td><%= customers.getString("lastName") %></td>
+	<td><%= customers.getString("lastName") %></td>
+	<td><%= customers.getString("lastName") %></td>
+</tr>
+<% } %>
+</table>
+JSTLSQL
+
+J S T L
+<sql:transaction [dataSource=”dataSource”] 
+[isolation=isolationLevel]>
+
+<sql:query> and <sql:update> statements
+
+</sql:transaction>
+
+isolationLevel ::= "read_committed"
+| "read_uncommitted"
+| "repeatable_read"
+| "serializable"
+
+JSTLSQL
+Les transactions
+
+J S T L
+JSTLXML
+
+
+<x:parse> parse un document XML par sa DTD
+
+<x:out> Évalue une expression Xpath et affiche le résultat
+
+<x:transform> applique les transformations d’une feuille de style XSLT sur un document XML
+
+
+
+J S T L
+JSTLlookup EJB Tag
+Définition d’un tag pour faire le lookup sur un EJB
+En JSP plusieurs instructions complexes
+Le concepteur de page doit connaître java, les EJB et le mécanisme de lookup.
+<%@page import="javax.naming.*,java.rmi.*,java.ejb.*" %>
+<%@taglib prefix="ejb" uri="" %>
+<% Context c = new InitialContext();
+   Object obj = c.lookup("java:comp/env/ejb/Admin");
+   EJBHome home = PortableRemoteObject.narrow(obj,EJBHome.class);
+%>
+
+J S T L
+JSTLlookup EJB Tag
+
+Entrée: nom JNDI de l’EJB + nom de la class Home
+
+Sortie: Objet de type EJBHome sauvegardé dans session
+	
+<ejb:lookup	var="varName"
+	ejbname="JndiName"
+	homename="HomeClassName" />
+
+J S T L
+JSTLlookup EJB Tag : EJBLookupTag.java
+ public int doStartTag() throws JspException {
+        Context c;
+        try {
+            c = new InitialContext();
+            Object obj = c.lookup("java:comp/env/ejb/"+ejbname);
+		   home = (EJBHome) PortableRemoteObject.narrow(obj,homename);
+		   if(home == null)
+                throw new JspException("[EJBLookupTag]Unable to lookup: 						"+ejbname); 
+            
+        } catch (NamingException ne) {
+            throw new JspException("[EJBLookupTag] Caused by: 							"+ne.getMessage());
+        }
+        return SKIP_BODY;
+    }
+    
+public int doEndTag() throws JspException {
+        
+        pageContext.setAttribute(home, homeClass, PageContext.PAGE_SCOPE);
+        
+        return EVAL_PAGE;
+    }
+	
+
+J S T L
+JSTLlookup EJB Tag: ejb.tld
+<taglib>
+ ….  
+  <tag>
+    <name>lookup</name>
+    <tag-class>com.ecom.jstl.EJBLookupTag</tag-class>
+    <body-content>EMPTY</body-content>
+	<attribute>
+        <name>var</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>ejbname</name>
+        <required>true</required>
+        <rtexprvalue>true</rtexprvalue>
+    </attribute>
+    <attribute>
+        <name>homename</name>
+        <required>true</required>
+        <rtexprvalue>false</rtexprvalue>
+    </attribute>
+  </tag>
+</taglib>
+	
+
+J S T L
+JSTLlookup EJB Tag : web.xml et index.jsp
+
+
+<web-app>
+<taglib>
+   <taglib-uri>/jstl-ejb-taglib</taglib-uri>
+   <taglib-location>/WEB-INF/ejb.tld</taglib-location>
+</taglib>
+</web-app>
+
+
+
+<@taglib prfix="ejb" uri="/jstl-ejb-taglib" %>
+. . .
+<ejb:lookup var="admin" ejbname="Admin" homename="AdminHome" />
+
+J S T L
+JSTLQuestions?
+
+Questions?
+
+J S T L
+JSTLDemo
+
+La démo

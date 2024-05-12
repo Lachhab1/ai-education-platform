@@ -1,0 +1,208 @@
+                            Résumé des TPs de DBA
+
+
+1- SHOW parameter SPFILE;
+       Cette requête renvoie le chemin de fichier de paramètre spfile utilisé, s’il
+ne renvoie rien, l’instance est lancée en utilisant un PFILE.
+
+
+2- create pfile=’chemin de fichier pfile’ from spfile;
+       Cette commande nous permet de créer un fichier pfile à partir d’un
+fichier spfile
+       !! si on ne spécifie pas le chemin de pfile, un fichier pfile sera créé
+automatiquement.
+
+
+3- create spfile=’chemin de fichier spfile’ from pfile=’chemin de
+fichier pfile’;
+       Cette commande nous permet de créer un fichier spfile à partir d’un
+fichier pfile
+
+
+4- SHOW parameter processes
+       Cette commande affiche le nombre max de processus connectés .
+
+
+5- alter system set processes = nombre_max_que_vous_voulez;
+       Cette commande nous permet de changer le nombre max des processus
+utilisés,
+       Exemple : alter system set processes = 200 scope = spfile;
+!! scope = spfile signifie que les changement vont être au niveau du système et
+quand on redemarre l’instance le nombre maximal des processus va être 200
+!! si on utilise scope = memory, les changement vont être appliquée juste au
+niveau de la mémoire et quand on redemarre l’instance le nombre maximum de
+processus reviendra à la valeur qui était avant .
+
+
+6- SHOW con_name;
+       Affiche le nom de la CDB utilisé
+
+
+7- SHOW pdbs;
+       Affiche la liste des pdbs intégrés dans la CDB utilisé
+8- alter session set container = nom;
+      Nous permet de changer le conteneur,
+      Exemple : si on est dans un CDB et on veut basculer vers un pdb qui
+s’appelle pdborcl, on utilise la commande :
+             ALTER session set container = pdborcl;
+
+
+
+9- SELECT instance_name from v$instance;
+      Affiche le nom de l’instance
+
+
+10- les méthodes pour identifier le nombre et le nom de chaque
+fichier de contrôle :
+
+      a- SELECT name from v$controlfile;
+      b- SHOW parameter control_files;
+      c- à travers le fichier PFILE ;
+
+
+11- les étapes de multiplexage d’un fichier de contrôle :
+Exemple : ajouter un fichier de contrôle ctrl03.ctl qui existe dans : /home/dba
+      a- modifiez le spfile :
+ALTER system set control_files =
+  //les chemins des fichiers de contrôle qui existe déja ,
+      ‘/home/dba/ctrl03.ctl’
+      scope=spfile;
+      b- arrêtez la base de données
+SHUTDOWN immediate
+      c- créez le fichier de contrôle physiquement
+      d- démarrez la BD
+
+
+!! si nous utilisons un PFILE on peut tout simplement arrêtez la BD,
+créez le fichier physiquement et après ajouter le chemin manuellement
+dans le PFILE et démarrez la BD
+
+
+12- ajout d’un groupe dans les fichiers de journalisation :
+Exemple : ajouter un groupe 3 qui contient deux membres log3a.log et
+log3b.log qui existent dans le chemin /home/dba/log avec un taille de 3M
+      ALTER DATABASE ADD LOGFILE GROUP 3
+             (‘/home/dba/log/log3a.rdo’,
+             ‘/home/dba/log/log3b.rdo’)
+      SIZE 3M;
+
+
+12- ajout d’un membre dans les fichiers de journalisation :
+
+Exemple : ajouter un membre au groupe 3 qui s’appelle log3c.log qui existent
+dans le chemin /home/dba/log
+      ALTER DATABASE ADD LOGFILE MEMBER
+             ‘/home/dba/log/log3c.rdo’ TO GROUP 3;
+
+
+13- suppression d’un groupe des fichiers de journalisations :
+
+Exemple : supprimer le groupe 3
+ALTER DATABASE DROP LOGILE GROUP 3;
+
+
+!! si le groupe 3 est utilisé par la Base de données on doit switcher vers un autre
+groupe en utilisant la commande :
+
+
+      ALTER SYSTEM SWITCH LOGFILE;
+
+
+13- suppression d’un membre des fichiers de journalisations :
+
+Exemple : supprimer le membre log3c.rdo
+ALTER DATABASE DROP LOGILE MEMBER
+‘/home/dba/log/log3c.rdo’;
+
+
+!! si le membre log3c.rdo est le seul membre dans le groupe, on peut pas le
+supprimer sauf si on supprime le groupe totalement
+14- activer et désactiver le mode archivelog :
+
+       a- activer :
+              startup mount;
+              alter database archivelog;
+              alter database open;
+       b- désactiver:
+              startup mount;
+              alter database noarchivelog;
+              alter database open;
+
+
+15- les tablespaces :
+
+Exemple : créez un tablespace permanent, temporaire,undo avec le nom FSBM
+qui contient un fichier de données file1.dbf qui existe dans /home/dba/dbf
+avec un taille de 5M et avec la possibilité d’extension par tranche de 2M avec
+une limite de 50M
+
+
+Permanent
+       create tablespace FSBM
+       datafile ‘/home/dba/dbf/file1.dbf’
+       size 5M autoextend on next 2m maxsize 50M
+
+
+
+temporaire
+       create TEMPORARY tablespace FSBM
+       datafile ‘/home/dba/dbf/file1.dbf’
+       size 5M autoextend on next 2m maxsize 50M
+
+
+Undo
+       create UNDO tablespace FSBM
+       datafile ‘/home/dba/dbf/file1.dbf’
+       size 5M autoextend on next 2m maxsize 50M
+
+
+!!changer la taille de fichier de données file1.dbf en 30M
+       alter database datafile ‘/home/dba/dbf/file1.dbf’ RESIZE 30M
+!!changer le tablespace par défaut de la BD en SMI
+      alter database default tablespace SMI
+
+
+!!ajouter un fichier de données au tablesapce SMI file2.dbf avec taille 10M
+      alter tablespace SMI
+      add datafile ‘/home/dba/dbf/file2.dbf’ size 10M;
+
+
+16- Gestion des utilisateur :
+
+
+Exemple :
+      a- créer un utilisateur TEST identifié par SMI en lui affectant le
+tablespace par défaut USERS et le tablespace temporaire TEMP.
+      b- créer un role etudiant avec privilèges de : create session,
+connect, create table, create user
+      c- affecter ce role à l’utilisateur TEST avec la possibilité que TEST
+peut l’affecter aux autres utilisateurs
+      d- retirer ce role de l’utilisateur TEST
+      e- supprimer l’utilisateur TEST
+
+
+      a
+            create user c##_TEST
+            Identified by SMI
+            Default tablespace USERS
+            Temporary tablespace temp;
+      b
+            Create role etudiant;
+            Grant create session, connect, create table, create user
+            to etudiant;
+
+
+      c
+            grant etudiant to TEST with admin option;
+      d
+            revoke etudiant from TEST;
+     e
+           drop user TEST;
+
+
+
+!! pour changer le mdp d’un utilisateur on utiliser
+     Alter user nom identifier by nouveau_mdp
+     !! si on veut lui donner la main de changer le mdp lors de la
+réinitialisation de son mdp on doit ajouter : password expire à la fin .
+

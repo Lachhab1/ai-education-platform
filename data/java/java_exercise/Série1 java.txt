@@ -1,0 +1,58 @@
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Java : Série 1
+Exercice 0
+Écrire une classe Serie1 disposant des méthodes statiques suivantes :
+1- saisieTableau qui fournit en retour un tableau des n nombres entiers, la
+valeur de n étant saisie par l’utilisateur.
+2- afficheTableau destinée à afficher les valeurs d’un tableau reçu en
+argument.
+Exercice 1
+Récrire le programme précédant, en prévoyant une méthode statique
+« Minimum » qui fournit en retour le minimum des valeurs d’un tableau des
+entiers reçu en argument.
+Écrire un petit programme d’essai en utilisant une méthode d’affichage du
+minimum d’un tableau des entiers.
+
+Exercice 2
+Récrire le programme précédant, en prévoyant une méthode statique
+« Occurrences » qui fournit en retour le nombre d’occurrences, dans un
+tableau, d’un nombre reçu en argument.
+Écrire un petit programme d’essai en utilisant une méthode d’affichage
+d’occurence.
+Exercice 3
+Récrire le programme précédant, en prévoyant une méthode statique
+« tabImpairs » qui compte le nombre des éléments impairs dans un tableau et
+qui fournit en retour un tableau des éléments impairs trouvés.
+Écrire un petit programme d’essai en utilisant une méthode d’affichage du
+tableau des impaires.
+
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Exercice 4
+Récrire le programme précédant, en prévoyant une méthode statique
+« chercher » qui fournit en retour la position d’un nombre recherché dans un
+tableau.
+Ecrire un petit programme d’essai en utilisant une méthode d’affichage de la
+position du nombre recherché.
+Exercice 5
+Récrire le programme précédant, en prévoyant une méthode statique
+« triInsertion » qui permet de trier un tableau.
+Écrire un petit programme d’essai en utilisant une méthode d’affichage du
+tableau trié.
+Exercice 6
+Récrire le programme précédant en prévoyant une méthode statique « main »
+qui permet d’exécuter chaque programme en introduisant le numéro de
+l’exercice.
+
+

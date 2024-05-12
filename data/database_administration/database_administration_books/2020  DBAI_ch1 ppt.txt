@@ -1,0 +1,460 @@
+Départements des Mathématiques et Informatique
+
+Cours Administration des Bases de
+Données
+DBA1 Oracle12c
+Niveau Licence
+SMI/S6
+
+Année universitaire
+2019 / 2020
+
+Pr . ELFILALI SANAA
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Chapitre 1 :
+Composants de l'architecture Oracle
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Composants de l'architecture Oracle
+
+1-3
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+objetives
+
+1-4
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database innovation
+
+CDB
+
+Non CDB
+
+1-5
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Entreprise Cloud Computing
+
+1-6
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Course Examples : HR Sample Schema
+
+1-7
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Exploring Oracle Database Architecture
+
+1-8
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Objectives
+
+1-9
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Server Architecture : Overview
+
+1-10
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Instance Configuraions
+
+Haute disponibilité
+Distribution des charges
+
+1-11
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Connecting to the Database Instance
+
+1-12
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Database Memory Structures
+Pile qui contient les
+resultas retournés
+
+1-13
+
+Zone qui contients les
+nformations liés à
+l’utilisateur
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Shared Pool
+Is a portion of the SGA contains :
+•
+•
+•
+•
+•
+
+Library cache
+Data dictionary cache
+Server result cache
+Shared sql area
+Reserved pool (CONSOMATION DE LA
+MÉMOIRE CONTIGUE )
+
+RMAN
+
+System Global Area (SGA)
+
+1-14
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Buffer Cache
+
+Souvent utilisé
+Rarement utilisé
+Utilisé normalement
+(K : Kilo octet )
+
+1-15
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Redo Log Buffer
+
+1-16
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Large Pool
+
+1-17
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Java pool
+
+1-18
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Streams Pool
+
+1-19
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Program Global Area (PGA)
+
+1-20
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+In-Memory Column Store : Introduction
+
+1-21
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+In-Memory Column Store : Overview
+
+1-22
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Full Database In-memory Caching
+Traditional Buffer Cache Usage
+DB_CACHE_SIZE= 10g
+
+Scans + OLTP
+
+LRU
+algo
+
+Full Database In-Memory Caching
+Entire database loaded into the buffer
+cache:
+• Huge performance benefits
+• Two modes
+‒ Full Database Caching
+‒ Force Full Database Caching
+
+Loaded in buffer cache
+if table size < small %
+of buffer cache size
+
+Table HR.EMPLOYEES
+
+No
+LRU
+
+SYSTEM
+
+EXAMPLE
+
+USERS
+
+Table SH.SALES
+
+1-23
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-24
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : b
+
+1-25
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-26
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : c
+
+1-27
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Architecture
+
+1-28
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Architecture
+
+•
+
+User process
+– Is the application or tool that connects to the Oracle database
+
+•
+
+Database processes
+– Server process: Connects to the Oracle instance and is started when a
+user establishes a session
+– Background processes: Are started when an Oracle instance is started
+
+•
+
+Daemon / Application processes
+– Networking listeners
+– Grid Infrastructure daemons
+
+1-29
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Structures
+
+Instances (ASM and Database separate)
+System Global Area (SGA)
+PGA
+Server
+process
+
+Background processes
+Required:
+
+DBWn
+
+CKPT
+
+RECO
+
+Listener
+
+Optional:
+
+ARCn
+
+LGWR
+
+LREG
+
+SMON
+
+MMON
+
+PMON
+
+MMNL
+
+Others
+
+Others
+
+Grid Infrastructure Processes
+(ASM and Oracle Restart)
+User
+process
+
+ohas
+
+orarootagent
+
+1-30
+
+ocssd
+
+diskmon
+
+oraagen
+t
+
+cssdagen
+t
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Writer Process (DBWn)
+
+1-31
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Log Writer Process (LGWR)
+
+1-32
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Checkpoint Process (CKPT)
+
+1-33
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+System Monitor Process (SMON)
+
+1-34
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Process Monitor Process (PMON)
+
+1-35
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Recover Process (RECO)
+
+1-36
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Listener Registration Process (LREG)
+
+1-37
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Archiver Processes (ARCn)
+
+1-38
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Database Storage Architecture
+
+1-39
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Logical and Physical Database Structures
+
+1-40
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Segment, Extents, and Blocks
+
+1-41
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Tablespaces and Data Files
+
+1-42
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+SYSTEM and SYSAUX Tablespaces
+
+1-43
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Oracle Container Database : Introduction
+
+1-44
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Multitenant Architecture
+
+1-45
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Automatic Storage Management
+
+1-46
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+ASM Storage Components
+
+1-47
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Interacting with an Oracle Database :
+Memory, Processes, and Storage
+
+1-48
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+
+1-49
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Quiz
+• Answer : b
+
+1-50
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Summary
+
+1-51
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+

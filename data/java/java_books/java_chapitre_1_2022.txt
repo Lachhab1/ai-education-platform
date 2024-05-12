@@ -1,0 +1,444 @@
+Cours Java
+Dr. Abdessamad Belangour
+belangour@gmail.com
+
+1
+
+Disclaimer : Ce support de cours est fourni à l’étudiant à titre
+personnel. Toute utilisation hors de ce cadre, sans l’aval de
+l’auteur, est une atteinte à la propriété intellectuelle.
+
+Java - Dr A. Belangour
+
+2
+
+2
+
+1
+
+Chapitre 1
+Vue d’ensemble de la plateforme Java
+
+3
+
+Introduction
+ Java est une plateforme de développement logiciel
+créée par la société SUN Microsystems en 1995.
+ Sun a été rachetée par Oracle en 2009.
+ Aujourd'hui la technologie Java est présente partout :
+
+
+
+
+
+
+
+
+Ordinateurs /Serveurs
+Smart TV
+Smart phones,
+Cartes SIM
+Lecteurs Blu-Ray
+Voitures
+…
+
+Java - Dr A. Belangour
+
+4
+
+4
+
+2
+
+Java : les éditions
+ Les principales éditions de Java sont:
+
+
+Java ME : Java Micro Edition
+ Prévu pour le développement d'applications embarquées (
+assistants personnels et terminaux mobiles..)
+
+
+
+Java SE : Java Standard Edition
+ Destiné au développement d'applications pour ordinateurs
+personnels ;
+
+
+
+Java EE : Java Entreprise Edition
+ Destiné à un usage professionnel avec la mise en œuvre de
+serveurs (serveurs d’applications et serveurs Web)
+
+Java - Dr A. Belangour
+
+5
+
+5
+
+Plateforme Java
+ La plateforme Java a deux composants :
+
+
+La Machine Virtuelle Java (Java Virtual Machine) :
+programme permettant d'interpréter et d'exécuter le
+bytecode Java (proche du langage machine).
+
+
+
+L’API Java (Java Application Programming Interface):
+ensemble de bibliothèques contenant des classes et
+interfaces organisées en Packages.
+
+Java - Dr A. Belangour
+
+6
+
+6
+
+3
+
+Plateforme Java
+
+Java - Dr A. Belangour
+
+7
+
+7
+
+Java : de l’édition à l’exécution (1)
+
+
+Code source : fichier texte avec extension .java.
+
+
+
+Compilation avec javac: fichier avec extension .class
+
+
+Contenu : code intermédiaire bytecode indépendant de toutes
+plateformes.
+
+
+
+Exécution avec java:
+
+
+bytecode est traduit en code natif, par la machine virtuelle java, selon
+le système d’exploitation.
+
+Java - Dr A. Belangour
+
+8
+
+8
+
+4
+
+Java : de l’édition à l’exécution (1)
+Code source
+
+Utilisateur
+
+Compilation (commande javac)
+Byte Code
+Exécution (commande java)
+
+JVM
+
+Compilation automatique
+
+Code natif Win32
+
+…
+
+Code natif MacOS
+Code natif Linux
+Java - Dr A. Belangour
+
+9
+
+9
+
+Java : de l’édition à l’exécution (2)
+ Remarque :
+
+
+La JVM est contenue dans un Framework d’exécution
+appelé JRE (Java Runtime Environment).
+
+
+
+Elle est disponible pour plusieurs systèmes d’exploitation
+(Microsoft Windows, Solaris OS, Linux, ou Mac OS)
+
+Java - Dr A. Belangour
+
+10
+
+10
+
+5
+
+Java SE Development Kit
+ Pour exécuter une application développée avec Java,
+il faut télécharger le JRE.
+ Cependant, pour le développeurs il faut télécharger le
+JDK (Java Developper Kit).
+ Le JDK contient le JRE + outils pour le développeur
+ Ilest disponible gratuitement en téléchargement pour
+les principaux systèmes d'exploitation.
+
+Java - Dr A. Belangour
+
+11
+
+11
+
+Java SE Development Kit
+
+
+Le JDK SE est composé d'un certain nombre d'outils dont
+voici les principaux :
+
+
+Javac : C'est le compilateur Java.
+
+
+
+Java : Exécute le ou les fichiers compilés par Javac.
+
+
+
+AppletViewer : Ce programme permet d'exécuter une Applet
+Java sans nécessité d'utiliser un navigateur web.
+
+
+
+Javadoc : Outil permettant de construire, à partir des
+commentaires insérés dans des sources Java, une
+documentation HTML.
+
+
+
+Le JDK contient aussi le JRE
+
+Java - Dr A. Belangour
+
+12
+
+12
+
+6
+
+Java SE Development Kit
+ Relation entre JDK, JRE et JVM
+
+JDK
+
+Java, javac, jdb, appletviewer,
+javah, javaw, jar, rmi…
+
+JRE
+
+Class Loader, Byte Code Verifier
+Java API, Runtime Libraries…
+
+JVM
+
+Java Interpreter JIT Garbage Collector
+Thread sync…
+
+Java - Dr A. Belangour
+
+13
+
+13
+
+Java : l’installation(1)
+
+Java - Dr A. Belangour
+
+14
+
+14
+
+7
+
+Java : l’installation(2)
+
+Java - Dr A. Belangour
+
+15
+
+15
+
+Java : l’installation(3)
+
+Java - Dr A. Belangour
+
+16
+
+16
+
+8
+
+Structure du JDK
+ Le JDK a une structure comme :
+
+Java - Dr A. Belangour
+
+17
+
+17
+
+Structure du JDK
+ Les outils du JDK comme le java.exe ou le javac.exe
+sont logés dans le répertoire bin
+
+Java - Dr A. Belangour
+
+18
+
+18
+
+9
+
+Variables d’environnements
+ Sous DOS : Afin de lancer la compilation d’un
+programme Java à partir de n’importe quel dossier il
+faut indiquer au système d’exploitation ou se trouve le
+compilateur.
+ Cela se fait grâce à la variable d’environnement PATH
+ PATH est accessible par le chemin suivant :
+
+
+« Menu Démarrer > Panneau de configuration >
+Système », cliquez sur l'onglet « Paramètres Système
+Avancés » puis sur le bouton "Variables d'environnement".
+
+Java - Dr A. Belangour
+
+19
+
+19
+
+Variables d’environnements
+
+Java - Dr A. Belangour
+
+20
+
+20
+
+10
+
+Variables d’environnements
+
+Java - Dr A. Belangour
+
+21
+
+21
+
+Variables d’environnements
+ Si la variable PATH existe
+alors il faut la modifier et
+ajouter le chemin du dossier
+« bin » jdk suivi de « ; »
+ Sinon il faut la créer.
+ Le chemin du bin est de la
+forme « C:\Program
+Files\Java\jdk-9.0.1\bin »
+
+Java - Dr A. Belangour
+
+22
+
+22
+
+11
+
+Variables d’environnements
+ Remarques :
+
+
+Les IDE tel que Netbeans, Eclipse et Jcreator n’ont pas
+besoin du PATH car à l’installation ils cherchent le chemin
+d’installation Java automatiquement !
+
+
+
+Lorsqu’un programme Java a besoin d’une bibliothèque
+particulière, alors il faut ajouter la variable : ClassPath
+
+
+
+Cette variable doit pointer vers la bibliothèque(s) ou la
+classe(s) requise par le programme Java.
+
+Java - Dr A. Belangour
+
+23
+
+23
+
+Premier programme Java !
+public class Bonjour {
+public static void main (String args[]) {
+System.out.println("Bonjour tout le monde !"); }
+}
+
+1.
+
+Écrire le code source dans un éditeur de texte
+
+2.
+
+L'enregistrer dans le fichier nommé « Bonjour.java »
+
+3.
+
+Le compiler par « javac Bonjour.java », ce qui crée le fichier
+« Bonjour.class »
+
+4.
+
+L'exécuter par la commande : « java Bonjour » (sans
+l'extension .class)
+
+Java - Dr A. Belangour
+
+24
+
+24
+
+12
+
+Premier programme Java !
+ Attention !
+1.
+
+Le nom de la classe et du fichier doivent être identiques.
+
+2.
+
+Java est sensible à la casse Bonjour ≠ bonjour
+
+Java - Dr A. Belangour
+
+25
+
+25
+
+Java SE API Documentation
+
+Java - Dr A. Belangour
+
+26
+
+26
+
+13
+
+

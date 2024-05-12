@@ -1,0 +1,36 @@
+[
+  {
+    "d_name": "Web Development",
+    "name": "web_developement",
+    "image_url": "https://via.placeholder.com/300x200?text=Web+Development",
+    "files": [
+      {
+        "name": "txt.txt"
+      },
+      {
+        "name": "txt.txt",
+        "path": "uploads/txt.txt"
+      },
+      {
+        "name": "txt.txt",
+        "path": "uploads/txt.txt"
+      },
+      {
+        "name": "txt.txt",
+        "path": "uploads/txt.txt"
+      }
+    ]
+  },
+  {
+    "name": "database_administration",
+    "d-name": "Database Administration",
+    "image_url": "https://via.placeholder.com/300x200?text=Database+Administration",
+    "files": []
+  },
+  {
+    "name": "java",
+    "d_name": "Java",
+    "image_url": "https://via.placeholder.com/300x200?text=Java",
+    "files": []
+  }
+]

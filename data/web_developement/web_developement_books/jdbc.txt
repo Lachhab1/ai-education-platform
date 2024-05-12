@@ -1,0 +1,378 @@
+Chapitre 13
+
+
+             JDBC
+
+
+
+
+Introduction
+ JDBC (Java DataBase Connector) est une API chargé
+     de communiquer avec les bases de données en Java.
+
+ Les classes et interfaces de l’API JDBC figurent dans
+     le package java.sql : import java.sql.*;
+
+ JDBC peut être utilisé pour accéder à n'importe quelle
+     base de données à partir de:
+            Simple application Java
+
+            Une servlet
+
+            Page JSP, …
+
+
+
+03/05/2016                  cours JEE - Dr. Abdessamad Belangour   627
+
+
+
+
+                                                                         1
+Travail avec une base de données
+ JDBC permet de travailler avec les base de données
+     de la même façon quelque soit leur fournisseur
+     (Oracle, SQL Server, MySQL, PostgreSQL,…).
+
+ Il suffit de télécharger la bibliothèque qui assure la
+     communication entre Java et cette base de donnée.
+
+ Cette bibliothèque s'appelle Driver ou Pilote ou
+     Connecteur.
+
+ Elle figure sur le site du fournisseur du SGBDR utilisé.
+
+
+
+03/05/2016             cours JEE - Dr. Abdessamad Belangour   628
+
+
+
+
+Chargement du pilote
+ Dans ce cours nous allons prendre MySQL comme
+     exemple.
+
+ La version du Driver MySQL pour Java que nous allons
+     utiliser se nomme " mysql-connector-java-5.0.4-
+     bin.jar"
+
+ Pour se connecter à une base de données il faut
+     charger son pilote.
+
+ La documentation de la Bdd utilisée fournit le nom de
+     la classe à utiliser.
+
+
+                             Java - Dr A. Belangour           629
+
+
+
+
+                                                                    2
+Chargement du pilote
+ Le chargement se fait comme suit :
+     Class.forName("nom_classe_acces_bdd");
+
+     ou
+
+     Class.forName("nom_classe_acces_bdd").newInstance();
+
+ Exemple :
+            Dans le cas de la Bdd MySQL, ce chargement est comme
+             suit : Class.forName(com.mysql.jdbc.Driver)
+
+ Une fois chargée, la classe JDBC qui se nomme
+     DriverManager prend en charge le driver pour
+     communiquer avec la base de donnée.
+
+03/05/2016                   cours JEE - Dr. Abdessamad Belangour           630
+
+
+
+
+Classes de l'API JDBC
+ Les classes et interfaces les plus usuelles sont les
+     suivantes:
+            DriverManager (classe): charge et configure le driver de la
+             base de données.
+
+            Connection (interface): réalise la connexion et
+             l'authentification à la base de données.
+
+            Statement (interface): contient la requête SQL et la
+             transmet à la base de données.
+
+            PreparedStatement (interface): représente une requête
+             paramétrée
+
+            ResultSet (interface): représente les résultat d'une requête
+             de sélection.
+03/05/2016                   cours JEE - Dr. Abdessamad Belangour           631
+
+
+
+
+                                                                                  3
+Etablissement de la connexion
+ Pour se connecter à une base de données, il faut
+     disposer d'un objet Connection créé grâce au
+     DriverManager en lui passant :
+            l'URL de la base à accéder , Le login, Le mot de passe
+
+ Exemple avec MySQL:
+            String url="jdbc:mysql://localhost/mydb";
+
+            String login="root";
+
+            String password="motdepasse";
+
+            Connection con=DriverManager.getConnection(url,
+             login, password);
+
+03/05/2016                     cours JEE - Dr. Abdessamad Belangour     632
+
+
+
+
+Exécution de requêtes SQL
+ L'interface Statement permet d'envoyer des requêtes
+     SQL à la base de données.
+
+ Un objet Statement est créé grâce à un objet Connection
+     de la façon suivante : Statement st = con.createStatement();
+
+ Il possède deux méthodes :
+            executeUpdate() : Insertion, suppression, mise à jour.
+                int n= st.executeUpdate("INSERT INTO Etudiant VALUES
+                 (3452,'Taha','Ali')");
+
+            executeQuery() : Selection.
+                ResultSet res= stm.executeQuery("SELECT * FROM
+                 Etudiant");
+
+03/05/2016                     cours JEE - Dr. Abdessamad Belangour     633
+
+
+
+
+                                                                              4
+Requêtes avec paramètres
+ L'interface preparedStatement permet d'envoyer
+   des requêtes SQL à la base de données en prenant
+   des paramètres.
+
+ Ces paramètres sont représentés par des points
+   d'interrogation(?) et doivent être spécifiés avant
+   l'exécution.
+
+ Exemple :
+     PreparedStatement p= con.prepareStatement(
+      "select* from Etudiant where cne=? And nom= ? ");
+
+
+                       Java - Dr A. Belangour             634
+
+
+
+
+Requêtes avec paramètres
+  p.setInt(1, 3452345);
+
+  p.setString(2, "Alaoui");
+
+  resultats = p.executeQuery();
+
+
+
+
+                       Java - Dr A. Belangour             635
+
+
+
+
+                                                                5
+Résultat d’une requête de sélection
+ Une requête de sélection retourne un ResultSet
+
+ ResultSet est un ensemble d'enregistrements
+     constitués de colonnes qui contiennent les données.
+
+ Les principales méthodes :
+            next() : se déplace sur le prochain enregistrement :
+             retourne false si la fin est atteinte. Le curseur pointe
+             initialement juste avant le premier enregistrement.
+
+            getInt(int/String) : retourne le contenu de la colonne dont
+             le numéro (resp. le nom) est passé en paramètre sous
+             forme d'entier.
+
+
+03/05/2016                  cours JEE - Dr. Abdessamad Belangour        636
+
+
+
+
+Résultat d’une requête de sélection
+            getFloat(int/String) : retourne le contenu de la colonne
+             sous forme de nombre flottant.
+
+            getDate(int/String) : retourne le contenu de la colonne
+             sous forme de date.
+
+            Close() : ferme le ResultSet
+
+
+
+
+                                 Java - Dr A. Belangour                 637
+
+
+
+
+                                                                              6
+Résultat d’une requête de sélection
+ Exemple :
+ResultSet res= st.executeQuery("SELECT * FROM Etudiant");
+
+while (res.next()) {
+
+    System.out.println("CNE= "+res.getString(1)+" Nom= " +
+
+         res.getString(2)+" Prénom= "+res.getString(3));
+
+}
+
+res.close();
+
+
+
+
+03/05/2016                 cours JEE - Dr. Abdessamad Belangour             638
+
+
+
+
+Exemple complet
+import java.sql.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+      String url="jdbc:mysql://localhost/etudiantsDB";
+
+      String driver = "com.mysql.jdbc.Driver";
+
+      try {
+
+               Class.forName(driver).newInstance();
+
+               Connection con=DriverManager.getConnection(url,"root","");
+
+               Statement st = con.createStatement();
+
+
+
+
+                                Java - Dr A. Belangour                  639
+
+
+
+
+                                                                                  7
+Exemple complet
+             ResultSet res= st.executeQuery("SELECT * FROM Etudiant");
+
+             while (res.next()) {
+
+                 System.out.println("CNE= "+res.getString(1)+" Nom= "
+
+                 +res.getString(2) + " Prénom= "+res.getString(3 ));
+
+             }
+
+             res.close();
+
+             st.close();
+
+             con.close();
+
+         }
+
+
+
+
+                               Java - Dr A. Belangour                   640
+
+
+
+
+Exemple complet
+    catch (Exception e) {
+
+        System.out.println("Erreur : " + e.getMessage() + " source : " +
+
+                                    e.getStackTrace());
+
+    }
+
+}
+
+}
+
+
+
+
+                               Java - Dr A. Belangour                   641
+
+
+
+
+                                                                              8
+Métadonnées sur la base de données
+ Il est possible aussi d’obtenir des informations sur la
+      base de données grâce aux objets suivants :
+             DatabaseMetaData : informations à propos de la base de
+              données : nom des tables, index, version ...
+
+             ResultSetMetaData : informations sur les colonnes (nom
+              et type) d'un ResultSet
+
+
+
+
+03/05/2016                      cours JEE - Dr. Abdessamad Belangour   642
+
+
+
+
+Métadonnées sur la base de données
+ Exemple :
+  try {
+
+          ResultSetMetaData meta= resultats.getMetaData();
+
+          int nbCols = meta.getColumnCount();
+          while (resultats.next()) {
+
+                 for (int i = 1; i <= nbCols; i++)
+
+                 System.out.println(résultats.getString(i) + " ");
+
+          }
+
+       resultats.close();
+
+  }
+
+  catch (SQLException e) { //traitement de l'exception }
+
+
+                                       Java - Dr A. Belangour          643
+
+
+
+
+                                                                             9
+

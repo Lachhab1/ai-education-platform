@@ -1,0 +1,123 @@
+Devoir Java N°1 :
+SMI S6
+Pr. A. Belangour
+Le code suivant fait partie d’une application plus grande de gestion des membres d’une
+enseigne commerciale qui concerne une gestion simplifiée des points de fidélités. Nous avons
+une classe Membre qui hérite d’une classe abstraite User dont l’un des attributs est de type
+Compte. La classe Membre implémente aussi l’interface IMembre.
+Terminer le code manquant sur la feuille de l’examen :
+public class Compte {
+private String login;
+private String password;
+public Compte(String login, String password){
+this.login = …………………………………………………………….……..;
+this.password = ……………………………………..………………………..;
+}
+public Compte(Compte compte){
+this.login = ………………………………….………………………………..;
+this.password = ………………………..……………………………………..;
+}
+// on suppose que les getters & setters sont fournis en cas de besoin
+@Override
+public String toString() {
+return "login=" + login + ", password=" + password ;
+}
+}
+
+public abstract class User {
+private int code;
+private String nom;
+private Compte compte;
+public User(int code, String nom, String login, String password) {
+this.code = code;
+this.nom = nom;
+this.compte = ………………………………………………………………..;
+}
+public User(User user) {
+this.code = user.code;
+this.nom = user.nom;
+this.compte = ………………………………………………………………..;
+}
+// les getters & setters sont fournis
+@Override
+public String toString() {
+return "code=" + code + ", nom=" + nom + ", compte= {" +
+…………………………………………………………….+"}" ;
+}
+
+public interface IMembre {
+public void ajouterPointFidélités(int nombre);
+public void retirerPointFidélités(int nombre) throws PointsFidélitésException;
+public int convertirPFenDH();
+public void afficher();
+}
+
+public class Membre extends User implements IMembre{
+private int pointFidélités;
+private static int totalPointsFidelités=0;//total de tous les membres
+public Membre( int code, String nom, String login, String password,int pointFidélités) {
+………………………………………………….………..……………. ;
+this.pointFidélités = pointFidélités;
+totalPointsFidelités=…………………………………………………….;
+}
+
+@Override
+
+public void ajouterPointFidélités(int nombre){
+…………………………………………………………………………………………. ;
+…………………………………………………………………………………………. ;
+.…………………………………………………………………………………………;
+}
+@Override
+public void retirerPointFidélités(int nombre) throws PointsFidélitésException{
+if (nombre>this.pointFidélités)
+……………………….…………………………………………………………………;
+.…………………………………………………………………………………………;
+.…………………………………………………………………………………………;
+}
+// 15 points est équivalent à 1 DH
+@Override
+public int convertirPFenDH(){
+return pointFidélités/15;
+}
+@Override
+public String toString() {
+return……………………………………………………………………………….…
+………………………………………………………..…………………………;
+}
+@Override
+public void afficher() {
+System.out.println(………………………………………………………….);
+}
+}
+
+public class PointsFidélitésException extends Exception{
+public PointsFidélitésException(String message) {
+…………………………………………………………………………………….. ;
+}
+}
+
+public class Main {
+public static void main(String[] args) {
+IMembre imembre=new Membre(12, "Alaoui", "Al2000", "success4ever", 10);
+imembre.ajouterPointFidélités(20);
+System.out.println("valeur en dirhams des points de fidélités :"
++ imembre.convertirPFenDH());
+imembre.afficher();
+// Appeler la méthode retirerPointFidélités(100) sur imembre puis afficher
+………………………………………………………………………………………………
+.………………………………………………………………………………………………
+………………………………………………………………………………………………
+………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+.………………………………………………………………………………………………
+}
+}
+
+

@@ -1,0 +1,56 @@
+Université Hassan II de Casablanca
+Faculté des Sciences Ben M’Sik
+Casablanca
+
+Année Universitaire 2021-2022
+SMI/Semestre 6
+
+Java : Série 3
+Exercice 1 : Classe, champs, méthodes, instanciation, this, private vs. public.
+1- Créer une classe Point permettant de manipuler un point (coordonnée x , y : private) avec des méthodes suivantes :
+• setX(), setY(), getX(), getY() pour resp. affecter une coordonnée (x ou y) et accéder à sa valeur (x ou y).
+• deplacr () qui permet de déplacer un point d'une longueur sur l'axe des x et des y.
+-
+
+Ecrire un petit programme de test qui crée un point p, lui affecte des coordonnées, affiche ses coordonnées et
+dépalce le point d'une longueur sur l'axe des x et des y.
+
+-
+
+Dans votre programme de test main, essayer d'accéder directement à x, y par la notation p.x et p.y où p est une
+variable Point. Conclusion.
+
+-
+
+Dans la classe Point , mettre x, y public au lieu de private cette fois-ci. Conclusion. (Remettre ensuite x, y privés.)
+
+2- Modifier la définition de la classe Point en introduisant deux méthodes d’accès nommées abscisse et ordonnée fournissant
+respectivement l’abscisse et l’ordonnée d’un point. Adapter la méthode main en conséquence
+
+3- Définir aussi une méthode :
+• maxNorme qui permet de déterminer parmi deux points lequel est le plus éloigné de l’origine et le fournissant en valeur de
+retour. On donnera deux solutions :
+ maxNorme est une méthode statique de Point,
+ maxNorme est une méthode usuelle de Point.
+Quelle est la différence entre les deux méthodes? Quelle serait votre choix, le cas 1 ou 2. ?
+
+Exercice 2 : constructeur
+- Reprendre la classe Point avec deux constructeurs :
+• constructeur sans paramètre : Point () {x=0 ; y=0 ;}
+• constructeur avec paramètre : Point (a,b) {x=a ; y=a ;}
+- Remplacer maintenant le code {x = 0; y = 0;} du constructeur défaut, par {this (0,0);}
+- Rajouter un constructeur avec un seul paramètre (initialisation de l’abscisse) qui affecte ce paramètre à x, et 0 à y.
+- Ecrire le code de ce constructeur de deux façons différentes. Vérifier qu'on peut réécrire le constructeur (défaut) par {this
+(0);} qui fait appel au constructeur public Point(int a) nouvellement ajouté.
+
+Exercice 3 :
+En ajoutant les fonctionnalités nécessaires à la classe Point, réaliser une classe Segment permettant de manipuler des
+segments d’un plan et disposant des méthodes suivantes :
+segment (Point origine, Point extremite)
+segment (double xOr, double yOr, double xExt, double yExt)
+double longueur() ;
+void deplaceOrigine (double dx, double dy)
+void deplaceExtremite (double dx, double dy)
+void affiche().
+
+

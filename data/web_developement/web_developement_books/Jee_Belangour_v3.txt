@@ -1,0 +1,3402 @@
+    Introduction à la plateforme JEE
+
+
+             Dr. Abdessamad Belangour
+
+
+
+
+Plan du cours
+
+
+   Partie   1   :   Survol de la plateforme JEE
+   Partie   2   :   Les Servlets
+   Partie   3   :   Les Java Server Pages (JSP)
+   Partie   4   :   Accès aux bases de données avec JDBC
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour   2
+
+
+
+
+                                                                   1
+    Partie 1 : Survol de la plateforme JEE
+
+
+
+
+    Pourquoi utiliser une plateforme ?
+   Une plateforme est une base générique qui fournit un
+    ensemble de fonctionnalités utiles pour une majorité
+    d’applications.
+   Une plateforme se construit sur la base d’un
+    ensemble de besoins génériques partagés entre
+    plusieurs applications (accès aux bases de données,
+    communication réseaux, etc..)
+   Avantages :
+      Ne pas re-coder des fonctionnalités communes et
+       récurrentes
+      Se concentrer sur les fonctionnalités réelles de l’application
+
+       en cours de développement.
+     Gain de temps et d’argent
+
+20/06/2016           cours JEE - Dr. Abdessamad Belangour               4
+
+
+
+
+                                                                            2
+Java Framework
+   Le Java Framework est composé de trois éditions, destinées à
+    des usages différents :
+        JME : Java Micro Edition est prévu pour le développement
+         d'applications embarquées, notamment sur des PDA (Personal
+         Digital Assistant ) et terminaux mobiles (téléphone portables, …) ;
+        JSE : Java Standard Edition est destiné au développement
+         d'applications pour ordinateurs personnels ;
+        JEE : Java Enterprise Edition, destiné à un usage professionnel
+         avec la mise en œuvre de serveurs.
+   Chaque édition propose un environnement complet pour le
+    développement et l'exécution d'applications basées sur Java et
+   Comprend notamment une machine virtuelle Java (Java virtual
+    machine) ainsi qu'une bibliothèque de classes.
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour                   5
+
+
+
+
+La plateforme JEE
+   JEE (Java Enterprise Edition) est une norme proposée par la
+    société Sun, portée par un consortium de sociétés
+    internationales, visant à définir un standard de développement
+    d'applications d'entreprises multi-niveaux, basées sur des
+    composants.
+   La plateforme JEE désigne l'ensemble constitué des services
+    (API) offerts et de l'infrastructure d'exécution.
+   La norme JEE comprend :
+      Les spécifications du serveur d'application (environnement
+       d'exécution).
+      Des services (au travers d'API) qui sont des extensions Java
+       indépendantes permettant d'offrir en standard un certain nombre
+       de fonctionnalités.
+     Remarque : Sun fournit une implémentation minimale de ces API
+       appelée JEE SDK (JEE Software Development Kit).
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour                   6
+
+
+
+
+                                                                                   3
+Les API de JEE
+   Les API de JEE peuvent se répartir en deux
+    grandes catégories :
+        Les composants
+                Les composants web
+                Les composants métier
+        Les services
+                Les services d'infrastructures
+                Les services de communication
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour   7
+
+
+
+
+Les API de JEE
+   Les composants :
+        Les composants Web : Servlets et JSP (Java
+         Server Pages). Il s'agit de la partie chargée de
+         l'interface avec l'utilisateur (on parle de logique de
+         présentation).
+        Les composants métier : EJB (Enterprise Java
+         Beans). Il s'agit de composants spécifiques
+         chargés des traitements des données propres à un
+         secteur d'activité (on parle de logique métier ou
+         de logique applicative) et de l'interfaçage avec les
+         bases de données.
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour   8
+
+
+
+
+                                                                      4
+Les API de JEE
+   Les services :
+        Les services d'infrastructures :
+                JDBC (Java DataBase Connectivity) est une API d'accès aux
+                 bases de données relationnelles.
+                JNDI (Java Naming and Directory Interface) est une API
+                 d'accès aux services de nommage et aux annuaires
+                 d'entreprises tels que DNS, NIS, LDAP, etc.
+                JTA/JTS (Java Transaction API/Java Transaction Services) est
+                 une API définissant des interfaces standard avec un
+                 gestionnaire de transactions.
+                JCA (JEE Connector Architecture) est une API de connexion au
+                 système d'information de l'entreprise, notamment aux
+                 systèmes dits «Legacy» tels que les ERP.
+                JMX (Java Management Extension) fournit des extensions
+                 permettant de développer des applications web de supervision
+                 d'applications.
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                 9
+
+
+
+
+Les API de JEE
+        Les services de communication :
+                JAAS (Java Authentication and Authorization Service)
+                 est une API de gestion de l'authentification et des droits
+                 d'accès.
+                JavaMail est une API permettant l'envoi de courrier
+                 électronique.
+                JMS (Java Message Service) fournit des fonctionnalités
+                 de communication asynchrone (appelées MOM pour
+                 Middleware Object Message) entre applications.
+                RMI-IIOP (Remote Method Invocation Over Internet
+                 Inter-ORB Protocol) est une API permettant la
+                 communication synchrone entre objets.
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour               10
+
+
+
+
+                                                                                    5
+               L'architecture JEE
+                  L'architecture JEE permet ainsi de séparer :
+                       La couche présentation, correspondant à
+                        l'interface homme-machine (IHM),
+                       La couche métier contenant l'essentiel des
+                        traitements de données en se basant dans la
+                        mesure du possible sur des API existantes,
+                       La couche de données correspondant aux
+                        informations de l'entreprise stockées dans des :
+                                Fichiers,
+                                Bases de données relationnelles ou XML,
+                                Annuaires d'entreprise
+                                Systèmes d'information complexes (ERP par exemple).
+
+               20/06/2016                  cours JEE - Dr. Abdessamad Belangour                       11
+
+
+
+
+               L'architecture JEE
+
+          Présentation                                 Métier                       Données
+             (IHM)
+                                                                   APIs
+Client lourd                                                         …
+                                                                   JNDI               Annuaire
+                        Conteneur de                 EJB
+                          servlets                               Java Mail
+                                                                   JAAS
+                                  JSP                  EJB
+                                                                   JDBC
+                                                                                  Bdd relationnelle
+                                                 EJB                JTA
+                                Servlets                            JCA
+Clients légers
+                                                                     …
+                            Serveur                                                    Système
+                             Web                          Serveur                   d’information
+                                                        d’application                   (ERP)
+
+
+               20/06/2016                  cours JEE - Dr. Abdessamad Belangour                       12
+
+
+
+
+                                                                                                           6
+Types de clients
+   Client lourd (en anglais fat client ou heavy client) : désigne une
+    application cliente graphique exécutée sur le système d'exploitation de
+    l'utilisateur. Un client lourd possède généralement des capacités de
+    traitement évoluées et peut posséder une interface graphique
+    sophistiquée.
+   Client léger (en anglais thin client) : désigne une application
+    accessible via une interface web (en HTML) consultable à l'aide d'un
+    navigateur web, où la totalité de la logique métier est traitée du côté
+    du serveur. Pour ces raisons, le navigateur est parfois appelé client
+    universel.
+   Client riche est un compromis entre le client léger et le client lourd.
+    L'objectif du client riche est de proposer une interface graphique,
+    décrite avec une grammaire de description basée sur la syntaxe XML,
+    permettant d'obtenir des fonctionnalités similaires à celles d'un client
+    lourd (glisser déposer, onglets, multi fenêtrage, menus déroulants).
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour                    13
+
+
+
+
+Serveur d’application
+   Un serveur d'application est un environnement
+    d'exécution des applications côté serveur.
+   Il prend en charge l'ensemble des fonctionnalités qui
+    permettent à N clients d'utiliser une même
+    application
+   Exemples :
+        JBoss (www.jboss.org)
+        WebSphere Application Server d’IBM
+        Weblogic de BEA (www.bea.com)
+        ..etc
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour                    14
+
+
+
+
+                                                                                    7
+Partie 2 : Les Servlets
+
+
+
+
+Introduction aux servlets
+   Ce sont des applications Java fonctionnant du
+    côté serveur (tels que ASP ou bien PHP).
+   Les servlets sont au serveur Web ce que les
+    applets sont au navigateur pour le client.
+   Servlet:
+        Reçoit des requêtes HTTP
+        Effectue traitement
+        Fournit une réponse HTTP dynamique au client
+         Web (permet donc de créer des pages web
+         dynamiques).
+
+
+20/06/2016         cours JEE - Dr. Abdessamad Belangour   16
+
+
+
+
+                                                               8
+   Introduction aux servlets
+      les servlets sont indépendantes du serveur web
+         Elles s'exécutent dans un moteur de servlets utilisé pour
+          établir le lien entre la servlet et le serveur Web
+
+
+
+
+                      Requête HTTP
+
+
+                      Réponse HTTP               Moteur de
+                                                  servlet
+                                                                     Servlet
+Client (navigateur)                         Serveur web
+
+
+
+
+   20/06/2016                 cours JEE - Dr. Abdessamad Belangour             17
+
+
+
+
+   Avantages des servlets
+      Les servlets ont de nombreux avantages par rapport
+       aux autres technologies côté serveur:
+           Peut utiliser toutes les API Java afin de communiquer avec
+            des applications extérieures, se connecter à des bases de
+            données, accéder aux entrée-sorties…
+           Sont indépendantes du serveur Web
+           Se chargent automatiquement lors du démarrage du serveur
+            ou bien lors de la connexion du premier client.
+           La résidence en mémoire leur permettent :
+                   De traiter les demandes des clients grâce à des threads.
+                   D’occuper moins de mémoire et de charge du processeur.
+           À l’opposé, les langages de script traditionnels créent de
+            nouveaux processus pour chaque requête HTTP.
+           permettant de créer des composants réutilisables.
+
+   20/06/2016                 cours JEE - Dr. Abdessamad Belangour             18
+
+
+
+
+                                                                                    9
+Moteur de servlets
+   Un moteur de servlets est connu aussi par conteneur
+    de servlets (en anglais Servlet Container)
+   Un moteur de servlets permet d’établir le lien entre
+    la Servlet et le serveur Web
+   Il prend en charge et gère les servlets:
+        chargement de la servlet
+        gestion de son cycle de vie
+        passage des requêtes et des réponses
+   Deux types de conteneurs
+        Conteneurs de Servlets autonomes : c’est un serveur Web
+         qui intègre le support des Servlets
+        Conteneurs de Servlets additionnels : fonctionnent comme
+         un plug-in à un serveur Web existant
+
+
+20/06/2016           cours JEE - Dr. Abdessamad Belangour           19
+
+
+
+
+Moteur de servlets
+   Nombreux conteneurs de Servlet
+        Jakarta Tomcat (jakarta.apache.
+        JBoss (www.jboss.org)
+        WebSphere Application Server d’IBM
+        Weblogic de BEA (www.bea.com)
+   Dans le reste du cours et des TP, nous
+    utiliserons le conteneur Tomcat pour déployer
+    nos servlets.
+
+
+
+
+20/06/2016           cours JEE - Dr. Abdessamad Belangour           20
+
+
+
+
+                                                                         10
+Jakarta Tomcat
+   Tomcat 5.5.4 respecte la spécification Servlet 2.4 et
+    JSP 2.0
+   Écrit entièrement en Java, il peut donc être utilisé sur
+    n’importe quel système disposant d’une machine
+    virtuelle
+   Disponible gratuitement sous forme d’une licence
+    Open Source
+   Nécessite obligatoirement une machine virtuelle
+    respectant la spécification 5.0 (jre 1.5.0)
+   Implémentation de référence de la spécification JEE.
+    Il fournit donc les librairies de façon à concevoir des
+    Servlets (javax.servlet.http.HttpServlet)
+
+20/06/2016          cours JEE - Dr. Abdessamad Belangour   21
+
+
+
+
+Jakarta Tomcat
+   Après installation de Tomcat :
+        L’icône suivante montre quand il marche
+        L’icône suivante montre quand il est
+         arrêté
+        « Start service » permet de le faire
+         marcher s’il est en arrêt
+        « stop service » permet de l’arrêter s’il
+         est en marche
+
+
+
+
+20/06/2016          cours JEE - Dr. Abdessamad Belangour   22
+
+
+
+
+                                                                11
+Jakarta Tomcat
+   Pour accéder à la page d’accueil de Tomcat il
+    suffit de taper : http://localhost:8080
+
+
+
+
+Hiérarchie des dossiers Tomcat
+   Organisation partielle des dossiers de Tomcat
+
+
+
+
+20/06/2016          cours JEE - Dr. Abdessamad Belangour   24
+
+
+
+
+                                                                12
+Déploiement d'une Servlet dans Tomcat
+   Une application Web doit être déployée dans le
+    dossier webapps et avoir la structure suivante:
+                                            Fichier d’accueil &
+                                             de présentation
+
+
+                                              Descripteur de
+                                               déploiement
+
+
+                                                    Fichiers *.class des
+                                                          Servlets
+
+
+                                                           Fichiers
+                                                        bibliothèques
+20/06/2016       cours JEE - Dr. Abdessamad Belangour                   25
+
+
+
+
+Tomcat Manager
+   Les applications hébergée sur Tomcat
+    peuvent être gérées (démarrées, arrêtées,
+    rechargées) grâce au Tomcat Manager.
+
+
+
+
+20/06/2016       cours JEE - Dr. Abdessamad Belangour                   26
+
+
+
+
+                                                                             13
+    Tomcat Manager
+   Le lancement de Tomcat Manager demande un login et
+    un mot de passe.
+   Par défaut
+       le login est : admin , Le mot de passe est vide
+   Editer le fichier « tomcat-users.xml » dans le dossier
+    «conf » de tomcat pour changer ses valeurs.
+   Exemple :
+v6 :<user username="admin" password="" roles="admin,manager"/>
+v7 : <user username="admin" password="" roles="manager-gui, manager-
+   script"/>
+
+
+
+    20/06/2016           cours JEE - Dr. Abdessamad Belangour          27
+
+
+
+
+    Tomcat Manager
+
+
+
+
+    20/06/2016           cours JEE - Dr. Abdessamad Belangour          28
+
+
+
+
+                                                                            14
+        Le fichier web.xml
+           Le fichier « web.xml » est le fichier de
+            configuration de l’application Web qu’on est
+            en cours de construire.
+           Il permet de donner des informations de
+            l’application à Tomcat comme :
+                Les noms des classes des Servlets
+                Le nom d’affichage de l’application
+                Le chemin virtuel pour accéder aux différents
+                 servlets
+                Les fichiers d’accueils
+                Etc..
+
+        20/06/2016           cours JEE - Dr. Abdessamad Belangour             29
+
+
+
+
+        Le fichier web.xml : Exemple
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
+            http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd" version="2.4">
+  <display-name>Ma premiere application Web</display-name>
+  <servlet>
+      <servlet-name>Hello</servlet-name>
+      <servlet-class>HelloWorldServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+      <servlet-name>Hello</servlet-name>
+      <url-pattern>/salut</url-pattern>
+  </servlet-mapping>
+</web-app>
+
+
+        20/06/2016           cours JEE - Dr. Abdessamad Belangour             30
+
+
+
+
+                                                                                   15
+      Le fichier web.xml
+         Si le dossier contenant notre Servlet se
+          nomme projet , le chemin d’accès à notre
+          servlet sera :
+          http://localhost:8080/projet/salut
+         Remarque :
+              Pour compiler une Servlet sous DOS il faudra
+               ajouter la bibliothèque « servlet-api.jar » à la
+               variable d’environnement classpath.
+              Cette bibliothèque se trouve dans le dossier
+               « lib » de Tomcat
+              Elle se compose des packages : « javax.servlet »
+               et « javax.servlet.http »
+
+      20/06/2016         cours JEE - Dr. Abdessamad Belangour     31
+
+
+
+
+      Exemple de servlet
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class HelloWorldServlet extends HttpServlet {
+@Override
+public void doGet(HttpServletRequest req, HttpServletResponse res)
+   throws ServletException, IOException {
+         res.setContentType("text/html");
+         PrintWriter out = res.getWriter();
+         out.println("<HTML>");
+         out.println("<HEAD><TITLE> Titre </TITLE></HEAD>");
+         out.println("<BODY>");
+         out.println(" Hello World");
+         out.println("</BODY>");
+         out.println("</HTML>");
+         out.close();
+  }
+        20/06/2016           cours JEE - Dr. Abdessamad Belangour 32
+}
+
+
+
+
+                                                                       16
+         Analyse de l’exemple
+        La première étape consiste à importer les
+         packages nécessaires à la création de la
+         servlet
+        il faut donc importer javax.servlet,
+         javax.servlet.http et java.io
+              import javax.servlet.*;
+              import javax.servlet.http.*;
+              import java.io.*
+
+
+
+         20/06/2016         cours JEE - Dr. Abdessamad Belangour          33
+
+
+
+
+         Analyse d’une Servlet
+   Si le type de la requête est GET, alors la méthode de la
+    Servlet qui traite la requête est la suivante :
+     public void doGet(HttpServletRequest req, HttpServletResponse res)
+       throws ServletException, IOException {
+          //traitement
+}
+   Si le type de la requête est POST alors la méthode doit
+    être
+
+    public void doPost(HttpServletRequest req, HttpServletResponse res)
+      throws IOException, ServletException {
+           //traitement
+}
+
+
+         20/06/2016         cours JEE - Dr. Abdessamad Belangour          34
+
+
+
+
+                                                                               17
+    Analyse d’une servlet
+   Remarque :
+        Dans le cas où nous connaissions pas la méthode
+         d’envoi de la requête (GET ou POST) une astuce
+         serait d’écrire les deux méthode comme suit :
+
+public void doGet(HttpServletRequest req, HttpServletResponse res)
+  throws ServletException, IOException {
+          //traitement
+}
+public void doPost(HttpServletRequest req, HttpServletResponse res)
+  throws IOException, ServletException {
+          doGet(req, res);
+}
+
+
+    20/06/2016          cours JEE - Dr. Abdessamad Belangour          35
+
+
+
+
+    Analyse d’une servlet
+        La méthode doGet (resp. doPost) prend deux
+         paramètres :
+            Un paramètre de type HttpServletRequest
+             représentant la requête client
+            Un paramètre de type HttpServletResponse
+             représentant la réponse à renvoyer au client
+        Remarque :
+            L'objet HttpServletRequest permet d’extraire
+             toutes les informations sur le client (adresse IP,
+             navigateur, Domaine, paramètres d’un formulaire,
+             etc..)
+
+    20/06/2016          cours JEE - Dr. Abdessamad Belangour          36
+
+
+
+
+                                                                           18
+Analyse d’une servlet
+   L’objet HttpServletResponse doit etre
+    complété d’informations par la servlet avant
+    de le renvoyer au client.
+   La première étape consiste à définir le type
+    de données qui vont être envoyées au client
+    (généralement il s'agit d'une page HTML).
+   La méthode setContentType() de l'objet
+    HttpServletResponse prend donc comme
+    paramètre le type MIME associé au format
+    HTML (text/html) :
+        res.setContentType("text/html");
+20/06/2016              cours JEE - Dr. Abdessamad Belangour   37
+
+
+
+
+Analyse d’une servlet
+   La création d'un objet PrintWriter grâce à la méthode
+    getWriter() de l'objet HttpServletResponse permet
+    d'envoyer du texte formatté au navigateur
+     PrintWriter out = res.getWriter();
+   La méthode println() de l'objet PrintWriter permet
+    d'envoyer les données textuelles au navigateur
+        out.println("<HTML>");
+        …
+        out.println("</HTML>");
+   L'objet PrintWriter doit être fermé lorsqu'il n'est plus
+    utile avec sa méthode close()
+        out.close();
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour   38
+
+
+
+
+                                                                    19
+       Rappel sur le protocole HTTP
+          HTTP (HyperText Transfer Protocol) est un protocole
+           qui permet de transférer des messages avec des en-
+           têtes décrivant le contenu du message en utilisant un
+           codage de type MIME.
+          HTTP permet de transférer des fichiers
+           (essentiellement au format HTML) localisés grâce à
+           leurs URL entre un navigateur et un serveur Web.
+                       envoi des                            localisation du
+                       en-têtes HTTP
+                                             Décode             fichier
+
+
+                                                             Création des
+                                                               en-têtes
+                       envoi des en-têtes                   formatage des
+                       HTTP de réponse                         données
+Client (navigateur)
+                                          Serveur web
+
+       20/06/2016              cours JEE - Dr. Abdessamad Belangour                         39
+
+
+
+
+       Rappel sur le protocole HTTP
+          Syntaxe d’une requête                      Syntaxe d’une réponse
+                                                       HTTP :
+           HTTP:                                            VERSION-HTTP CODE
+               METHODE URL VERSION<crlf>                    EXPLICATION <crlf>
+               EN-TETE : Valeur<crlf>                      EN-TETE : Valeur <crlf>
+               ...                                          ...
+               EN-TETE : Valeur<crlf>                      EN-TETE : Valeur <crlf>
+               Ligne vide<crlf>                            Ligne vide <crlf>
+               CORPS DE LA REQUETE                         CORPS DE LA REPONSE
+          Exemple :                                  Exemple :
+               GET http://www.Licence.ma                   HTTP/1.0 200 OK
+                HTTP/1.0                                    Date : Sat, 15 Jan 2000
+                                                             14:37:12 GMT
+               Accept : text/html
+                                                            Server : Microsoft-IIS/2.0
+               If-Modified-Since : Saturday,               Content-Type : text/HTML
+                15-January-2000 14:37:11 GMT
+                                                            Content-Length : 1245
+               User-Agent : Mozilla/4.0                    Last-Modified : Fri, 14 Jan 2000
+                (compatible; MSIE 5.0;                       08:25:13 GMT
+                Windows 95)
+
+
+
+       20/06/2016              cours JEE - Dr. Abdessamad Belangour                         40
+
+
+
+
+                                                                                                 20
+Rappel sur le type MIME
+   MIME veut dire Multipurpose Internet Mail Extensions
+   Standard utilisé entre autres pour typer les
+    documents transférés par le protocole HTTP
+   Un type MIME est constitué de la manière suivante :
+        Content-type: TYPE/SOUS-TYPE
+        Exemples :
+                Content-type:   image/gif (Images gif )
+                Content-type:   image/jpeg (Images Jpeg )
+                Content-type:   text/html (Fichiers HTML )
+                Content-type:   text/plain (Fichiers texte sans mise en forme)
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                   41
+
+
+
+
+Notion de Contexte
+   Un contexte constitue pour chaque Servlet d'une même
+    application une vue sur le fonctionnement de cette application.
+   Une application web peut être composée de :
+        Servlets
+        JSP
+        Classes utilitaires
+        Documents statiques (pages html, images, sons, etc.)
+        Etc..
+   Grâce à ce contexte, il est possible d'accéder à chacune des
+    ressources de l'application web correspondant au contexte.
+   Dans le code source d'une servlet, un contexte est représenté
+    par un objet de type ServletContext.
+   Exemple :
+        getServletContext().getServerInfo() retourne le nom du logiciel
+         utilisé pour prendre en charge la requête , par exemple
+         Tomcat/3.2.1.
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                   42
+
+
+
+
+                                                                                       21
+Notion de Contexte
+   Chaque contexte est propre à une application et qu'il n'est pas
+    possible de partager des ressources entre applications
+    différentes.
+   A chaque contexte correspond une arborescence dans le
+    système de fichiers qui contient les ressources accédées lors des
+    requêtes vers le moteur de servlets comme nous avons vu pour
+    Tomcat.
+   Le fichier web.xml est donc un descripteur de déploiement du
+    contexte. Il peut contenir entre autres:
+        Les paramètres d'initialisation du contexte.
+        Les définitions des servlets et des JSPs.
+        La liste des fichiers de bienvenue.
+        Les pages d'erreur.
+        Etc..
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour        43
+
+
+
+
+Notion de Contexte
+   Exemple de fichiers web.xml:
+     …
+     <web-app>
+        <servlet>
+         <servlet-name>toto</servlet-name>
+         <servlet-class>UneServlet</servlet-class>
+        </servlet>
+        <servlet-mapping>
+         <servlet-name>toto</servlet-name>
+         <url-pattern>/unChemin</url-pattern>
+        </servlet-mapping>
+        <welcome-file-list>
+         <welcome-file>accueil.html</welcome-file>
+         <welcome-file>sommaire.html</welcome-file>
+       </welcome-file-list>
+       <error-page>
+         <error-code>404</error-code>
+         <location>/erreur404.html</location>
+        </error-page>
+     </web-app>
+20/06/2016              cours JEE - Dr. Abdessamad Belangour        44
+
+
+
+
+                                                                         22
+Notion de Contexte
+   Remarque :
+        Reprendre l’exemple de la Servlet précédente
+        Faire en sorte d’écrire un faux nom de la Servlet
+        Remarquer l’appel automatique à la page html
+         indiquant l’erreur comme mentionné par le fichier
+         web.xml
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour           45
+
+
+
+
+L'API Servlet
+   l'API Servlet fournit un ensemble de classes et
+    d’interfaces pour la manipulation des servlets
+   Cet API est fourni sous forme d’un kit appelé
+    JSDK (Java Servlet Development Kit)
+   L'API servlet regroupe un ensemble de classes
+    dans deux packages :
+        javax.servlet : contient les classes pour développer des
+         servlets génériques indépendantes d'un protocole
+        javax.servlet.http : contient les classes pour développer
+         des Servlets qui reposent sur le protocole http utilisé
+         par les serveurs web.
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour           46
+
+
+
+
+                                                                          23
+Le package javax.servlet
+   Le package javax.servlet définit plusieurs
+    interfaces, méthodes et exceptions :
+        Les interfaces :
+                ServletConfig : Définit d'un objet utilisé par le conteneur de la
+                 servlet pour passer de l’information à une servlet pendant son
+                 initialisation.
+                ServletContext : Définit un ensemble de méthodes qu’une
+                 servlet utilise pour communiquer avec le conteneur de servlets.
+                 un objet ServletContext est contenu dans un objet
+                 ServletConfig.
+                Servlet : interface de base d'une servlet
+                RequestDispatcher : définit un objet qui reçoit les requêtes du
+                 client et les envoie à n'importe quelle ressource (par exemple
+                 servlet, fichiers HTML ou JSP) sur le serveur.
+                ServletRequest : Définit un objet contenant la requête du
+                 client.
+
+
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                  47
+
+
+
+
+Le package javax.servlet
+                ServletResponse : Définit un objet qui contient la réponse
+                 renvoyée par la servlet
+                SingleThreadModel : Permet de définir une servlet qui ne
+                 répondra qu'à une seule requête à la fois
+        Les classes :
+                GenericServlet : Classe définissant une servlet indépendante de
+                 tout protocoles
+                ServletInputStream : permet la lecture des données de la
+                 requête cliente
+                ServletOutPutStream : permet l'envoie de la réponse de la
+                 servlet
+        Les exceptions :
+                ServletException : Exception générale en cas de problème
+                 durant l'exécution de la servlet
+                UnavailableException : Exception levée si la servlet n'est pas
+                 disponible
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                  48
+
+
+
+
+                                                                                       24
+Le package javax.servlet.http
+   Le package javax.servlet.http définit plusieurs
+    interfaces et méthodes :
+        Les interfaces :
+                HttpServletRequest : Hérite de ServletRequest : définit un objet
+                 contenant une requête selon le protocole http
+                HttpServletResponse : Hérite de ServletResponse : définit un
+                 objet contenant la reponse de la servlet selon le protocole http
+                HttpSession : Définit un objet qui représente une session
+        Les classes :
+                Cookie : Classe représentant un cookie (ensemble de données
+                 sauvegardées par le brower sur le poste client)
+                HttpServlet : Hérite de GenericServlet : classe définissant une
+                 servlet utilisant le protocole http
+                HttpUtils : Classe proposant des méthodes statiques utiles pour
+                 le développement de servlet http (classe devenue obsolète)
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                  49
+
+
+
+
+L’interface d'une servlet
+   Pour pouvoir être gérée par le conteneur Web, toute
+    servlet doit implémenter l’interface Servlet
+    appartenant au package javax.servlet
+   Cette interface permet ainsi au conteneur Web de
+    gérer le cycle de vie de la servlet.
+   L’interface d’une servlet se compose des méthodes
+    suivantes :
+        la      méthode   init()
+         la      méthode   service()
+                                                                   servlet
+     
+
+        la      méthode   getServletConfig()
+                                                             init()
+        la      méthode   getServletInfo()
+                                                             service()
+        la      méthode   destroy()                         getServletConfig()
+                                                             getServletInfo()
+                                                             destroy()
+
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                  50
+
+
+
+
+                                                                                       25
+L’interface d'une servlet
+   Afin de mettre en place l'interface Servlet
+    nécessaire au conteneur de servlet, il existe
+    plusieurs possibilités :
+     1.Définir manuellement chaque méthode
+     2.Dériver la classe GenericServlet et redéfinir les
+       méthodes dont on a besoin
+     3.Dériver la classe HttpServlet et redéfinir les
+       méthodes dont on a besoin
+   C’est la 3eme solution que nous utilisons
+    presque tout le temps
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour            51
+
+
+
+
+La méthode init()
+   Signature :
+        public void init(ServletConfig config) throws ServletException
+   Est appelée par le conteneur à chaque instanciation
+    de la servlet
+   Lors de l'instanciation, le conteneur de servlet passe
+    en argument à la méthode init() un objet
+    ServletConfig permettant de charger des paramètres
+    de configuration propres à la servlet.
+   En cas d'anomalie lors de l'appel de la méthode init(),
+    celle-ci renvoie une exception de type
+    ServletException et la servlet n'est pas initialisée.
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour            52
+
+
+
+
+                                                                           26
+  La méthode init()
+     Exemple :
+          Écrire une Servlet qui compte le nombre d’utilisation d’une
+           Servlet depuis son chargement.
+     Solution :
+               import javax.servlet.*;
+               import javax.servlet.http.*;
+               import java.io.*;
+
+               public class Compteur1 extends HttpServlet {
+                 private int compteur;
+                 @Override
+                 public void init() throws ServletException {
+                      compteur = 0;
+                 }
+
+  20/06/2016               cours JEE - Dr. Abdessamad Belangour          53
+
+
+
+
+  La méthode init()
+
+ @Override
+  protected void doGet(HttpServletRequest req,
+    HttpServletResponse res) throws ServletException, IOException
+    {
+         res.setContentType("text/plain");
+         PrintWriter out = res.getWriter();
+         compteur++;
+         out.println("Depuis son chargement, on a accédé à cette
+    Servlet " +compteur+" fois.");
+  }
+}
+
+
+
+  20/06/2016               cours JEE - Dr. Abdessamad Belangour          54
+
+
+
+
+                                                                              27
+     La méthode init()
+        Il est possible de faire des initialisations au niveau du
+         fichier web.xml et de les utiliser dans la méthode
+         init().
+        Exemple :
+          <servlet>
+             <servlet-name>Cmp</servlet-name>
+             <servlet-class>Compteur2</servlet-class>
+             <init-param>
+                 <param-name>compteur_initial</param-name>
+                 <param-value>50</param-value>
+                 <description>Valeur init du compteur</description>
+             </init-param>
+          </servlet>
+
+
+
+
+     20/06/2016          cours JEE - Dr. Abdessamad Belangour         55
+
+
+
+
+     La méthode init()
+public class Compteur2 extends HttpServlet {
+ private int compteur;
+ @Override
+ public void init() throws ServletException {
+  String initial = this.getInitParameter("compteur_initial");
+     try {
+              compteur = Integer.parseInt(initial);
+           }
+     catch (NumberFormatException e) {
+             compteur= 0;
+         }
+     }
+ @Override
+protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    throws ServletException, IOException {
+     //même traitement que l’exemple dernier…
+     } 20/06/2016           cours JEE - Dr. Abdessamad Belangour      56
+}
+
+
+
+
+                                                                           28
+La méthode service()
+   Signature :
+        public void service(ServletRequest req, ServletResponse res)
+         throws ServletException, IOException
+   Cette méthode est exécutée par le conteneur
+    lorsque la Servlet est sollicitée.
+   Elle détermine le type de requête dont il
+    s'agit, puis transmet la requête et la réponse
+    à la méthode adéquate (doGet() ou doPost).
+   Chaque requête du client déclenche une seule
+    exécution de cette méthode.
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour          57
+
+
+
+
+La méthode getServletConfig()
+   Signature :
+        public ServletConfig getservletConfig()
+   Renvoie un objet ServletConfig qui constitue un
+    intermédiaire permettant d’accéder au contexte d’une
+    application.
+   On peut aussi utiliser ServletConfig pour récupérer un
+    paramètre du fichier web.xml :
+   Exemple :
+     String param;
+     public void init(ServletConfig config)
+     {
+          param = config.getInitParameter("param");
+     }
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour          58
+
+
+
+
+                                                                         29
+La méthode getServletInfo()
+   Signature:
+        public String getServletInfo()
+   Lorsqu'elle est surchargée permet de retourner des
+    informations sur la servlet comme l’auteur, la
+    version, et le copyright.
+   Ces informations peuvent être exploitées pour
+    affichage par des outils dans les conteneurs Web.
+   Exemple :
+     public String getServletInfo() {
+       return " servlet écrite par x (x@y.com)" ;
+     }
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour   59
+
+
+
+
+La méthode destroy()
+   Signature :
+        void destroy()
+   La méthode destroy() est appelée par le conteneur
+    lors de l'arrêt du serveur Web.
+   Elle permet de libérer proprement certaines
+    ressources (fichiers, bases de données ...).
+   C'est le serveur qui appelle cette méthode.
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour   60
+
+
+
+
+                                                                  30
+Le cycle de vie d'une servlet
+    Le cycle de vie d'une Servlet est assuré par le
+     conteneur de servlet (grâce à l’interface Servlet).
+    Cette interface permet à la servlet de suivre le cycle
+     de vie suivant :
+     1. le serveur crée un pool de threads auxquels il va pouvoir
+        affecter chaque requête
+     2. La Servlet est chargée au démarrage du serveur ou lors de
+        la première requête
+     3. La Servlet est instanciée par le serveur
+     4. La méthode init() est invoquée par le conteneur
+     5. Lors de la première requête, le conteneur crée les objets
+        Request et Response spécifiques à la requête
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour               61
+
+
+
+
+Le cycle de vie d'une servlet
+     6. La méthode service() est appelée à chaque requête dans
+         une nouvelle thread. Les objets Request et Response lui
+         sont passés en paramètre
+
+     7. Grâce à l'objet Request, la méthode service() va pouvoir
+         analyser les informations en provenance du client
+
+     8. Grâce à l'objet Response, la méthode service() va fournir
+         une réponse au client
+
+     9. La méthode destroy() est appelée lors du déchargement
+         de la Servlet, c'est-à-dire lorsqu'elle n'est plus requise par le
+         serveur. La Servlet est alors signalée au garbage collector
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour               62
+
+
+
+
+                                                                              31
+Développer une servlet http
+     Les étapes de développement d’une servlet
+      sont les suivantes:
+     1. Lecture de la requête (représentée par l’objet
+        HttpServletRequest )
+     2. Traitement
+     3. Création de la réponse (représentée par l’objet
+        HttpServletResponse)
+
+
+
+
+20/06/2016           cours JEE - Dr. Abdessamad Belangour         63
+
+
+
+
+Développer une servlet http
+Lecture d’une requête
+   L’objet HttpServletRequest fournit un ensemble de
+    méthodes pour avoir toutes les informations
+    concernant une requête.
+   Ces méthodes sont comme suit :
+        String getMethod() : Récupère la méthode HTTP utilisée
+         par le client
+        String getHeader(String name): Récupère la valeur de l’en-
+         tête demandée
+        String getRemoteHost() : Récupère le nom de domaine
+         du client
+        String getRemoteAddr() : Récupère l'adresse IP du client
+
+
+20/06/2016           cours JEE - Dr. Abdessamad Belangour         64
+
+
+
+
+                                                                       32
+Développer une servlet http
+        String getParameter(String name) : Récupère la valeur du
+         paramètre name d'un formulaire. Lorsque plusieurs valeurs
+         sont présentes, la première est retournée
+        String[] getParameterValues(String name) : Récupère les
+         valeurs correspondant au paramètre name d'un formulaire,
+         c'est-à-dire dans le cas d'une sélection multiple (cases à
+         cocher, listes à choix multiples) les valeurs de toutes les
+         entités sélectionnées
+        Enumeration getParameterNames() : Retourne un objet
+         Enumeration contenant la liste des noms des paramètres
+         passés à la requête
+        String getServerName() : Récupère le nom du serveur
+        String getServerPort() : Récupère le numéro de port du
+         serveur
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour         65
+
+
+
+
+Atelier 2
+   Écrire une Servlet qui extrait les informations
+    suivantes de la requête:
+        la méthode d’envoi de la requête HTTP utilisée par
+         le client
+        l'adresse IP du client
+        Le nom du serveur
+        le numéro de port du serveur
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour         66
+
+
+
+
+                                                                        33
+Solution (1/2)
+import   javax.servlet.ServletException;
+import   javax.servlet.http.HttpServlet;
+import   javax.servlet.http.HttpServletRequest;
+import   javax.servlet.http.HttpServletResponse;
+import   java.io.PrintWriter;
+import   java.io.IOException;
+
+public class testServlet extends HttpServlet {
+  @Override
+ public void doGet(HttpServletRequest request,
+                 HttpServletResponse response)
+              throws ServletException, IOException{
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    out.println("<html>");
+    out.println(" <head>");
+    out.println(" <title>entêtes HTTP</title>");
+    out.println(" </head>");
+    out.println(" <body>");
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour            67
+
+
+
+
+Solution (2/2)
+out.println("<br><u><font color=red>Method d’envoi du client
+    </font></u><br>"); out.println(request.getMethod());
+out.println("<br><u><font color=red> adresse IP du client</font></u><br>");
+    out.println(request.getRemoteAddr());
+out.println("<br><u><font color=red>Nom du serveur </font></u><br>");
+    out.println(request.getServerName());
+out.println("<br><u><font color=red>Port du serveur</font></u><br>");
+    out.println(request.getServerPort());
+out.println(" </body>");
+   out.println("</html>");
+  }
+}
+
+
+
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour            68
+
+
+
+
+                                                                                   34
+Atelier 3
+   Construire un formulaire HTML comprenant les informations
+    suivantes :
+        Nom (zone de texte)
+        Prénom (zone de texte)
+        Sexe (boutons radio M ou F)
+        Fonction (options)
+                Enseignant
+                Étudiant (choix initial)
+                Ingénieur
+                Retraité
+                Autre
+        Loisirs (cases à cocher)
+                Lecture
+                Sport
+                Voyage
+        Commentaire (textarea)
+
+
+
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour   69
+
+
+
+
+Atelier 3 (suite)
+   On demande d’écrire une servlet qui:
+        récupère ces valeurs lorsque l’utilisateur clique sur
+         envoyer.
+        Affiche le nom de chaque champ et la valeur saisie
+         par l’utilisateur
+
+
+
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour   70
+
+
+
+
+                                                                          35
+Solution (1/2)
+<HTML>
+                                     Index.html
+ <HEAD> <title> formulaires et servlets </title></HEAD>
+ <BODY>
+    <FORM method="post" action="traiterFormulaire">
+     Enregistrement d'un utilisateur
+    <TABLE border=0>
+      <TR><TD>Nom :</TD> <TD><INPUT type=text name="nom"></TD></TR>
+      <TR><TD>Prénom :</TD><TD><INPUT type=text name="prenom"></TD></TR>
+      <TR><TD>Sexe :</TD><TD>Homme : <INPUT type=radio name="sexe" value="M" checked><br>
+                                     Femme : <INPUT type=radio name="sexe" value="F"></TD></TR>
+      <TR><TD>Fonction : </TD>
+             <TD><SELECT name="fonction"> <OPTION VALUE="enseignant">Enseignant</OPTION>
+             <OPTION VALUE="etudiant">Etudiant</OPTION>
+             <OPTION VALUE="ingenieur" selected>Ingénieur</OPTION>
+             <OPTION VALUE="retraite">Retraité</OPTION> <OPTION VALUE="autre">Autre</OPTION>
+                </SELECT> </TD></TR>
+      <TR><TD>loisirs :</TD>
+             <TD><INPUT type=checkbox NAME="loisirs" value="lecture" CHECKED>Lecture
+             <INPUT type=checkbox NAME="loisirs" value="sport">Sport
+             <INPUT type=checkbox NAME="loisirs" value="voyage">Voyage</TD></TR>
+    <TR><TD>Commentaire :</TD><TD><TEXTAREA rows="3" name="commentaire">Tapez ici votre
+    commentaire</TEXTAREA></TD></TR>
+    <TR><TD COLSPAN=2><INPUT type="submit" value="Envoyer"></TD></TR>
+    </TABLE>
+    </FORM>
+</BODY>
+</HTML>
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour                                 71
+
+
+
+
+Solution (2/2)
+                             Essentiel de la servlet
+    out.println("<br><H3>Récupération des paramètres utilisateur
+    </H3><br>") ;
+    out.println("<br>nom:"+request.getParameter("nom"));
+    out.println("<br>prénom:"+request.getParameter("prenom"));
+    out.println("<br>sexe:"+request.getParameter("sexe"));
+    out.println("<br>fonction:"+request.getParameter("fonction"));
+    out.println("<br>commentaire:"+request.getParameter("comme
+    ntaire"));
+    out.println("essai de getParameterValues<br>");
+    out.println("<br>loisirs:<br>");
+    String[] valeursDeLoisirs=request.getParameterValues("loisirs");
+    for (int i=0 ; i < valeursDeLoisirs.length ; i++)
+    {out.println(valeursDeLoisirs[i]+" "); }
+
+
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour                                 72
+
+
+
+
+                                                                                                       36
+Développer une servlet http
+Création de la réponse
+   Après lecture et traitement d’une requête, la réponse
+    à fournir à l'utilisateur est représentée sous forme
+    d'objet HttpServletResponse.
+   Les méthodes de l’objet HttpServletResponse sont
+    comme suit :
+        void setHeader(String Nom, String Valeur) : Définit une
+         paire clé/valeur dans les en-têtes
+        void setContentType(String type) : Définit le type MIME
+         de la réponse HTTP, c'est-à-dire le type de données
+         envoyées au navigateur
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour             73
+
+
+
+
+Développer une servlet http
+        void setContentLength(int len) : Définit la taille de la
+         réponse
+        PrintWriter getWriter() : Retourne un objet PrintWriter
+         permettant d'envoyer du texte au navigateur client. Il se
+         charge de convertir au format approprié les caractères
+         Unicode utilisés par Java
+        ServletOutputStream getOutputStream() : Définit un flot
+         de données à envoyer au client, par l'intermédiaire d'un
+         objet ServletOutputStream, dérivé de la classe
+         java.io.OutputStream
+        void sendredirect(String location) : Permet de rediriger le
+         client vers l'URL location
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour             74
+
+
+
+
+                                                                            37
+Développer une servlet http
+           String setStatus(int StatusCode) : Définit le code de retour
+            de la réponse
+           Rappelons quelques codes de retour:
+                Code 202 (SC_ACCEPTED) : Requête acceptée.
+                Code 204 (SC_NO_CONTENT) : pas d’information à retourner.
+                Code 301 (SC_MOVED_PERMANENTLY) : la ressource demandée a été
+                 déplacée.
+                Code 400 (SC_BAD_REQUEST) : La requête est syntaxiquement
+                 incorrecte.
+                Code 403 (SC_FORBIDDEN) : le serveur comprend la requête mais
+                 refuse de la servir.
+                Code 404 (SC_NOT_FOUND) : la ressource demandée n’est pas
+                 disponible.
+                etc...
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour              75
+
+
+
+
+Développer une servlet http
+    Exemple :
+      Écrire une Servlet qui effectue une redirection vers
+        
+
+      un site web donné.
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class PremiereServlet extends HttpServlet {
+  @Override
+    public void doGet(HttpServletRequest req, HttpServletResponse
+     res) throws ServletException, IOException {
+         res.sendRedirect("http://www.google.co.ma");
+    }
+}
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour              76
+
+
+
+
+                                                                                  38
+Développer une servlet http
+   Remarque :
+        Pour éviter que la page soit rechargée à partir du
+         cache :
+                response.setHeader("Cache-Control","no-cache"); //HTTP 1.1
+                response.setHeader("Pragma","no-cache"); //HTTP 1.0
+                response.setDateHeader ("Expires", 0); /*prevents caching at the proxy
+                                                                server*/
+
+
+
+
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour                    77
+
+
+
+
+Suivi de session
+   Le protocole HTTP est un protocole sans état
+   Impossibilité alors de garder des informations
+    d’une requête à l’autre (identifier un client
+    d’un autre)
+   Obligation d’utiliser différentes solutions pour
+    remédier au problème d’état dont :
+        L’utilisation de cookies
+        L’utilisation de sessions
+
+
+
+
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour                    78
+
+
+
+
+                                                                                          39
+Suivi de session : cookies
+   Les cookies représentent un moyen simple de stocker
+    temporairement des informations chez un client, afin de les
+    récupérer ultérieurement.
+   Les cookies ont été introduits par la première fois dans
+    Netscape Navigator
+   Les cookies font partie des spécifications du protocole HTTP.
+   L'en-tête HTTP réservé à l'utilisation des cookies s'appelle Set-
+    Cookie, il s'agit d'une simple ligne de texte de la forme:
+        Set-Cookie : NOM=VALEUR; domain=NOM_DE_DOMAINE;
+         expires=DATE
+   La valeur d’un cookie pouvant identifier de façon unique un
+    client, ils sont souvent utilisés pour le suivi de session
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour                 79
+
+
+
+
+Suivi de session : cookies
+   L’API Servlet fournit la classe javax.servlet.http.Cookie pour
+    travailler avec les Cookies
+        Cookie(String name, String value) : construit un cookie
+        String getName() : retourne le nom du cookie
+        String getValue() : retourne la valeur du cookie
+        setValue(String new_value) : donne une nouvelle valeur au cookie
+        setMaxAge(int expiry) : spécifie l’âge maximum du cookie en
+         secondes
+   Pour la création d’un nouveau cookie, il faut l’ajouter à la
+    réponse (HttpServletResponse)
+        addCookie(Cookie mon_cook) : ajoute à la réponse un cookie
+   La Servlet récupère les cookies du client en exploitant la requête
+    (HttpServletRequest)
+        Cookie[] getCookies() : récupère l’ensemble des cookies du site
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour                 80
+
+
+
+
+                                                                                 40
+Suivi de session : cookies
+   Code pour créer un cookie et l’ajouter au client :
+     Cookie c = new Cookie("Id", "123");
+     res.addCookie(c);
+   Code pour récupérer les cookies
+     Cookie[] cs= req.getCookies();
+     if (cs != null) {
+     for (int i = 0; i < cs.length; i++) {
+     String name = cs[i].getName();
+     String value = cs[i].getValue();
+     …
+     }
+     }
+   Remarque :
+        Il n’existe pas dans l’API Servlet de méthode permettant de
+         récupérer la valeur d’un cookie par son nom
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour            81
+
+
+
+
+Atelier 6
+   Écrire une Servlet permettant d’identifier un
+    client par l’intermédiaire des cookies.
+        Aide : vous pouvez obtenir un identifiant unique
+         sur le temps par rapport à l’hôte sur lequel il a été
+         généré grâce à la méthode
+         java.rmi.server.UID().toString().
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour            82
+
+
+
+
+                                                                            41
+Solution (1/2)
+import javax.servlet.http.*;
+import javax.servlet.*;
+import java.io.*;
+
+public class CookiesServlet extends HttpServlet {
+  @Override
+ protected void doGet(HttpServletRequest req, HttpServletResponse res)
+    throws ServletException, IOException {
+       res.setContentType("text/html");
+       PrintWriter out = res.getWriter();
+       String contenu= null;
+        Cookie[] tabCookies = req.getCookies();
+        if (tabCookies != null)
+             for (int i = 0; i < tabCookies .length; i++) {
+               if (tabCookies [i].getName().equals("monId"))
+                       contenu = tabCookies[i].getValue();
+            }
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour              83
+
+
+
+
+Solution (2/2)
+if (contenu == null) {
+      contenu = new java.rmi.server.UID().toString();
+      Cookie c = new Cookie("monId", contenu);
+      c.setMaxAge(60*60*24*365);
+      res.addCookie(c);
+      out.println("Bonjour le nouveau");
+  }
+  else out.println("Encore vous");
+  out.close();
+ }
+}
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour              84
+
+
+
+
+                                                                              42
+Suivi de session : HttpSession
+   Le plus gros problème des cookies est que les
+    navigateurs ne les acceptent pas toujours
+   L’utilisateur peut configurer son navigateur
+    pour qu’il refuse ou pas les cookies
+   Les navigateurs n’acceptent que 20 cookies
+    par site, 300 par utilisateur et la taille d’un
+    cookie peut être limitée à 4096 octets (4 ko)
+
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour                   85
+
+
+
+
+Suivi de session : HttpSession
+   Solutions : utilisation de l’API de suivi de session
+    javax.servlet.http.HttpSession
+   Méthodes de création liées à la requête (HttpServletRequest)
+        HttpSession getSession() : retourne la session associée à
+         l’utilisateur si elle existe sinon lui crèe une nouvelle
+        HttpSession getSession(boolean p) : création selon la valeur de p
+   Gestion d’association (HttpSession)
+        Enumeration getAttributeNames() : retourne les noms de tous les
+         attributs
+        Object getAttribute(String name) : retourne l’attribut name
+        setAttribute(String an, Object av) : associe l’objet av à la chaîne
+         an
+        removeAttribute(String na) : supprime l’attribut associé à na
+   Destruction (HttpSession)
+        invalidate() : expire la session
+
+
+
+20/06/2016              cours JEE - Dr. Abdessamad Belangour                   86
+
+
+
+
+                                                                                    43
+Suivi de session : HttpSession
+   Exemple : Servlet qui permet d’utiliser le suivi de session pour
+    un compteur
+public class HttpSessionServlet extends HttpServlet {
+        @Override
+      protected void doGet(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+           res.setContentType("text/plain");
+           PrintWriter out = res.getWriter();
+           HttpSession s = req.getSession();
+           Integer compt= (Integer)s.getAttribute("compteur");
+           if (compt== null) {
+               compt = new Integer(1);}
+           else {
+               compt = new Integer(compt.intValue() + 1);}
+           s.setAttribute("compteur", compt);
+           out.println("Vous avez visité cette page " + compt + " fois.");
+      }
+}
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                87
+
+
+
+
+Collaboration de Servlets
+   Les Servlets s’exécutant dans le même serveur
+    peuvent dialoguer entre elles
+   Deux principaux styles de collaboration :
+        Partage d’information : un état ou une ressource.
+         Exemple : un magasin en ligne pourrait partager les
+         informations sur le stock des produits ou une connexion à
+         une base de données
+        Partage du contrôle : une requête.
+         Réception d’une requête par une Servlet et laisser l’autre
+         Servlet une partie ou toute la responsabilité du traitement
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                88
+
+
+
+
+                                                                                   44
+            Collaboration de Servlets : partage
+            d’information
+               La collaboration est obtenue par l’interface
+                ServletContext
+               L’utilisation de ServletContext permet aux
+                applications web de disposer de son propre
+                conteneur d’informations unique
+               Une Servlet retrouve le ServletContext de son
+                application Web par un appel à getServletContext()
+               Exemples de méthodes :
+                     void setAttribute(String nom, Object o) : lie un objet sous le
+                      nom indiqué
+                     Object getAttribute(String nom) : retrouve l’objet sous le
+                      nom indiqué
+                     Enumeration getAttributeNames() : retourne l’ensemble des
+                      noms de tous les attributs liés
+                     void removeAttribute(String nom) : supprime l’objet lié sous
+                      le nom indiqué
+
+            20/06/2016                  cours JEE - Dr. Abdessamad Belangour                               89
+
+
+
+
+            Partage d’information
+        Exemple : Servlets qui vendent des pizzas et partagent une spécialité du
+         jour public class PizzasAdmin extends HttpServlet {
+                protected void doGet(HttpServletRequest req, HttpServletResponse res)
+                throws ServletException, IOException {
+                          res.setContentType("text/plain");                 Création d’un attribut
+                          PrintWriter out = res.getWriter();
+                          ServletContext context = this.getServletContext();
+                          context.setAttribute("Specialite", "Anchois");
+                          out.println("La pizza du jour a été définie."); }
+              }
+
+public class PizzasClient extends HttpServlet {
+  protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException,
+  IOException {            res.setContentType("text/plain");
+                      PrintWriter out = res.getWriter();                           Lecture de l’attribut
+                      ServletContext context = this.getServletContext();
+                      String pizza_spec = (String)context.getAttribute("Specialite");
+                      out.println("Aujourd'hui, notre specialite est : " + pizza_spec); }
+}
+            20/06/2016                  cours JEE - Dr. Abdessamad Belangour                               90
+
+
+
+
+                                                                                                                45
+Collaboration de Servlets : partage du
+contrôle
+   Pour une collaboration dynamique entre servlets,
+    deux possibilités existent:
+        Déléguer entièrement la requête à une autre servlet :
+         méthode forward()
+        Inclure la réponse d’une autre servlet dans la servlet en
+         cours : méthode include()
+   Ces deux méthodes appartiennent à l’interface
+    RequestDispatcher du package javax.servlet
+        RequestDispatcher getRequestDispatcher(String path) :
+         retourne une instance de type RequestDispatcher par
+         rapport à un composant
+        Un composant peut-être de tout type : Servlet, JSP, fichier
+         statique, …
+        path est un chemin relatif ou absolu ne pouvant pas sortir
+         du contexte
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour             91
+
+
+
+
+Partage du contrôle (forward)
+   Soit l’exemple suivant :
+        Une servlet (Servlet1) reçoit une requête
+        Elle y place un attribut X qu’elle y met la chaîne "salut"
+        Elle renvoie ensuite cette requête à une autre Servlet
+         (Servlet2).
+        Servlet2 récupère cet attribut et se charge de créer la
+         réponse qu’elle renvoie à l’utilisateur.
+   Attention:
+        Servlet1 ne doit pas toucher à la réponse car c’est Servlet2
+         qui s’en charge.
+        Après le renvoi de la requête à Servlet2, Servlet1 ne doit
+         plus toucher à la requête.
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour             92
+
+
+
+
+                                                                             46
+Partage du contrôle (forward)
+                               Code pour servlet1
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+
+public class Servlet1 extends HttpServlet {
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse res)
+throws ServletException, IOException {
+
+     req.setAttribute("X", "salut");
+     RequestDispatcher dispat = req.getRequestDispatcher("/cheminServlet2");
+     dispat.forward(req,res);
+}
+}
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                              93
+
+
+
+
+Partage du contrôle (forward)
+                               Code pour servlet2
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+
+public class Servlet2 extends HttpServlet {
+@Override
+protected void doGet(HttpServletRequest req, HttpServletResponse res)
+throws ServletException, IOException {
+
+     res.setContentType("text/plain");
+     PrintWriter out = res.getWriter();
+     out.println("l'attribut que j'ai récupéré de servlet 1 est: "+req.getAttribute("X"));
+}}
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                              94
+
+
+
+
+                                                                                                  47
+Partage du contrôle (include)
+   Soit l’exemple suivant :
+        Une servlet (Principale) reçoit une requête
+        Elle y place un attribut x qu’elle y met la chaîne "3"
+        Elle inclut une autre Servlet dans le traitement (Secondaire)
+        Secondaire récupère cet attribut et affiche son carré
+        Principale reprend le contrôle, elle modifie x en "5
+        Secondaire récupère encore une fois cet attribut et affiche
+         son carré
+        Principale reprend le contrôle
+   Remarque:
+        Secondaire ne doit pas fermer la réponse par </body> car
+         c’est Principale qui s’en charge.
+        C’est Principale qui se charge de préciser le type MiMe de la
+         réponse.
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                      95
+
+
+
+
+Partage du contrôle (include)
+                            Code pour Principale
+
+public class Principale extends HttpServlet {
+        @Override
+      protected void doGet(HttpServletRequest req, HttpServletResponse res)
+      throws ServletException, IOException {
+          res.setContentType("text/html");
+          PrintWriter out = res.getWriter();
+          out.println("<HTML><BODY>");
+          req.setAttribute("x", "3");
+          RequestDispatcher dispat = req.getRequestDispatcher("/cheminServlet2");
+          dispat.include(req,res);
+          req.setAttribute("x", "5");
+          dispat.include(req,res);
+          out.println("</BODY></HTML>");
+      }
+}
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                      96
+
+
+
+
+                                                                                         48
+Partage du contrôle (include)
+                           Code pour Secondaire
+
+public class Secondaire extends HttpServlet {
+ @Override
+protected void doGet(HttpServletRequest req, HttpServletResponse res)
+throws ServletException, IOException {
+
+    PrintWriter out = res.getWriter();
+    String ch=req.getAttribute("x");
+    int x=Integer.parseInt(ch);
+    out.println(" Le carré de "+ ch +" est :"+x);
+}
+}
+
+
+20/06/2016               cours JEE - Dr. Abdessamad Belangour           97
+
+
+
+
+Fin de la partie 2
+
+
+
+
+                                                                             49
+    Partie 3 : Java Server Pages (JSP)
+
+
+
+
+Introduction
+   JSP : Java Server Pages
+   Java Server Pages est une technologie qui
+    combine Java et des Tags HTML dans un
+    même document pour produire un fichier JSP.
+   But : faciliter la génération dynamique de
+    contenu de sites Web.
+   Similitudes : PHP, ASP, etc..
+
+
+
+
+20/06/2016      cours JEE - Dr. Abdessamad Belangour   100
+
+
+
+
+                                                             50
+Exemple de fichier JSP
+                  test.jsp
+
+<html>
+  <head>
+              <title>Exemple JSP</title>
+  </head>
+  <body>
+       la somme de 2 et 2 est <%=2+2%>
+  </body>
+</html>
+
+
+
+
+20/06/2016         cours JEE - Dr. Abdessamad Belangour   101
+
+
+
+
+Serveur Web
+   L'utilisation des JSP implique d'avoir un
+    serveur HTTP (logiciel servant à diffuser les
+    pages Web) disposant d'une extension
+    capable de traiter les JSP.
+   Exemple de serveurs HTTP gratuit supportant
+    JSP:
+        Tomcat proposé par la fondation Apache.
+        JSWDK proposé par SUN
+   Comme pour les servlets, nous travaillerons
+    avec Tomcat.
+
+
+20/06/2016         cours JEE - Dr. Abdessamad Belangour   102
+
+
+
+
+                                                                51
+Traitement des JSP
+     L'interprétation d'une page contenant des
+      instructions JSP se fait de la manière
+      suivante :
+     1. L’ utilisateur demande, via son navigateur
+        (client), un document possédant l'extension .jsp
+     2. Le serveur HTTP lance une servlet (application
+        Java serveur) qui construit le code Java à partir
+        du code contenu dans la page HTML.
+     3. Le programme résultant est compilé puis exécuté
+        sur le serveur.
+     4. Le résultat est réintroduit dans la page renvoyée
+        au client.
+
+
+20/06/2016        cours JEE - Dr. Abdessamad Belangour                 103
+
+
+
+
+Traitement des JSP
+
+
+     Test.jsp               1                       Test.java
+                Génération du code
+<HTML>
+                java correspondant             out.println(2+2);
+<%=2+2 %>
+<HTML>
+                                           Compilation du code
+                                                                   2
+                                                  java
+
+<HTML>
+                                                    Test.class
+ 4               Génération de la page
+<HTML>                   HTML
+                                                  00100110…..
+                           3
+
+
+
+20/06/2016        cours JEE - Dr. Abdessamad Belangour                 104
+
+
+
+
+                                                                             52
+Structure d’un fichier JSP
+   Similaire à la structure d’un fichier
+    HTML
+   Elle se compose essentiellement de
+    quatre types de tags:
+        Tag   de directive
+        Tag   de commentaire
+        Tag   de Scriplet
+        Tag   d’expression
+
+
+
+20/06/2016          cours JEE - Dr. Abdessamad Belangour   105
+
+
+
+
+Directives JSP
+   Les directives contrôlent comment le serveur
+    WEB doit générer la Servlet
+   Elles sont placées entre les symboles <%@
+    et %>
+   Syntaxe : <%@ directive { attribut="valeur"} %>
+   Les directives les plus importantes sont:
+        include : indique au compilateur d’inclure un
+         autre fichier
+        page : définit les attributs spécifiques à une page
+
+
+
+
+20/06/2016          cours JEE - Dr. Abdessamad Belangour   106
+
+
+
+
+                                                                 53
+   Directives JSP : include
+      Cette inclusion se fait au moment de la
+       conversion
+      Tout le contenu du fichier externe est inclus
+       comme s’il était saisi directement dans la
+       page JSP
+      Pas de séparation de la portée des variables
+      Exemple :
+           <%@ include file="unAutreFichier.jsp" %>
+
+
+
+
+   20/06/2016               cours JEE - Dr. Abdessamad Belangour                  107
+
+
+
+
+   Exemple pratique
+
+            entete.html
+<HTML>
+<HEAD>
+<TITLE>Page de démonstration</TITLE>
+</HEAD>
+<BODY>                                                        index.jsp
+ je suis dans l’entete de la page<br>
+                                                <%@ include file = "/entete.html" %>
+             corps.jsp                          <%@ include file = "/corps.jsp" %>
+                                                 Bonjour <%= mon_nom %>
+<%! String mon_nom; %>                          <%@ include file = "/piedpage.html" %>
+<% mon_nom = "Ali"; %>
+
+            piedpage.html
+<br>Je suis dans le pied de page.
+</BODY>
+</HTML>
+
+   20/06/2016               cours JEE - Dr. Abdessamad Belangour                  108
+
+
+
+
+                                                                                         54
+  Directives JSP : page
+  La directive page définit les attributs spécifiques à une page.
+  La liste des attributs possibles pour la directive page est
+   comme suit :
+Attribut         exemple valeurs              Description
+language         java                         Indique le langage utilisé. Java par défaut
+extends          Package.class                Hérite de l’interface du package choisi.
+session          false                        Si initialisé à false vous ne pouvez pas utiliser les
+                                              sessions. True par défaut.
+import           Java.util.*, *.class ,       Importe les classes dont vous avez besoin.
+                 java.*
+buffer           5 kb                         Taille en kb de la mémoire tampon qui contient le flux
+                                              de données à imprimer sur la JSP. 8 kb par défaut.
+autoflush        true                         Si à false il ne vide pas automatiquement le buffer une
+                                              fois rempli. Si vous avez mis le buffer à none vous ne
+                                              pouvez mettre autoFlush à false. Défaut à true.
+  20/06/2016                        cours JEE - Dr. Abdessamad Belangour                              109
+
+
+
+
+  Directives JSP : page
+  Attribut              Exemple de valeur            Description
+  isThreadSafe          false                        Si à false le serveur d’applications ne permet
+                                                     qu’à un client à la fois d’accéder à la JSP.
+                                                     Défaut à true.
+  info                  Ma première JSP              Information qui apparaît dans le document jsp
+                                                     compilé et utilisé par le serveur.
+  errorPage             Erreurpage.html              Adresse de la page d’erreur sur laquelle est
+                        Erreur.jsp                   renvoyé le visiteur en cas d’erreur (Exception)
+                                                     de la JSP.
+  contentType           text/html                    Le type MIME et le jeu de caractères à utiliser
+                                                     dans cette JSP. Par défaut text/html;
+                                                     charset=ISO-8859-1
+  isErrorPage           true                         Si true la JSP peut afficher l’erreur renvoyée
+                                                     par l’exception. True par défaut.
+  pageEnconding ISO-8859-1                           ISO-8859-1 par défaut.
+
+  20/06/2016                        cours JEE - Dr. Abdessamad Belangour                              110
+
+
+
+
+                                                                                                            55
+   Directives JSP : page
+       Remarque :
+            Vous n’avez pas besoin d’importer les classes
+             suivantes, qui le sont déjà implicitement:
+                    java.lang.*
+                     javax.servlet.*
+                     javax.servlet.http.*
+                     javax.servlet.jsp.*
+       Exemple de directives :
+            <%@ page import=" java.util.*" errorPage=" erreur.jsp"
+             buffer="5kb" session="false" %>
+
+
+
+
+    20/06/2016                 cours JEE - Dr. Abdessamad Belangour       111
+
+
+
+
+  Éléments de scripts JSP : commentaire
+       Cet élément de script est utilisé pour faire un commentaire dans
+        le code JSP
+       Le texte dans un commentaire JSP ne sera pas envoyé au client
+        ni compilé dans la Servlet
+       Les commentaires sont placés entre les symboles <%-- et --%>
+
+
+
+Example.jsp:
+                                                 <html>
+<html>
+                                                   <!-- commentaire HTML -->
+  <!– commentaire HTML -->
+  <%-- commentaire JSP --%>
+                                                 </html>
+</html>
+
+
+
+
+    20/06/2016                 cours JEE - Dr. Abdessamad Belangour       112
+
+
+
+
+                                                                                56
+  Éléments de scripts JSP : déclaration
+     Une déclaration permet d’insérer du code dans la
+      classe de la Servlet
+     Les déclarations sont placés entre les symboles <%!
+      et %>
+     Exemple:
+       <%!
+        private int count = 0;
+        private int incrementCount() { return count++;}
+       %>
+     Elle peut être utilisée pour :
+          Déclarer un attribut de classe
+          Spécifier et implémenter des méthodes
+          Les attributs et les méthodes déclarées dans la page JSP
+           sont utilisables dans toute la page JSP
+
+
+
+  20/06/2016             cours JEE - Dr. Abdessamad Belangour                 113
+
+
+
+
+  Éléments de scripts JSP : scriplet
+     C’est un bloc de code Java qui est placé dans _jspService(…) de
+      la Servlet générée (équivalent à service(...))
+     Les scriplets sont placées entre les symboles <% et %>
+     Tout code java a accès :
+          aux attributs et méthodes définis par le tag déclaration <%! …
+           %>
+          aux objets implicites que nous verrons plus loin.
+
+
+
+                ...
+                <% for (int i = 0; i < 5 ; i++) { %>            Code JSP : scriplet
+Code HTML           HelloWorld <br>
+                <% } %>
+                ...
+
+
+  20/06/2016             cours JEE - Dr. Abdessamad Belangour                 114
+
+
+
+
+                                                                                      57
+Éléments de scripts JSP : expression
+   Sert à évaluer une expression et à renvoyer sa valeur
+   Les expressions sont placées entre les symboles <%= et %>
+   Retourne une valeur String de l’expression
+   Correspond à une scriplet de la forme <% out.println(…); %>
+   Se transforme en out.println("…"); dans la méthode
+    _jspService(…) après génération
+
+
+
+         ...                                              scriplet
+         <% String[] noms={"Ali","Omar","Hassan"};
+             for (int i = 0 ; i < noms.length ; i++) { %>
+               Le <%= i %> ème nom est <%= noms[i] %>
+         <% } %>
+         ...
+                                       expression
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour              115
+
+
+
+
+Éléments de scripts JSP : scriplet et
+objets implicites
+   Les objets implicites sont les objets présents dans la méthode
+    service(…) qui ont été employés dans la partie Servlet
+   Ils sont identifiés par des noms de variables uniques :
+        request : requête courante
+        response : réponse courante
+        session : session courante
+        out : flot de sortie permet l’écriture sur la réponse
+        application : contient des méthodes log() permettant d'écrire des
+         messages dans le journal du contenu (ServletContext)
+        pageContext : utilisé pour partager directement des variables
+         entre des pages JSP et supportant les beans et les balises
+        exception : disponible uniquement dans les pages erreurs
+         donnant information sur les erreurs
+
+
+
+
+20/06/2016             cours JEE - Dr. Abdessamad Belangour              116
+
+
+
+
+                                                                               58
+Éléments de scripts JSP : scriplet et objets
+implicites
+   Exemple : JSP qui récupère des informations du client
+     <%@ page language="java" contentType="text/html" %>
+     <html>
+     <head>
+     <title>Informations client</title>
+     </head>
+     <body bgcolor="white">
+       Protocol : <%= request.getProtocol() %><br>
+       Scheme : <%= request.getScheme() %><br>
+       ServerName : <%= request.getServerName() %><br>
+       ServerPort : <% out.println(request.getServerPort()); %><br>
+       RemoteAddr : <% out.println(request.getRemoteAddr()); %><br>
+       RemoteHost : <% out.println(request.getRemoteHost()); %><br>
+       Method : <%= request.getMethod() %><br>
+     </body>
+
+
+
+
+20/06/2016               cours JEE - Dr. Abdessamad Belangour              117
+
+
+
+
+Cycle de vie d’une JSP
+   Le cycle de vie d'une Java Server Page est identique à une
+    Servlet :
+        La méthode jspInit() est appelée après le chargement de la page
+        La méthode _jspService() est appelée à chaque requête
+        La méthode jspDestroy() est appelé lors du déchargement
+         (fermeture d'une base de données)
+   Possibilité de redéfinir dans le code JSP les méthodes jspInit()
+    et jspDestroy() en utilisant un élément de scripts déclaration
+   Exemple :
+             <html> <head><title>Bonjour tout </title></head><body>
+             <%! int compteur; %>
+             <%! public void jspInit() {
+                 compteur = 0;} %>
+                La valeur du compteur est <%= compteur++ %>
+             </body></html>
+
+
+
+
+20/06/2016               cours JEE - Dr. Abdessamad Belangour              118
+
+
+
+
+                                                                                 59
+Cycle de vie d’une JSP
+   Exemple : un compteur avec une initialisation et une destruction
+             <%@ page language="java" contentType="text/html" %>
+             <%@ page import="java.util.Date" %>
+             <%!
+             int global_counter = 0;
+             Date start_date;
+             public void jspInit() {
+             start_date = new Date();
+             }
+             public void jspDestroy() {
+             ServletContext context = getServletConfig().getServletContext();
+             context.log("test.jsp a été visitée " + global_counter + "fois entre le
+             " + start_date + " et le " + (new Date()));
+             }
+             %>
+             <html>
+             <head><title>Page avec un compteur</title></head>
+             <body bgcolor="white">
+             Cette page a été visitée : <%= ++global_counter %> fois depuis le <%=
+             start_date %>.
+             </body></html>
+
+
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                       119
+
+
+
+
+JSP et Actions
+   Les actions permettent de faire des
+    traitements au moment où la page est
+    demandée par le client
+        utiliser des Java Beans
+        inclure dynamiquement un fichier
+        rediriger vers une autre page
+   Les actions sont ajoutées à la page JSP à
+    l'aide d'une syntaxe d'éléments XML (définis
+    par des balises personnalisées). Exemple :
+        <ma:balise ... />
+        <ma:balise ... > ...</ma:balise>
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour                       120
+
+
+
+
+                                                                                             60
+Java Beans
+   Permet de coder la logique métier de
+    l'application WEB
+   L'état d'un Bean est décrit par des attributs
+    appelés propriétés
+   La spécification des Java Beans définit les
+    Beans comme des classes qui supportent
+        Introspection : permet l'analyse d'un Bean
+         (nombre de propriétés)
+        Événements : métaphore de communication
+        Persistance : pour sauvegarder l'état d'un Bean
+        ...
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour           121
+
+
+
+
+Java Beans
+   Les Java Beans sont des classes Java normales
+    respectant un ensemble de directives
+        A un constructeur public sans argument
+        Les propriétés d'un Bean sont accessibles au travers de
+         méthodes getXXX (lecture) et setXXX (écriture) portant le
+         nom de la propriété
+   Lecture et écriture des propriétés
+        type getNomDeLaPropriété() : pas de paramètre et son type
+         est celui de la propriété
+        void setNomDeLaPropriété(type) : un seul argument du type
+         de la propriété et son type de retour est void
+   En option, un Java Beans implémente l'interface
+    java.io.Serializable permettant la sauvegarde de l'état
+    du Bean
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour           122
+
+
+
+
+                                                                           61
+Exemple : classe Client
+public class Client {
+    // attributs
+     private String nom;
+     private String adresse;
+    //méthodes d’accès et de modification
+     public String getNom () { return nom;                          }
+     public void setNom (String nm) { nom=nm;                       }
+     public String getAdresse () { return adresse;                  }
+     public void setAdresse (String adr) { adresse=adr;             }
+}
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                 123
+
+
+
+
+Java Beans et JSP
+   Pour déclarer et allouer un Java Beans dans une
+    page JSP il faut employer l'action <jsp:useBean>
+   Exemple :
+     <jsp:useBean id="nomObjet" class="Package.nomClasse" scope="
+        page ou request ou session ou application " />
+        id : nom de l'instance pour identification
+        class : Nom de la classe du bean
+        scope : portée de la validité de l'objet Bean :
+                page : Bean valide pour la requête sans transmission
+                request : Bean valide pour la requête et peut être transmise
+                 (forward)
+                session : Bean ayant la durée de vie de la session
+                application : Bean créée pour l'application WEB courante
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour                 124
+
+
+
+
+                                                                                      62
+Java Beans et JSP : lecture propriétés
+   Pour lire une propriété du Bean deux éléments sont
+    utilisés
+        La référence du Bean définie par l'attribut id
+        Le nom de la propriété
+   Deux manières existent pour interroger la valeur
+    d'une propriété et la convertir en String
+        En utilisant un tag action <jsp:getProperty>
+                Exemple : <jsp:getProperty name="référence Bean"
+                 property="nom propriété" />
+        En utilisant l'élément de scripts JSP : expression
+                <%= nom_instance.getNomPropriete() %>
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour         125
+
+
+
+
+Java Beans et JSP : écriture propriétés
+   Modification de la valeur d'une propriété en utilisant
+    le tag action <jsp:setProperty>
+        Exemples :
+                <jsp:setProperty name="référence Bean" property="nom
+                 propriété" value="valeur" />
+                <jsp:setProperty name="référence Bean" property="nom
+                 propriété" param="nomParametre" />
+   Modification de l'ensemble de propriétés suivant les
+    paramètres fournis par la requête
+        Exemple :
+                <jsp:setProperty name="référence" property="*" />
+        Condition : Les noms des paramètres de requête doivent
+         être identiques aux noms des propriétés
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour         126
+
+
+
+
+                                                                              63
+          Java Beans et JSP : lecture et écriture
+          propriétés
+
+    Soit le java bean suivant :
+                  package toto;
+                  public class Client {
+                      private String nom;
+                      private String adresse;
+                      public String getNom () { return nom;                        }
+                       public void setNom (String nm) { nom=nm;                     }
+                       public String getAdresse () { return adresse;                }
+                       public void setAdresse (String adr) { adresse=adr;           }
+                  }
+
+
+             Attention :
+             les classes des beans doivent
+
+    !        être mise dans le répertoire
+             WEB-INF/classes
+
+          20/06/2016             cours JEE - Dr. Abdessamad Belangour                   127
+
+
+
+
+          Java Beans et JSP : lecture et écriture
+          propriétés
+       Exemple d’utilisation du bean précédent:
+    <jsp:useBean id="cl" class=" toto.Client"/>
+    <% cl.setNom("Ali");
+         cl.setAdresse("31, Bd des FAR, Casablanca");
+    %>
+    <html>
+         <head>
+             <title>Page pour lecture d'information</title>
+         </head>
+         <body bgcolor="white">
+             Nom du Client : <%= cl.getNom() %><br>
+             Adresse du Client : <jsp:getProperty name="cl" property="adresse"/>
+         </body>
+    </html>
+
+
+          20/06/2016             cours JEE - Dr. Abdessamad Belangour                   128
+
+
+
+
+                                                                                              64
+         Java Beans et JSP : scope
+            Exemple : affectation et récupération des
+             valeurs d'un Java Bean
+            Soit la javabean suivante :
+              Package toto;
+              public class TestBean{
+                  private String contenu;
+                  public String getContenu () {
+                    return contenu;
+                  }
+                  public void setContenu (String c) {
+                     contenu=c;
+                  }
+              }
+         20/06/2016             cours JEE - Dr. Abdessamad Belangour            129
+
+
+
+
+         Java Beans et JSP : scope
+   Utilisation du bean avec différentes portées dans une première JSP.
+<jsp:useBean id="b1" scope="page" class="toto.TestBean"></jsp:useBean>
+<jsp:useBean id="b2" scope="session" class="toto.TestBean"></jsp:useBean>
+<jsp:useBean id="b3" scope="application" class="toto.TestBean"></jsp:useBean>
+<jsp:setProperty name="b1" property= "contenu" value="page"/>
+<jsp:setProperty name="b2" property= "contenu" value="session"/>
+<jsp:setProperty name="b3" property= "contenu" value="application"/>
+<html>
+<head><title> Utilisation du bean </title></head>
+<body bgcolor="white">
+     Avant<br>
+     b1 = <%= b1.getContenu() %><br>
+     b2 = <%= b2.getContenu() %><br>
+     b3 = <%= b3.getContenu() %><br>
+     <form method=GET action="lecture.jsp">
+     <p align="center"><input type="submit" name="Submit"></p>
+     </form>
+</body>
+</html>
+
+         20/06/2016             cours JEE - Dr. Abdessamad Belangour            130
+
+
+
+
+                                                                                      65
+          Java Beans et JSP : scope
+   Récupération du bean avec différentes portées dans une deuxième JSP.
+
+<jsp:useBean id="b1" scope="page" class="toto.TestBean"/>
+<jsp:useBean id="b2" scope="session" class="toto.TestBean"/>
+<jsp:useBean id="b3" scope="application" class="toto.TestBean"/>
+<html><head><title> Récupération du bean </title></head>
+     <body bgcolor="white">
+      Après<br>
+      b1 = <jsp:getProperty name="b1" property="contenu"/><br>
+      b2 = <jsp:getProperty name="b2" property="contenu"/><br>
+      b3 = <jsp:getProperty name="b3" property="contenu"/><br>
+     </body>
+</html>
+
+
+
+
+          20/06/2016                cours JEE - Dr. Abdessamad Belangour   131
+
+
+
+
+          Java Beans et JSP : scope
+             Les résultats de ces deux jsp est comme suit :
+                Avant
+
+                          b1 = page
+                          b2 = session
+                          b3 = application
+                  Après
+                          b1 =null
+                          b2 = session
+                          b3 = application
+
+
+
+
+          20/06/2016                cours JEE - Dr. Abdessamad Belangour   132
+
+
+
+
+                                                                                 66
+Collaboration de JSP
+   Rappel sur la collaboration (voir partie Servlet)
+        partage d’information : un état ou une ressource
+        partage du contrôle : une requête
+   Processus identique à la collaboration de Servlet pour
+    le partage d’information et de contrôle
+   Partage d’information
+        Utilisation du contexte pour transmettre des attributs
+        Méthode getContext(…), setAttribute(…) et getAttribute(…)
+   Partage du contrôle
+        Utilisation des tags action JSP include et forward
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour          133
+
+
+
+
+Partage d’information
+   Le partage se fait grâce à l’objet implicite
+    application qui est de type ServletContext
+   Exemple : transmettre un simple attribut à
+    tout un contexte
+        Page1.jsp :
+             Enregistrement dans le contexte d'un attribut
+             <% application.setAttribute("attribut1","Bonjour tout le
+               monde"); %>
+        Page2.jsp :
+                <% out.println(application.getAttribute("attribut1")); %>
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour          134
+
+
+
+
+                                                                              67
+Partage du contrôle
+   forward:
+        Exemple1 : renvoi sans passage de paramètres
+             <jsp:forward page="page.html" />
+        Exemple2 : renvoi avec passage de paramètres
+             <jsp:forward page="page.html" >
+               <jsp:param name="defaultparam" value="nouvelle" />
+             </jsp:forward>
+        Remarque :
+                ne pas modifier l’objet response
+                Ne pas modifier l’objet request après le renvoi
+   Include :
+        Exemple1 : inclusion sans passage de paramètres
+             <jsp:include page="page.html" />
+        Exemple2 : inclusion avec passage de paramètres
+             <jsp:include page="page.html" >
+               <jsp:param name="defaultparam" value="nouvelle" />
+             </jsp:include>
+
+
+
+
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour   135
+
+
+
+
+Partage du contrôle
+   Remarques :
+        Le partage du contrôle et plus précisément l’inclusion et le
+         renvoi par des balises actions ne permettent que le transfert
+         d’attributs de types chaînes de caractères.
+        Nécessité d’utiliser RequestDispatcher et les objets
+         implicites request et response pour transférer des attributs
+         objets
+        Exemple pour une inclusion (même chose pour un renvoi)
+             <% RequestDispatcher dispatch =
+              request.getRequestDispatcher("/fichier.jsp");%>
+             <% request.setAttribute("attribut1","bonjour"); %>
+             <% dispatch.include(request,response); %>
+
+
+
+
+20/06/2016                   cours JEE - Dr. Abdessamad Belangour   136
+
+
+
+
+                                                                          68
+Fin de la partie 3
+
+
+
+
+  Partie 4 : Accès aux bases de données avec
+                      JDBC
+
+
+
+
+                                               69
+Introduction
+   Dans la plateforme JEE, l’API chargé de
+    communiquer avec les bases de données est l’API
+    JDBC
+   JDBC est une abréviation de Java DataBase
+    Connector
+   JDBC présente un modèle fonctionnel riche pour
+    accéder aux bases de données.
+   JDBC peut être utilisé pour accéder à une base de
+    données à partir de:
+        Simple application Java
+        Une servlet
+        Page JSP
+        …
+
+
+
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour   139
+
+
+
+
+Travail avec une base de données
+   Nous avons choisi de travailler avec la base de
+    données MySQL.
+   Après le téléchargement de MySQL et son
+    installation, elle sera à l’écoute du port 3306.
+   Pour accéder à la base de données à partir du code
+    Java il faut télécharger un pilote JDBC pour cette
+    base de données.
+   Ces pilotes sont appelés Connecteurs.
+   Pour MySQL ce connecteur se nomme mysql-
+    connector-java-5.0.4-bin.jar.
+   Ce connecteur doit être placé dans le sous-répertoire
+    lib de l’application.
+
+20/06/2016            cours JEE - Dr. Abdessamad Belangour   140
+
+
+
+
+                                                                   70
+Classes de l'API JDBC
+   Les classes de l’API JDBC figurent dans le package
+    java.sql : import java.sql
+   Les classes les plus usuelles sont les suivantes:
+        DriverManager : charge et configure le driver de la base
+         de données.
+        Connection : réalise la connexion et l'authentification à la
+         base de données.
+        Statement ( et PreparedStatement ) : contient la requête
+         SQL et la transmet à la base de données.
+        ResultSet : permet de parcourir les informations
+         retournées par la base de données dans le cas d'une
+         sélection de données
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour          141
+
+
+
+
+La connexion à une base de données
+   Le chargement du pilote:
+        Pour se connecter à une base de données il faut
+         charger son pilote.
+        La documentation de la Bdd utilisée fournit le nom
+         de la classe à utiliser.
+        Le chargement se fait comme suit :
+         Class.forName("nom_classe_acces_bdd");
+        Exemple :
+                Dans le cas de la Bdd MySQL, ce chargement est comme
+                 suit : Class.forName(com.mysql.jdbc.Driver)
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour          142
+
+
+
+
+                                                                              71
+La connexion à une base de données
+   L'établissement de la connexion
+        Pour se connecter à une base de données, il faut
+         instancier un objet de la classe Connection en lui
+         passant :
+                l'URL de la base à accéder.
+                Le login
+                Le mot de passe
+        Exemple :
+                Dans notre cas (avec MySQL) cette instruction est
+                 comme suit :
+                      String url="jdbc:mysql://localhost/mydb";
+                      Connection con;
+                      con=DriverManager.getConnection(url,"root","monPwd");
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour           143
+
+
+
+
+La connexion à une base de données
+   Accéder à la base de données :
+        Après l’établissement de la connexion, il est
+         possible d'exécuter des ordres SQL.
+        Il est possible aussi d’obtenir des informations sur
+         la base de données grâce aux objets suivants :
+                DatabaseMetaData : informations à propos de la base de
+                 données : nom des tables, index, version ...
+                ResultSet : résultat d'une requête et information sur une
+                 table. L'accès se fait enregistrement par enregistrement.
+                ResultSetMetaData : informations sur les colonnes (nom
+                 et type) d'un ResultSet
+
+
+
+
+20/06/2016                  cours JEE - Dr. Abdessamad Belangour           144
+
+
+
+
+                                                                                 72
+La connexion à une base de données
+   L'exécution de requêtes SQL:
+         Les requêtes d'interrogation SQL sont exécutées avec les méthodes
+          d'un objet Statement que l'on obtient à partir d'un objet Connection
+         Un objet de la classe Statement permet d'envoyer des requêtes
+          SQL à la base.
+         Pour exécuter une requête de :
+                sélection : il faut utiliser la méthode executeQuery()
+                Insertion, suppression, mise à jour : il faut utiliser la méthode
+                 executeUpdate() qui, en plus, retourne le nombre d'enregistrements
+                 qui ont été mis à jour
+
+
+Exemple 1 :                                     Exemple 2 :
+String requete="SELECT * FROM client"           String requete="INSERT INTO client VALUES
+                                                (4,'client 4','prenom 4')"
+ResultSet resultats = null;
+                                                Statement stm= con.createStatement();
+Statement stm = con.createStatement();
+                                                int nbMaj = stm.executeUpdate(requete);
+resultats = stm.executeQuery(requete);
+                                                  affiche("nb mise a jour = "+nbMaj););
+
+Remarque: Utilisez PreparedStatement à la place de Statement
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour                          145
+
+
+
+
+La connexion à une base de données
+   Remarque : Différence entre Statement et PreparedStatement ?
+         L'interface PreparedStatement étend Statement et représente
+          une instruction paramétrée.
+         Cette interface diffère de Statement sur deux points principaux :
+                Les instances de PreparedStatement contiennent une instruction SQL
+                 déjà compilée (d'où le terme prepared). Cela améliore notamment les
+                 performances si cette instruction doit être appelée de nombreuses fois.
+                Les instructions SQL des instances de PreparedStatement contiennent
+                 un ou plusieurs paramètres d'entrée, non spécifiés lors de la
+                 création de l'instruction. Ces paramètres sont représentés par des
+                 points d'interrogation(?). Ces paramètres doivent être spécifiés avant
+                 l'exécution.
+         L'exécution des PreparedStatement est identique à celle des
+          simples Statement, à la différence près qu'il n'y a pas d'argument
+          aux méthodes executeQuery() et executeUpdate().
+         Exemple :
+             PreparedStatement pstm= con.prepareStatement("SELECT * FROM personnes WHERE
+                nom_personne = ?");
+             pstm.setString(1, "Soufiane");
+             resultats = pstm.executeQuery();
+             …
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour                          146
+
+
+
+
+                                                                                                  73
+La connexion à une base de données
+   Résultat d’une requête de sélection:
+        Une requête de sélection retourne un objet dont le type est
+         ResultSet
+        ResultSet est une abstraction d'une table qui se compose de
+         plusieurs enregistrements constitués de colonnes qui contiennent
+         les données.
+        Les principales méthodes pour obtenir des données sont :
+                getInt(int/String) : retourne le contenu de la colonne dont le
+                 numéro (resp. le nom) est passé en paramètre sous forme d'entier.
+                getFloat(int/String) : retourne le contenu de la colonne dont le
+                 numéro (resp. le nom) est passé en paramètre sous forme de nombre
+                 flottant.
+                getDate(int/String) : retourne le contenu de la colonne dont le
+                 numéro (resp. le nom) est passé en paramètre sous forme de date.
+                next() : se déplace sur le prochain enregistrement : retourne false si la
+                 fin est atteinte. Le curseur pointe initialement juste avant le premier
+                 enregistrement.
+                Close() : ferme le ResultSet
+                getMetaData() : retourne un objet ResultSetMetaData associé au
+                 ResultSet qui permet d'obtenir des informations sur le résultat de la
+                 requête.
+
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour                     147
+
+
+
+
+La connexion à une base de données
+   Parcours des données retournées :
+        Les résultat d’une requête de sélection figure dans un objet ResultSet qu’il
+         faudra parcourir pour en extraire les données.
+        Comme le curseur pointe initialement juste avant le premier
+         enregistrement, il est nécessaire de faire un premier appel à la méthode
+         next() pour se placer sur le premier enregistrement.
+        Exemple :
+             try {
+             ResultSetMetaData rsmd = resultats.getMetaData();
+             int nbCols = rsmd.getColumnCount();
+             boolean encore = resultats.next();
+             while (encore) {
+                 for (int i = 1; i <= nbCols; i++)
+                 System.out.println(résultats.getString(i) + " ");
+                 encore = résultats.next();
+                 }
+             résultats.close();
+             }
+             catch (SQLException e) { //traitement de l'exception }
+
+
+
+
+20/06/2016                    cours JEE - Dr. Abdessamad Belangour                     148
+
+
+
+
+                                                                                             74
+Exemple TP
+1. Création de la base de données :
+            En mode console créer une base de données
+             MySQL qui se nomme maBdd.
+                 mysql> CREATE DATABASE maBdd;
+            Créer ensuite une table qui se nomme personnes
+             et qui est composés des champs id, nom,
+             prenom et age.
+                 mysql> USE maBdd
+                 mysql>create table personnes(id int not null primary
+                  key auto_increment, nom varchar(25), prenom
+                  varchar(25), age tinyint);
+                 mysql>SHOW TABLES;
+
+
+
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour               149
+
+
+
+
+Exemple TP (suite)
+   Création de l’application Web :
+        L’application web démarre avec une page d’accueil (HTML)
+         avec deux liens hypertextes:
+                Le premier lien pointe vers un formulaire HTML qui permet de
+                 saisir le nom, le prénom et l’age d’une personne. Ce formulaire
+                 est traité par une Servlet qui se charge de faire l’insertion
+                 dans la base de données.
+                Le deuxième lien pointe vers une page JSP qui se charge
+                 d’accéder à la base de données et afficher les données dans un
+                 tableau HTML.
+        Après l’insertion dans la base de données la servlet affiche
+         un message d’insertion réussie et un lien pour revenir à la
+         page d’accueil.
+        La page JSP à son tour affiche un lien pour revenir à la page
+         d’accueil.
+
+20/06/2016                 cours JEE - Dr. Abdessamad Belangour               150
+
+
+
+
+                                                                                    75
+      Solution : Fichiers de l’exemple
+                          exemple\accueil.html:
+<html>
+<head><title>page d'accueil de l'exemple JDBC</title></head>
+<body>
+ <center>
+   <H3> Bienvenu dans l'application qui montre l'utilisation des bases de
+   données dans JEE </H3>
+   <UL>
+   <LI> <a href="formulaire.html"> Pour vous inscrire cliquez ici</a>.
+   <LI> <a href="affichage.jsp"> Pour consulter la liste des personnes inscrites
+   cliquez ici</a>.
+   </UL>
+ </center>
+</body>
+</html>
+
+
+
+
+      20/06/2016             cours JEE - Dr. Abdessamad Belangour               151
+
+
+
+
+      Solution : Fichiers de l’exemple
+                           exemple\formulaire.html
+ <html>
+ <head><title> formulaires et servlets </title></head>
+ <body>
+   <form method="post" action="insertionPath">
+      Enregistrement d'un utilisateur
+    <table border=0 bgcolor="blue">
+     <tr> <td>Nom :</td> <td><input type=text name="nom"></ td >        </tr>
+     <tr> <td>Prénom :</td><td><input type=text name="prenom"></td> </tr>
+     <tr> <td>Age :</td><td><input type=text name="age"></td>           </tr>
+     <tr> <td align="center"><input type="submit" value="Envoyer"></td>
+          <td align="center"><input type="reset" value="Effacer"></td>
+    </tr>
+    </table>
+   </form>
+ </body>
+ </html>
+
+
+
+
+      20/06/2016             cours JEE - Dr. Abdessamad Belangour               152
+
+
+
+
+                                                                                      76
+Solution : Fichiers de l’exemple
+                        exemple\WEB-INF\classes\Insertion.java
+import   java.sql.*;
+import   javax.servlet.*;
+import   javax.servlet.http.*;
+import   java.io.*;
+
+public class Insertion extends HttpServlet {
+    protected void doPost(HttpServletRequest req, HttpServletResponse res)throws
+    ServletException, IOException {
+       res.setContentType("text/html");
+       PrintWriter out = res.getWriter();
+      try {
+         String fnom=req.getParameter("nom");
+         String fprenom=req.getParameter("prenom");
+         String fage=req.getParameter("age");
+        //converion de l'age en int : attention cette instruction doit figurer dans un bloc try/catch
+        int intAge=Integer.parseInt(fage);
+        String url="jdbc:mysql://localhost/maBdd";
+        String driver = "com.mysql.jdbc.Driver";
+        Class.forName(driver).newInstance();
+        Connection con;
+
+
+
+
+20/06/2016                       cours JEE - Dr. Abdessamad Belangour                              153
+
+
+
+
+Solution : Fichiers de l’exemple
+      con=DriverManager.getConnection(url,"root","toto");
+      PreparedStatement stmt=con.prepareStatement("insert into
+         personnes(nom,prenom,age) values (?,?,?)");
+      stmt.setString(1,fnom);
+      stmt.setString(2,fprenom);
+      stmt.setInt(3,intAge);
+      stmt.executeUpdate();
+      stmt.close();
+      con.close();
+      out.println("<font color=\"red\"> insertion réussie </font><br>");
+      out.println("<a href=\"accueil.html\"> retour à la page d'accueil </a>");
+ }
+ catch (Exception e){
+    out.println("Erreur : "+e.getMessage()+ " source : "+e.getStackTrace());
+ }
+}
+}
+
+
+
+
+20/06/2016                       cours JEE - Dr. Abdessamad Belangour                              154
+
+
+
+
+                                                                                                         77
+Solution : Fichiers de l’exemple
+                          exemple\WEB-INF\web.xml
+
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-
+   app_2_4.xsd"
+  version="2.4">
+  <servlet>
+   <servlet-name>InsertionServlet</servlet-name>
+   <servlet-class>Insertion</servlet-class>
+  </servlet>
+  <servlet-mapping>
+     <servlet-name>InsertionServlet</servlet-name>
+     <url-pattern>/insertionPath</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+   <welcome-file>accueil.html</welcome-file>
+  </welcome-file-list>
+</web-app>
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                          155
+
+
+
+
+Solution : Fichiers de l’exemple
+                              exemple\affichage.jsp
+<%@page errorPage="erreur.jsp" import="java.sql.*"%>
+<% String url="jdbc:mysql://localhost/maBdd";
+     String driver = "com.mysql.jdbc.Driver";
+     Class.forName(driver).newInstance();
+     Connection con=DriverManager.getConnection(url,"root","toto");
+   PreparedStatement stmt=con.prepareStatement("select * from personnes;");
+   ResultSet resultats = stmt.executeQuery();
+%>
+<html>
+<head><title>liste des personnes inscrites</title></head>
+<body>
+
+
+
+
+20/06/2016                cours JEE - Dr. Abdessamad Belangour                          156
+
+
+
+
+                                                                                              78
+   Solution : Fichiers de l’exemple
+<table border="1">
+<tr><td>Id</td><td>Nom</td><td>Prénom</td><td>Age</td></tr>
+    <% boolean encore = resultats.next();
+  while (encore) { %>
+    <tr>
+      <td><%=resultats.getInt(1)%></td><td><%=resultats.getString(2) %></td>
+      <td><%=resultats.getString(3) %></td><td><%=resultats.getInt(4)%></td>
+    </tr>
+ <% encore = resultats.next(); } %>
+</table>
+<%
+  resultats.close();
+  stmt.close();
+  con.close();
+%>
+ <a href="accueil.html"> retour à la page d'accueil </a>
+</body>
+</html>
+
+
+
+   20/06/2016            cours JEE - Dr. Abdessamad Belangour             157
+
+
+
+
+   Solution : Fichiers de l’exemple
+                         exemple\erreur.jsp
+   <%@ page isErrorPage="true" import="java.io.*" %>
+   <h1>Erreur : </h1>
+   <% out.println(exception.toString()); %>
+
+
+
+
+   20/06/2016            cours JEE - Dr. Abdessamad Belangour             158
+
+
+
+
+                                                                                79
+

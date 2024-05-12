@@ -1,0 +1,582 @@
+Structure de stockage de données :
+les tablespaces et les fichiers
+de données
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Plan
+Les concepts de stockage de données
+Contenu des blocs de base de données
+Informations de la structure de stockage
+Les tablespaces créés par défaut
+Création de tablespace
+• Le tablespace permanent
+• Le tablespace Temporaire
+• Le tablespace UNDO
+Gestion des tablespaces
+Consulter les informations sur les tablespaces
+Le package DBMS_SPACE
+
+8-2
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Les concepts de stockage de données
+Oracle stocke les données logiquement dans
+les tablespaces et physiquement dans les
+fichiers de données.
+• Un tablespace :
+– ne peut appartenir qu’à une seule base de
+données à la fois
+– est composé d’un ou de plusieurs fichiers
+de données
+– est divisé en unités logiques de stockage
+appelées segment
+
+Base de données
+
+• Un fichier de données :
+– ne peut appartenir qu’à un seul tablespace
+et une seule base de données,
+– est un référentiel pour les données d’objet
+de schéma.
+
+8-3
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Tablespace
+Fichiers de
+données
+
+Les concepts de stockage de données
+•
+•
+•
+•
+
+Chaque tablespace comporte plusieurs segements
+Chaque segment est formé de plusieurs extents
+Un extent est une ensemble de blocs contigus
+Un blocs de données Oracle est la plus petite unité
+d'E/S logique
+• Le paramètre DB_BLOCK_SIZE définit la taille d'un
+bloc logique
+• La taille d'un bloc logique peut être comprise entre
+2 ko et 32 ko.
+
+8-4
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Les concepts de stockage de données
+Structure logique
+
+Structure physique
+
+Base de données
+
+Tablespace
+
+Fichiers de données
+
+Segment
+
+Extent
+
+Bloc de
+données Oracle
+
+8-5
+
+Bloc du système
+d'exploitation
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Les concepts de stockage de données
+Colonnes
+
+Table A
+
+Blocs
+
+Table B
+Lignes
+
+Segment
+
+Segment
+
+Table
+Tablespace
+
+Morceau de ligne
+8-6
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Extent
+
+Contenu des blocs de base de données
+Anatomie d'un bloc de base de données
+
+En-tête du bloc
+Croissance
+
+Espace libre
+
+Données des lignes
+
+En-tête du bloc : L'en-tête d'un bloc contient le type de segment (table ou index,
+par exemple),
+Données
+des lignes : Il s'agit des données réelles des lignes contenues
+
+Espace
+libre :L'espace
+L'espaceréservé
+libre se aux
+trouve
+au centre
+bloc. Ilaugmente
+permet à du
+dans
+le bloc.
+données
+desdulignes
+l'espace
+et à l'espace des données des lignes d'augmenter en
+bas
+vers led'en-tête
+haut
+fonction
+des besoins
+8-7
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Contenu des blocs de base de données
+
+8-9
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Informations de la structure de
+stockage
+• La vue DBA_TABLESPACES permet de donner des
+informations sur les tablespaces de la base de
+données
+• La vue DBA_SEGMENTS permet d’afficher les
+paramètres de stockage et l’utilisation de l’espace
+dans les segments
+• La vue DBA_EXTENTS permet d’afficher le nombre
+de blocs, la taille de l’extent…
+
+8-10
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Les tablespaces créés par défaut
+Lors de la création de la base de données plusieurs tablespaces
+sont crées par défaut :
+• SYSTEM contenant le dictionnaire de données
+• SYSAUX utilisé pour les composants de Oracle
+• UNDO tablespace utilisé pour les données d’annulation
+• TEMP un tablespace temporaire pour les opérations de tri
+Il est possible de créer un tablespace par défaut pour les objets
+crées sans précision du tablespace en général nommé
+USERS
+La vue DATABASE_PROPERTIES permet de donner des infos
+sur les tablespaces par défaut de la BD
+
+8-11
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Les tablespaces créés par défaut
+
+8-12
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Création de tablespace
+
+Trois types de tablespaces peuvent être crées :
+• Tablespace permanent
+• Tablespace temporaire
+• Tablespace UNDO
+
+8-13
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace Permanent
+La commande pour créer un tablespace permanant :
+CREATE [SMALLFILE|BIGFILE] TABLESPACE
+NOMTABLESPACE
+[DATAFILE [NOM_FICHIER][SIZE INTEGER{K|M|G|T}]
+[AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+[BLOCKSIZE INTEGER [K]]
+[LOGGING|NOLOGGING]
+[ONLINE|OFFLINE]
+[ENCRYPTION[USING ALGORITHM] [IDENTIFIED BY PASS]
+DEFAULT STORAGE ENCRYPT]
+[DEFAULT {COMPRESS|NOCOMPRESS}]
+8-14
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace Permanent
+SMALLFILE : tablespace sur plusieurs fichiers allant à
+1022 fichiers (Total Max 128 TB)
+BIGFILE : tablespace sur un seul fichier de grande taille
+(Max 128 TB)
+AUTOEXTEND : active l’extension automatique du fichier
+ONLINE : Tablespace immédiatement utilisable
+ENCRYPT : crypter les données du tablespace
+COMPRESS : le stockage des segments dans le
+tablespace est compressé
+
+8-15
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Exemple
+
+8-16
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Créer des tablespaces
+Exemple
+Un tablespace est créé à l'aide de la commande :
+CREATE TABLESPACE
+userdata : le nom de tablespace
+
+CREATE TABLESPACE userdata
+DATAFILE '/u01/oradata/userdata01.dbf' SIZE 100M
+AUTOEXTEND ON NEXT 5M MAXSIZE 200M;
+
+Par défaut c’est local : lors de la création, la gestion de tablespace
+
+8-17
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace Temporaire
+Le tablespace temporaire ne pourra pas être crée avec une
+taille du bloc différente de celle du bloc de la BD
+(DB_BLOCK_SIZE)
+Commande :
+CREATE (SMALLFILE|BIGFILE) TEMPORARY TABLESPACE
+NOMTABLESPACE
+[TEMPFILE [NOM_FICHIER][SIZE INTEGER{K|M|G|T}]
+[AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+[ONLINE|OFFLINE]
+TABLESPACE GROUP nomGroup;
+
+8-18
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace Temporaire
+TABLESPACE GROUP : permet de créer et d’affecter le
+tablespace temporaire à un groupe de tablespaces
+temporaires
+Les avantages :
+• Permettre d’affecter la BD par un groupe de tablespaces
+temporaires et ainsi augmenter sa performance
+• Permettre à une application d’utiliser plusieurs tablespaces
+temporaires à la fois pour le tri
+Pour modifier le tablespace temporaire par défaut :
+• ALTER DATABASE DEFAULT TEMPORARY TABLESPACE
+NOM_GP_OU_TBS
+
+8-19
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace UNDO
+Lorsque l’utilisateur exécute une requête LMD, les blocs
+concernés sont modifiés mais avant d’écraser les blocs
+originaux, Oracle prend une copie de ces données et la place
+dans le tablespace UNDO
+Si l’utilisateur décidera d’annuler sa transaction (Rollback),
+Oracle cherche les blocs originaux dans le tablespace UNDO
+Le tablespace UNDO ne pourra pas être crée avec une taille du
+bloc différente de celle du bloc de la BD(DB_BLOCK_SIZE)
+
+8-20
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le tablespace UNDO
+Commande de création :
+CREATE (SMALLFILE|BIGFILE) UNDO TABLESPACE
+NOMTABLESPACE
+[DATAFILE [NOM_FICHIER][SIZE INTEGER{K|M|G|T}]
+[AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+[ONLINE|OFFLINE];
+
+Pour modifier le tablespace temporaire par défaut
+:
+ALTER SYSTEM SET
+UNDO_TABLESPACE=NOMTBS_UNDO
+
+8-21
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces
+La gestion des tablespace englobe les opérations
+suivantes :
+Agrandissement du tablespace
+Changement du mode OFFLINE|ONLINE
+Déplacement du tablespace
+Tablespace en lecture seule
+Suppression du tablespace
+
+8-22
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Agrandissement du
+tablespace
+Pour agrandir un tablespace :
+Si le tablespace est SMALLFILE alors deux manières
+peuvent être utilisées :
+• Ajouter un fichier au tablespace
+• Augmenter la taille des fichiers du tablespace
+Si le tablespace est BIGFILE alors une seule
+possibilité : Augmenter la taille du fichier
+
+8-23
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Agrandissement du
+tablespace
+Ajouter un fichier au tablespace :
+ALTER TABLESPACE nom_tbs ADD
+{ DATAFILE |TEMPFILE } [nom_fichier]
+[SIZE INTEGER{K|M|G|T}]
+[AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+Supprimer un fichier du tablespace :
+ALTER TABLESPACE nom_tbs DROP DATAFILE|TEMPFILE
+nom_fichier
+
+8-24
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Agrandissement du
+tablespace
+Augmenter la taille ou activer l’auto-extension d’un fichier dans
+le tablespace:
+ALTER DATABASE [nom_bd] {DATAFILE|TEMPFILE}
+nom_fichier
+{ RESIZE INTEGER | [AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+
+8-25
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Agrandissement du
+tablespace
+Le cas d’un tablespace BIGFILE:
+ALTER tablespace nom_tbs
+{ RESIZE INTEGER
+|
+[AUTOEXTEND {OFF|ON[NEXT INTEGER]}]
+[MAXSIZE{UNLIMITED|INTEGER}]
+
+8-26
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Changement du mode
+OFFLINE|ONLINE
+
+En cas de problème dans un tablespace, on peut le mettre OFFLINE
+Ceci permet d’éviter de fermer la BD et ainsi arrêter les applications
+n’utilisant pas le tablespace concerné
+La Commande :
+ALTER TABLESPACE nom_tbs {
+ONLINE |
+OFFLINE [NORMAL|TEMPORARY|IMMEDIATE]
+}
+
+8-27
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Changement du mode
+OFFLINE|ONLINE
+
+NORMAL : Lance l’écriture des blocs modifiés dans le
+tablespace avant sa fermeture. Ceci ne nécessite pas la
+récupération des données avant de le rendre ONLINE
+TEMPORARY : lance un checkpoint sans s’assurer que
+les blocs sont écrites. Peut nécessiter la récupération
+IMMEDIATE : Récupération obligatoire lors du
+changement vers le mode ONLINE
+
+8-28
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Déplacement du
+tablespace
+Le déplacement du tablespace nécessite que la BD soit
+ouverte et le tablespace en mode OFFLINE
+Démarche :
+• Rendre OFFLINE le tablespace
+• Copier les fichiers à l’aide du système d’exploitation
+vers le nouveau emplacement
+• Renommer les fichier de données
+• Mettre le tablespace en ligne
+
+8-29
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Déplacement du
+tablespace
+La commande pour renommer les fichiers de données
+:
+ALTER TABLESPACE nom_tbs RENAME DATAFILE
+ancien_nom TO nouveau_nom
+
+8-30
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Tablespace en
+Lecture Seule
+On peut mettre un tablespace en lecture seule dans ce
+cas les opérations LMD sont interdites
+Commande :
+Alter Tablespace nom_tbs READ { ONLY | WRITE }
+
+8-31
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Gestion des tablespaces : Suppression du
+tablespace
+Commande :
+DROP Tablespace nom_tbs
+[
+INCLUDING CONTENTS
+[ AND DATAFILES] [CASCADE CONSTRAINTS]
+]
+INCLUDING CONTENTS : Supprime le tablespace s’il contient des
+objets
+DATAFILES : supprime les fichiers du tablespace (Inutile avec
+OMF(Oracle Managed Files) )
+CASCADE CONSTRAINTS : supprime les contraintes d’intégrité
+référentielles qui font référence aux tables du tablespace a supprimé
+8-32
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Consulter les informations sur les
+tablespaces
+Pour avoir des informations sur les tablespaces, nous
+pouvons utiliser les vues suivantes :
+• V$TABLEPSACE
+• DBA_TABLESPACE
+
+• DBA_DATA_FILES : infos sur les fichiers de données
+
+8-33
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Consulter les informations sur les tablespacesD.
+Exemple : Affichez les informations à partir du dictionnaire de données.
+
+DBA_TABLESPACE
+SQL> select
+tablespace_name from
+dba_tablespaces;
+TABLESPACE_NAME
+-----------------------------SYSTEM
+UNDOTBS1
+SYSAUX
+TEMP
+USERS
+EXAMPLE
+DATA01
+INDEX01
+RONLY
+9 ligne(s) sélectionnée(s).
+8-34
+
+DBA_DATA_FILES
+SQL> select
+tablespace_name from
+dba_data_files ;
+TABLESPACE_NAME
+-----------------------------USERS
+SYSAUX
+Pas de
+UNDOTBS1
+Temp
+SYSTEM
+EXAMPLE
+DATA01
+INDEX01
+RONLY
+8 ligne(s)
+sélectionnée(s).
+
+V$TABLEPSACE
+SQL> select name from
+v$tablespace;
+NAME
+-----------------------------SYSTEM
+UNDOTBS1
+SYSAUX
+USERS
+TEMP
+EXAMPLE
+DATA01
+INDEX01
+RONLY
+9 ligne(s)
+sélectionnée(s).
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+8-35
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+8-36
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+Le package DBMS_SPACE
+Le package DBMS_SPACE permet d’avoir les
+informations de stockage des segments de la BD
+Deux procédures sont proposées :
+• SPACE_USAGE : donne l’information sur
+l’occupation du segment et la distribution des blocs
+• UNUSED_SPACE : permet d’avoir une idée sur
+l’espace inutilisé dans le segment
+
+8-37
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+8-38
+
+Copyright © Oracle Corporation, 2014. Tous droits réservés.
+
+

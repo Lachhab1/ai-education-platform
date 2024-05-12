@@ -1,0 +1,97 @@
+Série révision Java
+Exercice 1 :
+Créez une classe Adresse composée de :
+-
+
+-
+
+-
+
+Attributs :
+o numero : entier
+o rue : chaine de caractère
+o quartier : chaine de caractère
+o ville : chaine de caractère
+o pays : chaine de caractère
+Constructeurs :
+o par défaut
+o paramétré (tous les cas possibles)
+o par recopie
+Méthodes :
+o Getters/setters
+o toString() (redéfinie à partir de Object)
+o afficher()
+o equals()
+
+Faire un petit programme d’essai
+Exercice 2 :
+Créez une classe Etudiant composée de :
+-
+
+Attributs :
+o CNE : chaine de caractère
+o nom : chaine de caractère
+o prenom : chaine de caractère
+o adresse : Adresse (de l’exercice 1)
+- Constructeurs :
+o par défaut
+o paramétré (tous les cas possibles)
+o par recopie
+- Méthodes :
+o Getters/setters
+o toString() (redéfinie à partir de Object)
+o equals()
+o afficherCoordonnees()
+a) Faire un petit programme d’essai
+b) Ajouter un attribut nombre représentant le nombre total d’objets étudiants
+créés, faites les modifications nécessaire et faire un petit programme d’essai.
+Pr. Abdessamad Belangour
+
+Exercice 3 :
+Soit une classe SMIS6représentant une classe scolaire d’étudiants SMI S6. Cette
+classe dispose de :
+-
+
+-
+
+-
+
+Attributs :
+o nomFiliere : chaine de caractère
+o listeEtudiants : tableau ou collection d’étudiants
+Constructeurs :
+o par défaut
+o paramétré (tous les cas possibles)
+o par recopie
+Méthodes :
+o Getters/setters
+o afficherFiliere()
+o afficherListe()
+o afficherTotalEtudiants()
+o ajouterEtudiant()
+o chercherEtudiant()
+
+Faire un petit programme d’essai
+Exercice 4 :
+Soit lEtudiant une interface étudiant.
+a) Donner le code associé à cette Interface.
+b) Ajuster la classe SMIS6 pour qu’elle prenne en considération cette interface.
+Exercice 5 :
+Nous voulons isoler la classe Etudiant de la classe Main (contenant le main) pour
+qu’elle ne l’instancie pas explicitement. Pour cela nous allons créer une classe
+appelée EtudiantFactory qui sera chargée d’instancier la classe Etudiant.
+Donnez le code de cette classe et réajuster encore une fois la classe SMIS6 pour
+prendre en considération ces changements.
+Exercice 6 :
+1) Ajouter un attribut notes qui est un tableau de notes à la classe Etudiant
+2) Ajouter une méthode moyenne() qui retourne la moyenne de l’étudiant
+3) Créer une classe NoteException qui signale une note en dehors de l’intervalle [0,20]
+4) Remplacer le tableau des étudiants par la collection adéquate
+
+5) Ajouter une méthode trier() à la classe SMIS6 permettant de trier la collection des étudiants
+(réfléchissez à implémenter Comparable ou Comparator)
+Pr. Abdessamad Belangour
+
+Pr. Abdessamad Belangour
+
+

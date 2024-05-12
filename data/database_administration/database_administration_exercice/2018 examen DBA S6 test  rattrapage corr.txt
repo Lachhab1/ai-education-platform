@@ -1,0 +1,387 @@
+UNIVERSITE HASSAN II DE CASABLANCA
+FACULTE DES SCIENCES BEN M’SIK
+
+Examen de Programmation : DBA
+
+SMI /S6
+Documents non Autorisés
+Durée : 1 H 00
+
+Le 31 MAI 2018
+Pr : S.ELFILALI
+
+Réservé à l’étudiant
+
+Réservé au professeur
+Note :
+
+Nom
+Prénom
+
+: …………..…………………………………………………………………….
+:……………………………………………………………….………………..
+
+Code apogée : …………..…………………………………………………………………
+CIN
+
+: …………..…………………………………………………………………….
+
+Partie 1 : Questions de cours (10 points )
+1. le processus ARCn est-il facultatif ou obligatoire et quel est son rôle ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+
+
+
+
+est un processus d’arrière-plan facultatif,
+en mode ARCHIVELOG, archive automatiquement les fichiers de journalisation en
+ligne,
+enregistre toutes les modifications apportées à la base de données.
+
+2. Quel est le rôle de SPFILE ? et c’est quoi son extension ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+le PFILE est un fichier texte (donc mis à jour avec n'importe quel editeur de texte) sur le client
+(là où tourne sqlplus). Il sert à passer tous les paramètres qu'on veut lors du premier
+lancement de l'instance.
+Le SPFILE est le fichier où Oracle stocke les paramètres d'instance sur le serveur. Comme ça
+plus besoin de repréciser un spfile à chaque fois. C'est un fichier binaire géré par Oracle et mis
+
+1
+
+à jour quand on modifie des paramètres (avec ALTER SYSTEM SET ...)
+Et le gros avantages, lorsqu'on a un spfile il y a beaucoup de paramètres qu'on peut changer
+sans avoir à redémarrer l'instance.
+Du coup, maintenant, le PFILE n'est utilisé que pour créer une nouvelle instance. Ou parfois si
+on a modifiés des paramètres qui empêchent l'instance de démarrer.
+
+Extension spfilexxx.ora
+3. Qu’est-ce qu’une instance oracle ? et c’est quoi son rôle ?
+
+……………………………….………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+L'instance est en fait la composition de 2 sous ensembles :
+
+
+
+
+Une zone mémoire : La SGA
+
+
+
+
+Des processus d'arrière plan :
+
+Elle va servir à stocker les données issues des fichiers de données sur le disque dur. Afin de
+pouvoir les partager entre les différents processus.
+Ils vont servir à gérer les transferts de données entre la mémoire et le disque dur, plus
+d'autres actions nécessaires au bon fonctionnement de la base de données.
+
+L'instance est indispensable au bon fonctionnement d'une base de données Oracle. Sans instance il
+ne vous sera pas possible d'accéder à la base de données.
+Il faut savoir qu'une instance ne pourra être assignée qu'à une seule base de données (sauf en
+environnement RAC).
+
+4. C’est quoi un privilège ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+Le droit d’exécuter la requête SQL spécifique s’appelle un privilège.
+L’administrateur de base de données (DBA) est un utilisateur haut niveau qui a le droit de
+créer des utilisateurs et de leur donner des droits d’accès à la base de donné es et aux
+objets. Les utilisateurs ont besoin des privilèges système pour accéder à la base de
+données et des privilèges objet pour manipuler le contenu des objets de la base de
+données. Les utilisateurs peuvent recevoir le privilège permettant d’accorder des
+privilèges à d’autres utilisateurs ou à des rôles qui sont des groupes nommés de
+privilèges.
+
+5. Quelle est la différence entre un privilège système et un privilège objet ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+2
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+
+Qui
+
+Les privilèges de niveau système
+permettent
+
+la
+
+création,
+
+modification,
+
+suppression,
+
+exécution
+
+de
+
+groupes
+
+d'objets
+
+les privilèges CREATE TABLE, CREATE VIEW, CREATE SEQUENCE par exemple permettent à
+l'utilisateur qui les a reçu de créer des tables, des vues et des séquences
+
+
+Qui
+
+Les privilèges de niveau objet
+permettent
+
+les
+
+manipulations
+
+sur
+
+des
+
+objets
+
+spécifiques
+
+les privilèges SELECT, INSERT, UPDATE, DELETE sur la table SCOTT.EMP par exemple permettent à
+l'utilisateur qui les a reçu de sélectionner, ajouter, modifier et supprimer des lignes dans la table
+EMP appartenant à l'utilisateur SCOTT
+
+6. Quel privilège un utilisateur doit-il posséder pour créer des tables ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+
+Qui
+
+Les privilèges de niveau système
+permettent
+
+la
+
+création,
+
+modification,
+
+suppression,
+
+exécution
+
+de
+
+groupes
+
+d'objets
+
+les privilèges CREATE TABLE, CREATE VIEW, CREATE SEQUENCE par exemple permettent à
+l'utilisateur qui les a reçu de créer des tables, des vues et des séquences
+
+7. C’est quoi un rôle et quel est son avantage?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+
+
+Un rôle est un groupe nommé de privilèges qui peuvent être assignés à un utilisateur.
+Cette méthode facilite la gestion des privilèges.
+
+
+
+Un utilisateur peut avoir accès à plusieurs rôles et plusieurs utilisateurs peuvent
+recevoir le même rôle. Les rôles sont spécialement créés pour une application de la
+base de données
+
+8. Quelle commande pouvez-vous utiliser pour changer de mot de passe ?
+
+…………………………………………………………………………………………………………………………………………………………
+…………………………………………………………………………………………………………………………………………………………
+
+ALTER USER user IDENTIFIED BY password;
+3
+
+9. Quel est le rôle du le dictionnaire de données ?
+
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+Le dictionnaire de données Oracle représente le coeur de la base de données. Il s'agit d'un
+ensemble de tables systèmes contenant les informations relatives à la structure de la base de
+données :
+
+
+Utilisateurs de la base (ainsi que leurs privilèges et leur rôle)
+
+
+
+Noms et caractéristiques des objets contenus dans la base (tables, vues, index, clusters,
+triggers, packages, ...)
+
+
+
+Contraintes d'intégrité
+
+
+
+Ressources physiques allouées à la base
+
+
+
+...
+Le dictionnaire est créé au moment de la création de la base et est mis à jour.
+Il appartient à l'utilisateur SYS, mais l'utilisateur SYSTEM, c'est-à-dire l'administrateur de la base,
+possède des droits de lecture sur des vues du dictionnaire. Enfin le dictionnaire de données est
+conservé dans le tablespace SYSTEM.
+Le dictionnaire de données sert principalement dans deux situations :
+
+
+
+afin de vérifier la syntaxe et les privilèges sur une requête SQL (pour le DDL, Data Definition
+Language)
+
+
+
+Afin d'obtenir des informations sur la structure de la base de données
+
+10. Quels sont les informations délivrées par cette commande : ?
+SQL> select name from v$controlfile;
+
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+NAME
+-------------------------------------------------------------------------------C:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\CONTROL01.CTL
+C:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\CONTROL02.CTL
+C:\ORACLE\PRODUCT\10.2.0\ORADATA\ORCL\CONTROL03.CTL
+Où se trouve le fichier de contrôle existant et quel est son nom ?
+
+Partie 2 : Exercice (10 points)
+
+4
+
+1. Une fois la base de données arrêtée, écrire la requête qui permet de Créer le fichier
+
+SPFILE à partir du fichier PFILE qui se trouve dans le répertoire
+C:\oracle\product\10.2.0\db_1\dbs.
+
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+SQL> create spfile = 'C:\oracle\product\10.2.0\db_1\dbs\spfileRamadan.ora'
+2 from pfile = 'C:\oracle\product\10.2.0\db_1\dbs\initdw.ora';
+
+2. Ecrire les requêtes qui permettent de créer les deux utilisateurs CHAABAN et
+RAMADAN avec les mots de passe respectivement Fetour et Siyam
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+3. Ecrire les requêtes qui permettent aux utilisateurs CHAABAN et RAMADAN de créer
+une session
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+4. Ecrire les requêtes qui permettent d’autoriser à l’utilisateur CHAABAN d’accéder à la
+table MODULES de l’utilisateur smi. Avec la possibilité de donner ce privilège à
+l’utilisateur RAMADAN
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+5. Écrire la requête qui permet d’autoriser CHAABAN à accéder à la table MODULES de
+l’utilisateur smi par l’utilisateur SMI Avec la possibilité de donner ce privilège à un
+autre utilisateur
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+6. Quels sont les requêtes qui permettent d’Ajouter une ligne à la table MODULES
+ L’utilisateur CHAABAN doit ajouter le module Mois sous le numéro 29
+ l’utilisateur RAMADAN doit ajouter le module laylat_9adr sous le numéro 27.
+ NB : La table MODULES contient 3 champs
+5
+
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+7. Ecrire les requêtes qui permettent de Créer des synonymes pour la table MODULES :
+ RAMADAN crée un synonyme nommé RAM pour la table MODULES.
+ CHAABAN crée un synonyme nommé CHAB pour la table MODULES.
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+8. Ecrire les requêtes qui permettent d’Interroger toutes les lignes de la table MODULES
+en utilisant le synonyme déjà crée .
+ L’utilisateur RAMADAN
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+ L’utilisateur CHAABAN
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+9. Est-ce qu’on aura le même résultat pour ces deux requêtes ?
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+10. Retirez à l'autre utilisateur le privilège SELECT.
+NB :
+
+
+
+RAMADAN retire le privilège.
+CHAABAN retire le privilège.
+
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+………………………………………………………………………………………………………………………………………………
+6
+
+

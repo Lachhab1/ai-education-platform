@@ -1,0 +1,669 @@
+JDBC
+Pr. BEN LAHMAR EL HABIB
+1
+
+Le problème de l’accès aux données sans JDBC
+Java est un excellent candidat pour le développement d’applications de bases de données:
+robuste et sécurisé
+facile à comprendre
+automatiquement téléchargeable par le réseau
+mais avant JDBC, il était difficile d’accéder à des bases de données SQL depuis Java :
+obligé d’utiliser des API natives comme ODBC
+2
+
+Objectifs de JDBC
+Permettre aux programmeurs Java d’écrire un code indépendant de la base de données et du moyen de connectivité utilisé
+Réalisé par l’API JDBC :
+une interface uniforme permettant un accès homogène aux SGBD
+simple à mettre en œuvre
+indépendant de la SGBD cible
+supportant les fonctionnalités de base du langage SQL
+3
+
+Avantages
+Liés a Java :
+portabilité sur de nombreux O.S. et sur de nombreuses SGBDR (Oracle, Informix, Sybase, ..)
+uniformité du langage de description des applications, des applets et des accès aux bases de données
+liberté totale vis a vis des constructeurs
+4
+
+Qu’est ce que JDBC ?
+Java DataBase Connectivity (Core API 1.1)
+API Java adaptée à la connexion avec les bases de données relationnelles (SGBDR)
+Fournit un ensemble de classes et d’interfaces permettant l’utilisation sur le réseau d’un ou plusieurs SGBDR à partir d’un programme Java.
+5
+
+L'architecture JDBC standard
+Tout programme comporte 3 composants :
+Le code de l'application (ou de l'applet)
+Les requêtes doivent être au standard JDBC
+ Le JDBC Driver Manager
+ Fourni par SUN
+ Lien entre l'application et les pilotes (ou drivers) JDBC
+ Le driver JDBC
+ Fourni par le fournisseur de la base ou autre
+ Adapté à la BD
+ Convertit les requêtes JDBC en requêtes propres à la base
+6
+
+Architecture JDBC
+7
+
+Les types de pilotes JDBC
+4 types de drivers (taxonomie de JavaSoft) :
+ Type I : JDBC-ODBC bridge driver
+ Type II : Native-API, partly-Java driver
+ Type III : Net-protocol, all-Java driver
+ Type IV : Native-protocol, all-Java driver
+Tous les drivers :
+ttp://www.javasoft.com/products/jdbc/drivers.html
+8
+
+Les types de pilotes JDBC
+Type 1 ( JDBC-ODBC bridge ) : le pont JDBC-ODBC qui s'utilise avec ODBC et un pilote ODBC spécifique pour la base à accéder. C'est la solution idéale pour des développements avec exécution sous Windows d'une application locale. 
+ inconvénients :
+la multiplication du nombre de couches rend complexe l'architecture (bien que transparent pour le développeur) et détériore un peu les performances
+lors du déploiement, ODBC et son pilote doivent être installé sur tous les postes ou l'application va fonctionner.
+la partie native (ODBC et son pilote) rend l'application moins portable et dépendant d'une plateforme. 
+9
+
+Les types de pilotes JDBC
+Type 3 : un driver écrit en Java utilisant le protocole natif de la base de données. 
+Ce type de driver utilise un protocole réseau propriétaire spécifique à une base de données. Un serveur dédié reçoit les messages par ce protocole et dialogue directement avec la base de données. Ce type de driver peut être facilement utilisé par une applet mais dans ce cas le serveur intermédiaire doit obligatoirement être installé sur la machine contenant le serveur web.
+10
+
+Les types de pilotes JDBC
+Type 4 : un driver Java natif
+Ce type de driver, écrit en java, appelle directement le SGBD par le réseau. Ils sont fournis par l'éditeur de la base de données.
+Avantage : tout le code est chargé sur le poste client sous forme de classes java.
+Inconvénient : La base de données reste sur le serveur d’applets.
+11
+
+Types de drivers et applets
+Une application Java peut travailler avec tous les types de drivers
+Pour une applet (untrusted) :
+type I ou II : impossible
+une applet ne peut pas charger à distance du code natif (non Java) sur son poste d’exécution
+ type III : possible
+si le serveur middleware se situe au même endroit que le serveur Web (car communication par sockets avec l’applet)
+ type IV : possible
+ si le SGBDR installé au même endroit que le serveur Web
+12
+
+Modèles de connexion en Java
+2-tiers : 2 entités interviennent
+ une application Java ou une applet
+ le SGBDR
+
+Modèle 3-tiers : 3 entités interviennent
+ une application Java ou une applet
+ un serveur middleware installé sur le réseau
+ le SGBDR
+13
+
+Modèle 2-tiers
+Principe :
+ l’application (ou l’applet) cliente utilise JDBC pour parler directement avec le SGBD qui gère la base de données
+Avantages :
+ simple à mettre en œuvre
+ bon choix pour des applications clientes peu évoluées, à livrer rapidement et n’exigeant que peu de maintenance
+ Inconvénients :
+ dépendance forte entre le client et la structure du SGBDR
+g modification du client si l’environnement serveur change
+tendance à avoir des clients « graisseux »
+ tout le traitement est du côté client
+14
+
+Architecture 2-tiers
+15
+
+Modèle 3-tiers
+ Principes :
+le serveur middleware est l’interlocuteur direct du code Java client; c’est lui qui échange des données avec le SGBDR
+pas forcément écrit en Java
+si c’est le cas : utilise souvent JDBC pour accéder au SGBDR
+ Avantages:
+le middleware peut ajouter un niveau de sécurité
+plusieurs supports pour les échanges avec le client :
+sockets, RMI Java, CORBA, …
+applets : le SGBDR peut se trouver sur une autre machine:
+mais serveur Web et middleware au même endroit
+facilite l’utilisation de clients « légers »
+16
+
+Modèle 3-tiers
+17
+
+Scénarios d’utilisation
+Scénario 1 :
+architecture 2-tiers avec une application Java
+
+18
+
+Scénarios d’utilisation
+Scénario 2 :
+architecture 2-tiers avec une applet Java
+19
+
+Scénarios d’utilisation
+Scénario 3 :
+ architecture 3-tiers et applet/application Java
+20
+
+Enregistrer une base de données dans ODBC sous Windows 9x ou XP
+21
+
+Enregistrer une base de données dans ODBC sous Windows 9x ou XP
+22
+
+L’API JDBC
+Est fournie par le package java(x).sql
+permet de formuler et gérer les requêtes aux bases de données relationnelles
+supporte le standard « SQL-3 Entry Level »
+bientôt le niveau supérieur : ANSI SQL-4
+Classes/interfaces définissant les objets nécessaires:
+à la connexion à une base éloignée 
+et à la création et exécution de requêtes SQL
+23
+
+L’API JDBC
+Disponible en plusieurs versions
+JDBC 1 :
+Livrée avec JDK 1.1
+Tout se trouve dans le package java.sql
+JDBC 2 :
+2 packages
+J2SE contient java.sql (SDK 1.2+)
+J2EE contient javax.sql
+JDBC 3 :
+Avec J2SE, SDK 1.4+
+24
+
+Les classes de l'API JDBC
+Les classes de java.sql :
+Statement
+CallableStatement, PreparedStatement
+DatabaseMetaData, ResultSetMetaData
+ResultSet,
+Connection
+Driver
+De javax.sql :
+RowSet
+Datasource
+25
+
+LES CLASSES DE L'API JDBC
+Toutes les classes de JDBC sont dans le package java.sql
+
+Classe
+
+Role
+DriverManager
+charge et configure le driver de la base de données.
+Connection
+
+réalise la connexion et l'authentification à la base de données.
+Statement ( et PreparedStatement )
+contient la requête SQL et la transmet à la base de données.
+ResultSet
+permet de parcourir les informations retournées par la base de données
+dans le cas d'une sélection de données
+26
+
+La connexion à une base de données
+Chargement d’un pilote JDBC
+Définition de l’URL de connexion
+Etablissement de la connexion
+Création d’une instruction
+Exécution de la requête
+Traitement des résultats
+Fermeture de la connexion
+27
+
+Chargement d’un pilote JDBC
+Pour se connecter à une base de données via ODBC, il faut tout d'abord charger le pilote JDBC-ODBC qui fait le lien entre les deux.
+L’utilisation de la méthode Class.forName() peut lever une exception de type ClassNotFoundException, il convient donc de placer le chargement du pilote dans un bloc sécurisé.
+Exemple :
+Try {
+Class.forName(« oracle.jdbc.driver.OracleDriver ») ;
+}
+catch(ClassNotFoundException e) {
+System.err.println(« Erreur de chargement du driver : + e) ;
+}
+28
+
+Définition de l’URL de connexion.
+Afin de localiser votre serveur ou votre base de données, il est indispensable de spécifier une adresse sous forme d’URL de type « jdbc: ».
+pour une connexion à une base de données en utilisant un driver JDBC, l’URL se compose comme suit: 
+		jdbc:<sous-protocole>:<nom-BD>?param=valeur, ...
+Exemple:
+String url=jdbc:odbc:Mabase
+
+29
+
+Etablissement de la connexion
+La classe DriverManager dispose d’une méthode statiqŵe permettant d’obtenir une cůnnexion à l’URL, la méthode getConnectioŮ() qui retourne ŵn objet de tyŰe Connexion. Cette méthode peut, si la connexion échoue ou si šucun pilote ne prend en chargť l’URL spécifiée, une exception de type SQLException.
+Exemple :
+Import java.sql.* ;
+…
+try {
+Connection con = DriverManager.getConnection(url,userId,password) ;
+}
+catch(SQLException sqle) {
+System.err.println(« Erreur lors de la connexion : » + sqle) ;
+}
+30
+
+Les transactions
+Une transaction est un ensemble de traitements qui sont regroupés pour être validés ou invalidés simultanément
+Par défaut une nouvelle connexion fonctionne en validation automatique « auto-commit». Chaque opération est validée individuellement.
+Pour gérer des transactions il faut donc modifier l’état par défaut.
+
+
+Les transactions seront ensuite validées ou invalidées par l’appel des méthodes commit() ou rollback().
+public abstract void setAutoCommit(boolean autoCommit) throws SQLException
+31
+
+Afin d’accéder ou de modifier les informations contenues dans la base de données, il convient d’utiliser un objet de type Statement. 
+Une instance de cet objet est retournée par la méthode Connexion.createStatement() comme ceci :
+Statement statement = con.createStatement() ;
+3 types de Statement :
+Statement : requêtes statiques simples
+PreparedStatement : requêtes dynamiques pré-compilées (avec paramètres d’entrée/sortie)
+CallableStatement : procédures stockées
+32
+
+Exécution d’une requête
+Pour une requête de type interrogation (SELECT), la méthode à utiliser de la classe Statement est exécuteQuery(). retourne un ResultSet (tuples résultants)
+
+Pour des traitements de mise à jour, il faut utiliser la méthode executeUpdate(). retournent un entier (nombre de tuples traités)
+String query = "SELECT * FROM Employés"; 
+ResultSet resultset = statement.executeQuery(query);
+String query = "DELETE FROM Employés WHERE Région = ‘WA’";
+int result = statement.executeUpdate(query) ;
+33
+
+Traitement du résultat
+Le résultat d'une requête d'intérrogation est renvoyé dans un objet de la classe ResultSet par la méthode executeQuery().
+En ce qui concerne la numérotation des colonnes, elle ne commence pas à 0 comme pour les tablešux KAWA, mais à 1.
+lors de l’exécution de la requêtť, l’objet ResultSet ne semble pas positionné sur le premier enregistrement mais avant, dans une zone que Ŭ’on nomme le GAP.
+L’objet ResultSet dispose aussi d’un certain nombre de méthodes permettant de naviguer d’un enregistrement à un autre.
+while(resultset.next()) {
+System.out.println(resultset.getString(1)) ;
+}
+34
+
+la classe ResultSet
+Méthode
+Role
+getInt(int)
+retourne le contenu de la colonne dont le numéro est passé en paramètre sous forme d'entier.
+getInt(String)
+retourne le contenu de la colonne dont le nom est passé en paramètre sous forme d'entier.
+getFloat(int)
+retourne le contenu de la colonne dont le numéro est passé en paramètre sous forme de nombre flottant.
+getFloat(String)
+getDate(int)
+retourne le contenu de la colonne dont le numéro est passé en paramètre sous forme de date.
+getDate(String)
+next()
+se déplace sur le prochain enregistrement : retourne false si la fin est atteinte
+Close()
+ferme le ResultSet
+getMetaData()
+retourne un objet ResultSetMetaData associé au ResultSet.
+Les principales méthodes pour obtenir des données sont :
+35
+
+Fermeture de la connexion
+Pour terminer proprement un traitement, il faut fermer les différents espaces ouverts
+ sinon le garbage collector s’en occupera mais moins efficace
+Chaque objet possède une méthode close() :
+resultset.close();
+statement.close();
+connection.close();
+
+36
+
+Exemple de consultation
+import java.sql.*;
+public class AffichageBaseDeDonnees {
+   public static void main(String args[]) {
+    String n,p,uid;
+    String url = "jdbc:odbc:BDMUS";
+    Statement req = null;
+    Connection con=null;
+    ResultSet res;
+     try {   Class.forName("Sun.jdbc.odbc.JdbcOdbcDriver");}
+    catch (Exception e) { System.out.println("Erreur de chargement du pilote JDBC/ODBD.");  }
+    try {   con = DriverManager.getConnection (url);
+               req = con.createStatement();
+    } 
+    catch (Exception e) {  System.err.println("Erreur de connexion à jdbc:odbc:BDID"); }
+    try {  System.out.println("\n >>   résultat obtenu :  \n");       
+             res= req.executeQuery("select *  from identite");
+             while (res.next()) { uid = res.getString("id_user");
+                                           n = res.getString("Nom");
+                                           p = res.getString("Prenom");
+                                           System.out.println("\n" + uid + " - " + n + "  - " + p + "\n"); 	 
+             } 
+     }
+     catch (Exception e) { e.printStackTrace(); }
+     finally {    try {con.close();} 
+                     catch(SQLException e){e.printStackTrace();}
+     } // fin finally
+ }//Fin de la fonction main
+}//Fin du programme
+37
+
+Exemple de remplissage
+import java.sql.*;
+import java.io.*;
+public class RemplBaseDeDonnees {
+   public static void main(String args[]) {
+    DataInputStream din = new DataInputStream(System.in);
+    String id,N,P,str="";    
+    String url = "jdbc:odbc:BDMUS";
+    Connection con=null;
+    PreparedStatement req = null;
+     try { con = DriverManager.getConnection(url);} 
+    catch (Exception e) { System.err.println("Erreur de connexion à jdbc:odbc:BDID");  }
+    try { System.out.print("\n\n Debut d'enregistrement : \n");
+            System.out.print("\nUser_id = ");
+            id = din.readLine();
+            System.out.print("\nNom : ");
+            N = din.readLine();
+            System.out.print("\nPrenom : ");
+            P = din.readLine();
+            str="'"+id+"','"+N+"','"+P+"'"; 
+            str="INSERT INTO identite(id_user,Nom,Prenom) values ("+str+")";
+            req=con.prepareStatement(str);
+            req.executeUpdate();
+    }
+    catch (Exception e) { e.printStackTrace(); }
+    finally {  try {con.close();} 
+               catch(SQLException e) {e.printStackTrace();} 
+    } 
+  }//Fin de la méthode main
+}//Fin du programme
+38
+
+Exemple de suppression
+import java.sql.*;
+import java.io.*;
+ public class SuppressionBaseDeDonnees {
+   public static void main(String args[]) {
+    DataInputStream din = new DataInputStream(System.in);
+    String url = "jdbc:odbc:BDMUS",N;
+    PreparedStatement req=null;
+    Connection con=null;
+    try {    con = DriverManager.getConnection (url);} 
+    catch (Exception e) { System.err.println("Erreur de connexion à jdbc:odbc:BDID");}
+    try {              
+            System.out.print("\nNom : ");
+            N = din.readLine();
+            req=con.prepareStatement("delete from identite where Nom='"+N+"'");
+            req.executeUpdate();
+	
+    }
+   catch (Exception e) { e.printStackTrace(); }
+    finally {    try {con.close();} 
+                    catch(SQLException e) {e.printStackTrace();} 
+    }
+  } //Fin de la methode main
+}//Fin du programme
+39
+
+Exemple plus pratique
+import java.sql.*;
+public class DBInteraction{
+   private Connection connexion;
+   private Statement instruction;
+   protected ResultSet résultat;
+String url;
+Public static v oid  connect() {    //constructeur
+      try {
+         url= "jdbc:mysql://localhost:3333/mabase;
+         Class.forName("com.mysql.jdbc.Driver");
+         connexion = DriverManager.getConnection(url , "root", "");
+         instruction = connexion.createStatement();
+      } 
+      catch (ClassNotFoundException ex) {
+         System.err.println("Problème de pilote");
+      }
+      catch (SQLException ex) {
+         System.err.println("Base de données non trouvée ou requête incorrecte");
+      }
+   }
+   public static Resultset lire(String requête) { //---   }
+Public static  int miseAJour(String requête) {       //---   }
+Public static  boolean deconnect() {       //---   }
+}
+
+40
+
+Exemple plus pratique
+import java.sql.SQLException;
+
+public class PersonneDao{
+List personnes=new Arraylist();
+public allpersonne() {
+ DBInteraction.connect()
+     Resultset rs=  DBInteraction.lire("SELECT * FROM  personne");
+    while(rs.next())
+     {
+personne p=new personne(rs.getint("id"), rs.getstring("nom"), rs.getstring("nom"));
+Personnes.add(p);
+     }
+DBInteraction.deconnect()
+   }
+public Personne findPersonneById(int () {
+DBInteraction.connect()
+personne p=new
+ DBInteraction.lire("SELECT * FROM personne where id=« +id);
+If(rs.next()
+p=new personne(rs.getint("id"), rs.getstring("nom"), rs.getstring("nom"));
+DBInteraction.deconnect()
+Return p;
+   }
+…..//delete
+……//update
+41
+
+Exemple plus pratique
+public class Main {
+    
+public static void main(String[] args) {
+       
+PersonneDao pm=new PersonneDao()
+	List Ps=        pm.allpersonne();
+	foreach(Personne p :ps)
+{
+	system.out.println(p.getid()+" …."+p.getNom()  ):
+}
+
+    
+}
+
+
+
+
+
+42
+
+PreparedStatement
+Lors de l'envoi d'une requête pour exécution 4 étapes doivent être faites :
+analyse de la requête
+compilation de la requête
+optimisation de la requête
+exécution de la requête
+et ceci même si cette requête est la même que la précédente!! Or les 3 premières étapes ont déjà été effectuées dans ce cas.
+Les bases de données définissent la notion de requête préparée, requête où les 3 premières étapes ne sont effectuées qu'une seule fois.
+modéliser cette notion: l'interface PreparedStatement
+interface dérive de l'interface Statement.
+43
+
+PreparedStatement
+on ne peut pas avec un Statement construire des requêtes paramétrées. Il faut pour cela utiliser un PreparedStatement.
+
+
+Syntaxe:
+PreparedStatement pSmt = conX.prepareStatement("SELECT * FROM Livres" );
+ResultSet rs = pSmt.executeQuery();
+Exemple :
+PreparedStatement pSmt = conX.prepareStatement("SELECT
+nom FROM Personnes WHERE age > ? AND adresse = ?" );
+pSmt .setInt(1, 22);
+pSmt .setString(2, "Turin");
+ResultSet rs = smt.executeQuery();
+setType(numéroDeLArgument, valeur)
+44
+
+CallableStatement
+L'interface CallableStatement définit les méthodes pour un objet qui va permettre d'appeler une procédure stockée.
+Cette interface hérite de l'interface PreparedStatement.
+Un objet qui implémente l'interface CallableStatement est obtenu en utilisant la méthode prepareCall() d'un objet de type Connection.
+45
+
+Exécution
+On lance l'éxécution d'une procédure stockée à l'aide de la syntaxe :
+{call nom_procedure_stockees} : cette forme la plus simple permet l'appel d'une procédure stockée sans paramètre ni valeur de retour
+{call nom_procedure_stockees(?, ?, ...)} : cette forme permet l'appel d'une procédure stockée avec des paramètres·
+{? = call nom_procedure_stockees(?, ?, ...)} : cette forme permet l'appel d'une procédure stockée avec des paramètre et une valeur de retour·
+46
+
+Exécution 
+Pour exécuter la requête, l'interface PreparedStatement propose deux méthodes:
+executeQuery() : cette méthode permet d'exécuter une requête de type interrogation et renvoie un objet de type ResultSet qui contient les données issues de l'exécution de la requête·
+executeUpdate() : cette méthode permet d'exécuter une requête de type mise à jour et renvoie un entier qui contient le nombre d'occurrences impactées par la mise à jour·
+47
+
+JDBC 2.0
+La version 2.0 de l'API JDBC a été intégrée au JDK 1.2. Cette nouvelle version apporte plusieurs fonctionnalités très intéréssantes dont les principales sont :
+support du parcours dans les deux sens des résultats ·
+support de la mise à jour des résultats ·
+possibilité de faire des mises à jour de masse (Batch Updates) ·
+prise en compte des champs définis par SQL-3 dont BLOB (BinaryLargeOBject ) et CLOB (CharacterLargeOBject)
+L'API JDBC 2.0 est séparée en deux parties :
+la partie principale (core API) contient les classes et interfaces nécessaires à l'utilisation de bases de données : elles sont regroupées dans le package java.sql·
+la seconde partie est une extension utilisée dans J2EE qui permet de gérer les transactions distribuées, les pools de connection, la connection avec un objet DataSource ... Les classes et interfaces sont regroupées dans le package javax.sql·
+48
+
+JDBC 2.0
+		Méthode 				Rôle
+
+boolean isBeforeFirst() 		renvoie un booleen qui indique si la position courante du 				curseur se trouve avant la première ligne
+boolean isAfterLast() 		renvoie un booleen qui indique si la position courante du 				curseur se trouve après la dernière ligne
+boolean isFirst() 		renvoie un booleen qui indique si le curseur est 					positionné  sur  la première ligne
+boolean isLast() 			renvoie un booleen qui indique si le curseur est positionné 				sur  la dernière ligne
+boolean first() 			déplace le curseur sur la première ligne
+boolean last() 			déplace le curseur sur la dernière ligne
+boolean absolute() 		déplace le curseur sur la ligne dont le numéro est fournie 				en  paramètre à partir du début si il est positif et à partir 				de  la  fin si il est négatif. 1 déplace sur la première ligne, 				-1 sur la  dernière, -2 sur l'avant dernière ...
+boolean relative(int) 		déplace le curseur du nombre de lignes fourni en 					paramètre par rapport à la position courante du curseur. 				Le paramètre  doit être négatif pour se déplacer vers le 				début et positif  pur se déplacer vers la fin. Avant l'appel de 				cette méthode, il faut obligatoirement que le curseur soit 				positionné sur une ligne.
+boolean previous() 		déplace le curseur sur la ligne précédente. Le booleen 				indique si la première occurrence est dépassée.
+49
+
+JDBC 2.0
+void afterLast() 
+déplace le curseur après la  dernière ligne
+void beforeFirst()	
+déplace le curseur avant la première ligne
+int getRow() 		
+renvoie le numéro de la ligne courante
+50
+
+JDBC 2.0
+		Méthode 			Rôle
+updateXXX(String, XXX) 	permet de mettre à jour la colonne dont le 				nom est fourni en paramètre. Le type Java 				de cette colonne est XXX
+
+updateXXX(int, XXX) 		permet de mettre à jour la colonne dont 				l'index est fourni en paramètre. Le type 				Java de cette colonne est XXX
+
+updateRow() 		permet d'actualiser les modifications 				réalisées avec des appels à updateXXX()
+boolean rowsUpdated() 	indique si la ligne courante a été modifiée
+
+deleteRow() 			supprime la ligne courante
+
+rowDeleted() 		indique si la ligne courante est supprimée
+
+moveToInsertRow() 		permet de créer une nouvelle ligne dans 				l'ensemble de résultat
+
+inserRow() 			permet de valider la création de la ligne
+51
+
+Accès aux méta-données
+La méthode getMetaData () permet d’obtenir des informations sur les types de données du ResultSet
+ elle renvoie des ResultSetMetaData
+ on peut connaître entre autres :
+ le nombre de colonne : getColumnCount()
+ le nom d’une colonne : getColumnName(int col)
+ le nom de la table : getTableName(int col)
+ si un NULL SQL peut être stocké dans une colonne : isNullable()
+52
+
+ResultSetMetaData
+ResultSet rs = stmt.executeQuery("SELECT * FROM emp");
+ResultSetMetaData rsmd = rs.getMetatData();
+
+int nbColonnes = rsmd.getColumnCount();
+for(int i = 1; i <= nbColonnes; i++) {
+// colonnes numerotées à partir de 1 (et non 0)
+String nomCol = rsmd.getColumnName(i);
+}
+
+53
+
+DatabaseMetaData
+Pour récupérer des informations sur la base de données elle-même, utiliser la méthode getMetaData() de l’objet Connection
+ dépend du SGBD avec lequel on travaille
+ elle renvoie des DatabaseMetaData
+ on peut connaître entre autres :
+ getDriverVersion(), getDriverName(),
+ getDatabaseProductName(), getDatabaseProductVersion()
+ les tables de la base : getTables()
+ le nom de l ’utilisateur : getUserName()
+54
+
+Le composant RowSet
+A démarré avec JDBC 2
+ Interfacé vers un containeur pour tabuler les données
+ Souvent associé avec un ResultSet
+ Peut être n'importe quelle donnée, tableau, fichier à plat, etc.
+Étend l'interface de ResultSet
+ Contient un ensemble complet de propriétés
+ Supporte les interactions basées sur les évènements
+55
+
+Le composant RowSet (2)
+Il a la possibilité de se remplir lui-même avec des données
+ Définition de l'emplacement de la base de données dans une propriété principale
+ Peut aussi être rempli à partir d'un ResultSet existant
+56
+
+RowSetReader et RowSetWriter
+Chaque classe qui implémente une RowSet dispose d'une lecture et d'une écriture associées :
+ La lecture extrait les données à partir de la source de données pour remplir le RowSet : appliquer l'interface RowsetReader
+ L'écriture extrait les données du RowSet et les envoie dans la source de données : appliquer RowSetWriter
+57
+
+Types de RowSet
+Les types définis par les fournisseurs :
+ CachedRowSet :
+ Déconnecte le RowSet qui stocke ces données dans la mémoire
+ Ne convient pas à des données volumineuses
+ Idéal pour les client java légers ou les PDA
+ JDBCRowSet :
+ Sert de fin emballage autour du ResultSet
+ Utilise un driver JDBC
+ WebRowSet :
+ Connecte le RowSet qui utilise le protocole HTTP
+ Permet une interaction avec les servlets à partir du client léger à la manière d'un tableau
+58
+
+Connexion/déconnexion du RowSet
+Les RowSet peuvent être utilisés de la même manière que les ResultSet standards
+ Peuvent être reliés à une source de données en permanence
+Peuvent aussi être déconnectés de la source de données
+Se comportent comme source de données pour le client (données cachées)
+ Peuvent être séralisés et transmis à travers le réseau
+ Utile pour les clients légers (PDAs, les périphériques non connectés)
+59

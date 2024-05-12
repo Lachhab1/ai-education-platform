@@ -1,0 +1,349 @@
+J2EE
+Ben Lahmer El habib
+h.Benlahmer@gmail.com
+
+Les architectures 3-tiers classiques
+Le tiers client
+Le tiers du milieu
+(Middle tier)
+Le tiers ressource
+(EIS)
+Le côté serveur
+2
+
+Les architectures web
+Le tiers client
+Le tiers du milieu
+Le tiers ressource
+(EIS)
+Le côté serveur
+Clients web
+Web services
+Clients lourds
+Le tiers web
+Web Services
+3
+
+Les architectures web : le tiers client
+Le tiers client
+Le tiers du milieu
+Le tiers ressource
+(EIS)
+Le côté serveur
+Clients web
+Web services
+Clients lourds
+Le tiers web
+Web Services
+4
+
+Le tiers client
+Un web browser
+HTTP, HTTPS / HTML, XML
+Un PDA 
+HTTP , HTTPS / WML, XML
+Un client lourd (fat client), applets, apps
+IIOP / RMI, CORBA
+JRMP / RMI
+autres…
+Un Web-service
+HTTP , HTTPS / ebXML (Elect. Business Exchange Specification , SOAP (XML)
+5
+
+Les architectures web : le web tiers
+Le tiers client
+Le tiers du milieu
+Le tiers ressource
+(EIS)
+Le côté serveur
+Clients web
+Web services
+Clients lourds
+Le tiers web
+Web Services
+6
+
+Le tiers web : rôle
+reçoit les requêtes HTTP des clients et renvoie les réponses
+permet la séparation entre présentation (spécifique au client) et «business logic» 
+génère du contenu dynamiquement
+transforme des requêtes HTTP dans un format compris par l’application
+contient la logique du flot de présentation
+identifie la session de l’utilisateur
+supporte plusieurs types de clients
+7
+
+Le tiers web : architecture
+Le tiers client
+Le tiers du milieu
+Le tiers ressource (EIS)
+Le côté serveur
+Clients web
+Web services
+Le tiers web
+Web Services
+Contenu statique
+Web Container
+Web Serveur
+CGI scripts
+Scripts (Fast CGI)
+Autres extensions
+HTML, XML / 
+HTTP, HTTPS
+SOAP / HTTPS
+SOAP / 
+HTTPS
+SQL, propriétaire
+XML, RMI / HTTP, IIOP, JRMP, JMS
+8
+
+Technologies utilisées dans le tiers web
+CGI/FastCGI (Common Gateway Interface)
+Peut-être écrit en JAVA, C, C++, Perl...
+ASP (Active Server Pages)
+Scripting interprété dans des pages HTML (Microsoft)
+Java Servlets
+nécessite un conteneur Java
+JSP (Java Server Pages)
+Scripting dans des pages HTML compilé en Servlet
+PHP, Python
+JavaScript (Server Side)
+9
+
+Les architectures web : le tiers du milieu
+Le tiers client
+Le tiers du milieu
+Le tiers ressource
+(EIS)
+Le côté serveur
+Clients web
+Web services
+Clients lourds
+Le tiers web
+Web Services
+10
+
+Le tiers du milieu : rôle
+Gestion de composants
+fourni tous les services et outils pour gérer les composants du système et l implémentation de la «business logic» comme
+management de session
+synchrone et asynchrone notification
+Tolérance de fautes, haute disponibilité
+Capacité de l’application de résister à une possible panne sans point unique de panne. Définie les polices de récupération.
+…
+Passage à l'échelle
+Capacité pour le système d'accroître ses ressources matérielles pour supporter un nombre accru d’utilisateur avec un temps de réponse constant
+Balance de charge
+Capacité d ’envoyer une requête a différents serveurs en fonction de la disponibilité des serveurs
+11
+
+Le tiers du milieu : rôle
+Ressources pooling
+Protège le tiers ressource en utilisant des groupes de connections partagées entre tous les clients
+Transaction Management
+Une transaction est une unité indivisible de travail comprenant plusieurs opérations, dont toutes ou aucune doivent être effectuées pour protéger l’intégrité des données
+Assure les propriétés ACID des transactions (atomicité, consistance, isolation and durabilité)
+Console de management
+Unique point de management permettant de contrôle l’ensemble du système incluant tous les serveurs
+Sécurité
+Authentification
+Autorisation
+12
+
+Type de serveurs : Web Information Serveurs
+Web Information Serveurs 
+A la frontière du tiers web et du tiers du milieu
+Pas de transactions
+Serveurs sans états
+Utilise des templates et un langage de script pour générer les pages HTML dynamiquement tout en accédant le tiers ressource
+Exemples
+IIS + ASP
+Web serveur + PHP, Python, CGI
+13
+
+Type de serveurs : Serveurs de composants
+Serveurs de composants
+Permet l'accès au tiers ressource
+Gère les transactions
+Serveurs sans états
+Sont maintenant au cœur des serveurs d’applications
+Exemples
+Microsoft Transaction Server (MTS, dans .net)
+Sybase Jaguar (dans Sybase EAServer)
+IBM Component broker (dans WebSphere)
+14
+
+Type de serveurs : Serveurs d’applications
+Serveur d’applications
+Environnement complet de développement coté serveur
+Comprends toujours un serveur de composants
+Serveurs avec états
+Supporte «business logic» décrite à l ’aide d ’objets, de règles et de composants
+Exemples
+Microsoft .net Enterprise Servers
+J2EE Serveurs : IBM WebSphere, BEA WebLogic, JBoss
+ORB Corba Servers : Borland VisiBroker, IONA ORBacus
+Notez que les serveurs d’applications Corba complet intègrent J2EE.
+Pour une comparaison MTS-EJB regardez
+http://www.execpc.com/~gopalan/misc/ejbmts/ejbmtscomp.html
+
+15
+
+Les architectures web : le tiers ressource
+Le tiers client
+Le tiers du milieu
+Le tiers ressource
+(EIS)
+Le côté serveur
+Clients web
+Web services
+Clients lourds
+Le tiers web
+Web Services
+16
+
+Le tiers ressource (EIS : Enterprise Information Systems)
+Base de données (databases)
+JDO, SQL/J, JDBC, ADO.NET
+
+Anciens systèmes (legacy systems)
+J2EE Connector, protocoles propriétaires
+
+ERP (Enterprise Resource Planning)
+J2EE Connector, protocoles propriétaires
+
+EAI (Enterprise Application Integration)
+J2EE Connector, protocoles propriétaires
+17
+
+Plate-formes Microsoft DNA, .NET
+Deux  mondes ?
+18
+
+Microsoft DNA (Distributed interNet Architecture)
+Méthodologie, software pattern
+apporte une solution à un ensemble de problème rencontrés dans les applications distribuées
+Ensemble de technologies Microsoft
+Microsoft apporte les outils logiciels pour implémenter cette méthodologie
+Présentation : Internet Explorer
+Moteur de rendu : IIS (Internet Information Server)
+Rendu<->Business : ASP (Active Server Pages), Scripting (VBScript)
+Communication entre composants : COM, MSMQ, COM+
+Composants : COM (Common Object Model) avec/sans MTS
+Business<->Data : ActiveX Data Objects (More COM), ODBC
+Accès aux données : OLEDB, Universal Data Access and ADSI (ADO)
+Persistance : SQL Server, Exchange, Active Directory et NTFS
+19
+
+Microsoft DNA (Distributed interNet Architecture)
+Source : http://msdn.microsoft.com/
+20
+
+Plate-forme Microsoft.NET
+.NET est une stratégie de produits M$
+Remplacement de Microsoft DNA
+Composé de 3 parties :
+CLR (Common Language Runtime)
+BCL (Base Class Library)
+ASP.NET
+CLS (Common Language Specification)
+CTS (Common Type System)
+MSIL (Microsoft Intermediate Language)
+21
+
+La plate-forme J2EE
+J2EE est un standard industriel
+contrairement à .net c’est une spécification
+Une application J2EE assemble des composants
+composants clients : applications clients, applets
+composants web : servlet et JSP
+composants business : EJB
+écrit en Java compilé en bytecode
+assemblés dans l’application J2EE
+déployés dans un serveur J2EE
+Le serveur J2EE fournit des conteneurs qui permettent de simplifier les composants et d’offrir tous les services nécessaires
+22
+
+Architecture d’un serveur J2EE
+Source : http://java.sun.com/blueprints/guidelines
+23
+
+APIs de la plate-forme J2EE
+Enterprise JavaBeans Technology (EJB) 2.0
+Brique de base pour construire l’application
+3 types de beans
+session beans
+entity beans
+message-driven beans
+JDBC 4.0 API
+Permet l'exécution de commandes SQL
+2 parties dans l’API
+la partie application pour accéder à la BD
+la partie fournisseur de services pour attacher le driver JDBC à la plate-forme J2EE
+Java Data Objects (JDO)
+24
+
+APIs de la plate-forme J2EE
+Java Servlet Technology 2.4
+introduit un modèle Requête/Réponse dans Java et étends la capacité d’un serveur HTTP
+JavaServer Pages (JSP) Technology 2.0
+mélange texte statique (HTML, XML) avec constructions dynamiques de contenue à l’aide de tags JSP
+Java Message Service (JMS) 1.1
+introduit un modèle de messages entre composants (MOM : Messages Oriented Middleware)
+permet des communications asynchrones, fiable et indépendantes entre composants
+25
+
+APIs de la plate-forme J2EE
+Java Transaction API (JTA) 1.0.1
+fournit les services nécessaires pour contrôler le niveau d’isolation des transactions
+JavaMail Technology 1.3.1
+Permet l’envoie d’emails. 2 parties dans l’API
+la partie application pour contrôle l’envoie d’emails
+la partie fournisseur de services emails
+JavaBeans Activation Framework(JAF)1.0.2
+Service de découverte et d’encapsulation de composants a l ’aide de JavaBean
+26
+
+APIs de la plate-forme J2EE
+Java API for XML (JAXP) 1.2.4
+Standard API pour parser et transformer les données XML (DOM/SAX/XSTL/TrAX)
+J2EE Connector API 1.5
+Permet la création d'adaptateurs de ressources pour permettre l'accès aux systèmes EIS
+Java Authentication and Authorization Service (JAAS) 1.0
+Permet la gestion de la securite dans les applications J2EE
+27
+
+APIs de la plate-forme J2EE : WebServices = WSDP 1.3
+Java Web Services Developer Pack
+Java API for XML Binding (JAXB, 1.0.2)
+Java APIs for XML Messaging 1.0 (JAXM)
+Java API for XML Registries 1.0.5 (JAXR)
+Java API for XML-based RPC 1.1 (JAX-RPC)
+JavaServer Faces (JSF)
+XML WS Security 1.0
+JAXP Java API for XML processing 1.2.4
+SOAP with attachments API 1.2.4 (SAAJ)
+Java Server Pages Std. Tag Library 1.1 (JSTL)
+28
+
+Comparaison de l’architecture J2EE et .NET
+Source : http://www.theserverside.com/resources/article.jsp?l=J2EE-vs-DOTNET
+29
+
+Comparaison du modèle de développement de J2EE et .NET
+Source : http://www.sdmagazine.com/documents/s=733/sdm0103a/0103a.htm
+Un langage
+Plusieurs plate-formes
+Plusieurs langages
+Une plate-forme
+30
+
+Gestion des composants : managed / unmanaged
+Source : http://www.dotnetguru.org/articles/architecturedotnet.htm
+.NET propose le même ensemble de services sous l'appellation de ServicedComponent. Le conteneur utilisé dans le Framework est COM+
+COM+ fonctionne dans un environnement non managé avec une gestion de type différente de celle de .NET  (Common Type System)
+Dans J2EE les transactions sont gérées en Java à l'aide des API JTA/JTS et l'ensemble des composants s'exécutent dans un seul et même environnement managé.
+31
+
+Tableau comparatif des plate-formes .NET et J2EE
+32
