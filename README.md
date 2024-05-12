@@ -37,7 +37,7 @@ cd ai-education-platform
 3. Install the required Python packages:
 
 ```
-pip install -r requirements.txt
+pip install flask nltk scikit-learn web3 solcx
 ```
 
 4. Download the necessary NLTK resources:
